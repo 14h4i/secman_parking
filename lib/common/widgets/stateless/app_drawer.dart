@@ -32,7 +32,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 imageUrl: '',
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.error, color: Colors.red),
               ),
             ),
           ),
