@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
-import 'package:secman_parking/modules/calendar/pages/calendar_page.dart';
 import 'package:secman_parking/modules/history/pages/history_page.dart';
-import 'package:secman_parking/modules/home/pages/home_page.dart';
+import 'package:secman_parking/modules/scan/pages/scan_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -12,10 +11,9 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  int _index = 1;
+  int _index = 0;
   final List<Widget> _children = const [
-    CalendarPage(),
-    HomePage(),
+    ScanPage(),
     HistoryPage(),
   ];
 
@@ -30,12 +28,8 @@ class _DashboardPageState extends State<DashboardPage> {
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.nfc),
+            label: 'Scan',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
