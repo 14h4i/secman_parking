@@ -6,7 +6,7 @@ import 'package:secman_parking/route/route_name.dart';
 class Routes {
   static Route authorizedRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case RouteName.dashboardPage:
         return _buildRoute(
           settings,
           const DashboardPage(),
@@ -21,7 +21,7 @@ class Routes {
 
   static Route unAuthorizedRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case RouteName.welcomePage:
         return _buildRoute(
           settings,
           const WelcomePage(),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:secman_parking/blocs/app_state_bloc.dart';
 import 'package:secman_parking/providers/bloc_provider.dart';
+import 'package:secman_parking/route/route_name.dart';
 import 'package:secman_parking/route/routes.dart';
 import 'package:secman_parking/src/settings/settings_controller.dart';
 
 class MyApp extends StatefulWidget {
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   const MyApp({
     Key? key,
     required this.settingsController,
@@ -18,6 +20,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final appStateBloc = AppStateBloc();
+  static final GlobalKey<State> key = GlobalKey();
 
   @override
   void initState() {
@@ -44,6 +47,8 @@ class _MyAppState extends State<MyApp> {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 themeMode: ThemeMode.light,
+                key: const ValueKey('UnAuthorized'),
+                initialRoute: RouteName.welcomePage,
                 builder: _builder,
                 onGenerateRoute: Routes.unAuthorizedRoute,
               );
@@ -52,6 +57,9 @@ class _MyAppState extends State<MyApp> {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               themeMode: ThemeMode.light,
+              key: key,
+              initialRoute: RouteName.dashboardPage,
+              navigatorKey: MyApp.navigatorKey,
               builder: _builder,
               onGenerateRoute: Routes.authorizedRoute,
             );
