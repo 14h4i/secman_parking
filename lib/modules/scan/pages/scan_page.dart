@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
 import 'package:secman_parking/main.dart';
+import 'package:secman_parking/modules/scan/blocs/scan_bloc.dart';
+import 'package:secman_parking/providers/bloc_provider.dart';
 import 'package:secman_parking/providers/log_provider.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -19,9 +20,10 @@ class ScanPage extends StatefulWidget {
 
 class _ScanPageState extends State<ScanPage> with WidgetsBindingObserver {
   LogProvider get logger => const LogProvider('⚡️ Camera');
+  ScanBloc? get bloc => BlocProvider.of<ScanBloc>(context);
   CameraController? controller;
 
-  File? _imageFile;
+  // File? _imageFile;
 
   // Initial values
   bool _isCameraInitialized = false;
@@ -66,58 +68,95 @@ class _ScanPageState extends State<ScanPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: _buildBackgroundColor(_index),
-          iconTheme: AppThemes.iconThemeAppBar,
-          elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: _onTap,
-              icon: const Icon(Icons.ac_unit),
-            ),
-            IconButton(
-                onPressed: () async {
-                  XFile? rawImage = await takePicture();
-                  File imageFile = File(rawImage!.path);
-
-                  int currentUnix = DateTime.now().millisecondsSinceEpoch;
-
-                  final directory = await getApplicationDocumentsDirectory();
-
-                  String fileFormat = imageFile.path.split('.').last;
-
-                  print(fileFormat);
-
-                  await imageFile.copy(
-                    '${directory.path}/$currentUnix.$fileFormat',
-                  );
-
-                  refreshAlreadyCapturedImages();
-                },
-                icon: const Icon(Icons.camera_alt))
-          ],
-        ),
+      appBar: AppBar(
         backgroundColor: _buildBackgroundColor(_index),
-        drawer: const AppDrawer(),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Builder(builder: (context) {
-            if (_index == 1) {
-              return const InfoCard(
-                isIn: true,
-                isGuest: false,
-              );
-            }
-            if (_index == 2) {
-              return InfoCard(
-                isIn: false,
-                isGuest: true,
-                urlImage: _imageFile != null ? _imageFile!.path : null,
-              );
-            }
-            return const Center(
+        iconTheme: AppThemes.iconThemeAppBar,
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: _onTap,
+            icon: const Icon(Icons.ac_unit),
+          ),
+          IconButton(
+              onPressed: () async {
+                bloc!.takePicture(controller!);
+              },
+              //  {
+              //   XFile? rawImage = await takePicture();
+              //   File imageFile = File(rawImage!.path);
+
+              //   int currentUnix = DateTime.now().millisecondsSinceEpoch;
+
+              //   final directory = await getApplicationDocumentsDirectory();
+
+              //   String fileFormat = imageFile.path.split('.').last;
+
+              //   print(fileFormat);
+
+              //   await imageFile.copy(
+              //     '${directory.path}/$currentUnix.$fileFormat',
+              //   );
+
+              //   refreshAlreadyCapturedImages();
+              // },
+              icon: const Icon(Icons.camera_alt))
+        ],
+      ),
+      backgroundColor: _buildBackgroundColor(_index),
+      drawer: const AppDrawer(),
+      body: _isCameraInitialized
+          ? Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Builder(builder: (context) {
+                if (_index == 1) {
+                  return const InfoCard(
+                    isIn: true,
+                    isGuest: false,
+                  );
+                }
+                if (_index == 2) {
+                  return StreamBuilder<File?>(
+                    stream: bloc!.lastImageCameraStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const InfoCard(
+                          isIn: false,
+                          isGuest: true,
+                          urlImage: 'error',
+                        );
+                      }
+                      if (snapshot.hasData) {
+                        final file = snapshot.data;
+                        return InfoCard(
+                          isIn: false,
+                          isGuest: true,
+                          urlImage: file?.path,
+                        );
+                      }
+                      return const InfoCard(
+                        isIn: false,
+                        isGuest: true,
+                        // urlImage: _imageFile != null ? _imageFile!.path : null,
+                      );
+                    },
+                  );
+                }
+                return const Center(
+                  child: AutoSizeText(
+                    'Quét mã...',
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 100,
+                    ),
+                  ),
+                );
+              }),
+            )
+          : const Center(
               child: AutoSizeText(
-                'Quét mã...',
+                'Đang khởi động máy ảnh',
                 maxLines: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -125,9 +164,8 @@ class _ScanPageState extends State<ScanPage> with WidgetsBindingObserver {
                   fontSize: 100,
                 ),
               ),
-            );
-          }),
-        ));
+            ),
+    );
   }
 
   Color _buildBackgroundColor(int index) {
@@ -194,46 +232,46 @@ class _ScanPageState extends State<ScanPage> with WidgetsBindingObserver {
     }
   }
 
-  Future<XFile?> takePicture() async {
-    final CameraController? cameraController = controller;
-    if (cameraController!.value.isTakingPicture) {
-      // A capture is already pending, do nothing.
-      return null;
-    }
-    try {
-      XFile file = await cameraController.takePicture();
-      return file;
-    } on CameraException catch (e) {
-      logger.log('Error occured while taking picture: $e');
-      return null;
-    }
-  }
+  // Future<XFile?> takePicture() async {
+  //   final CameraController? cameraController = controller;
+  //   if (cameraController!.value.isTakingPicture) {
+  //     // A capture is already pending, do nothing.
+  //     return null;
+  //   }
+  //   try {
+  //     XFile file = await cameraController.takePicture();
+  //     return file;
+  //   } on CameraException catch (e) {
+  //     logger.log('Error occured while taking picture: $e');
+  //     return null;
+  //   }
+  // }
 
-  refreshAlreadyCapturedImages() async {
-    final directory = await getApplicationDocumentsDirectory();
-    List<FileSystemEntity> fileList = await directory.list().toList();
-    allFileList.clear();
-    List<Map<int, dynamic>> fileNames = [];
+  // refreshAlreadyCapturedImages() async {
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   List<FileSystemEntity> fileList = await directory.list().toList();
+  //   allFileList.clear();
+  //   List<Map<int, dynamic>> fileNames = [];
 
-    for (var file in fileList) {
-      if (file.path.contains('.jpg')) {
-        allFileList.add(File(file.path));
+  //   for (var file in fileList) {
+  //     if (file.path.contains('.jpg')) {
+  //       allFileList.add(File(file.path));
 
-        String name = file.path.split('/').last.split('.').first;
-        fileNames.add({0: int.parse(name), 1: file.path.split('/').last});
-      }
-    }
+  //       String name = file.path.split('/').last.split('.').first;
+  //       fileNames.add({0: int.parse(name), 1: file.path.split('/').last});
+  //     }
+  //   }
 
-    if (fileNames.isNotEmpty) {
-      final recentFile =
-          fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
-      String recentFileName = recentFile[1];
-      if (recentFileName.contains('.jpg')) {
-        _imageFile = File('${directory.path}/$recentFileName');
-      }
-      setState(() {});
-    }
-  }
+  //   if (fileNames.isNotEmpty) {
+  //     final recentFile =
+  //         fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
+  //     String recentFileName = recentFile[1];
+  //     if (recentFileName.contains('.jpg')) {
+  //       _imageFile = File('${directory.path}/$recentFileName');
+  //     }
+  //     setState(() {});
+  //   }
+  // }
 }
 
 class InfoCard extends StatelessWidget {
