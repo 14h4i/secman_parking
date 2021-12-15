@@ -1,20 +1,25 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:secman_parking/providers/log_provider.dart';
 
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
 
+List<CameraDescription> cameras = [];
+LogProvider get logger => const LogProvider('⚡️ MainApp');
+
 void main() async {
-  // Set up the SettingsController, which will glue user settings to multiple
-  // Flutter Widgets.
   final settingsController = SettingsController(SettingsService());
 
-  // Load the user's preferred theme while the splash screen is displayed.
-  // This prevents a sudden theme change when the app is first displayed.
   await settingsController.loadSettings();
 
-  // Run the app and pass in the SettingsController. The app listens to the
-  // SettingsController for changes, then passes it further down to the
-  // SettingsView.
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    cameras = await availableCameras();
+    logger.log('Availabled Cameras');
+  } on CameraException catch (e) {
+    logger.log('Error in fetching the cameras: $e');
+  }
   runApp(MyApp(settingsController: settingsController));
 }

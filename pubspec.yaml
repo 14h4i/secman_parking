@@ -12,10 +12,12 @@ environment:
 dependencies:
   auto_size_text: ^3.0.0
   cached_network_image: ^3.2.0
+  camera: ^0.9.4+5
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  path_provider: ^2.0.8
   rxdart: ^0.27.3
   shared_preferences: ^2.0.11
 
