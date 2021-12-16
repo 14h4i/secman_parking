@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:secman_parking/providers/firebase_initializer.dart';
 import 'package:secman_parking/providers/log_provider.dart';
 
 import 'src/app.dart';
@@ -21,5 +22,9 @@ void main() async {
   } on CameraException catch (e) {
     logger.log('Error in fetching the cameras: $e');
   }
-  runApp(MyApp(settingsController: settingsController));
+  runApp(
+    FirebaseInitializer(
+      child: MyApp(settingsController: settingsController),
+    ),
+  );
 }
