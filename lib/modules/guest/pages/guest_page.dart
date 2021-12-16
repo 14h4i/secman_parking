@@ -5,22 +5,22 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
 import 'package:secman_parking/main.dart';
-import 'package:secman_parking/modules/scan/blocs/scan_bloc.dart';
+import 'package:secman_parking/modules/guest/blocs/guest_bloc.dart';
 import 'package:secman_parking/providers/bloc_provider.dart';
 import 'package:secman_parking/providers/log_provider.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class ScanPage extends StatefulWidget {
-  const ScanPage({Key? key}) : super(key: key);
+class GuestPage extends StatefulWidget {
+  const GuestPage({Key? key}) : super(key: key);
 
   @override
-  State<ScanPage> createState() => _ScanPageState();
+  State<GuestPage> createState() => _GuestPageState();
 }
 
-class _ScanPageState extends State<ScanPage> with WidgetsBindingObserver {
+class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
   LogProvider get logger => const LogProvider('⚡️ Camera');
-  ScanBloc? get bloc => BlocProvider.of<ScanBloc>(context);
+  GuestBloc? get bloc => BlocProvider.of<GuestBloc>(context);
   CameraController? controller;
 
   // File? _imageFile;
