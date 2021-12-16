@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "82279246896",
+    "project_id": "secman-parking",
+    "storage_bucket": "secman-parking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82279246896:android:044444e1247565aa4bd1f5",
+        "android_client_info": {
+          "package_name": "com.example.secman_parking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82279246896-2fgvk0a8etp5hd11udujert581fo3rgg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-MdHdfEiPSy7AsAYOrvuQ9E8c1Tz3Ce4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82279246896-2fgvk0a8etp5hd11udujert581fo3rgg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

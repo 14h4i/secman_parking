@@ -14,7 +14,6 @@ void main() async {
   final settingsController = SettingsController(SettingsService());
 
   await settingsController.loadSettings();
-
   try {
     WidgetsFlutterBinding.ensureInitialized();
     cameras = await availableCameras();
