@@ -48,9 +48,9 @@ class _InternalPageState extends State<InternalPage> {
             if (data != null) {
               child = InfoCardInternal(card: data);
               if (data.timeIn == null) {
-                _backgroundColor = Colors.green;
-              } else {
                 _backgroundColor = Colors.redAccent;
+              } else {
+                _backgroundColor = Colors.green;
               }
             }
           } else {
@@ -66,7 +66,7 @@ class _InternalPageState extends State<InternalPage> {
               actions: [
                 IconButton(
                   onPressed: () async {
-                    bloc!.scan('abc002');
+                    bloc!.scan('abc001');
                   },
                   icon: const Icon(Icons.send),
                 )
