@@ -52,16 +52,6 @@ class InfoCardInternal extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              if (card.timeIn != null)
-                AutoSizeText(
-                  'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
-                  maxLines: 1,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 25,
-                  ),
-                ),
               if (card.timeOut != null)
                 AutoSizeText(
                   'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
@@ -72,9 +62,21 @@ class InfoCardInternal extends StatelessWidget {
                     fontSize: 25,
                   ),
                 ),
+              if (card.timeIn != null)
+                AutoSizeText(
+                  'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
+                  maxLines: 1,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 25,
+                  ),
+                ),
               const SizedBox(height: 40),
               Icon(
-                card.timeIn == null ? Icons.arrow_downward : Icons.arrow_upward,
+                card.timeIn == null
+                    ? Icons.arrow_circle_up
+                    : Icons.arrow_circle_down,
                 size: 150,
                 color: Colors.white,
               ),
