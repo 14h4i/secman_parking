@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-const dateFormat = "HH:mm dd/MM/yyyy";
+const dateFormat = "dd/MM/yyyy HH:mm:ss";
 
 class DateTimeIntl {
   static bool checkTimeNow(String time, int earlier, int later) {
