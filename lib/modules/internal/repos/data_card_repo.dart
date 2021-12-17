@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:secman_parking/models/card.dart';
+import 'package:secman_parking/utils/date_time_intl.dart';
 
 class DataCardRepo {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -16,24 +17,39 @@ class DataCardRepo {
       }
 
       Map<String, dynamic> data = snapshot.docs.first.data();
-      data['doc'] = snapshot.docs.first.id;
 
-      Card card = Card.fromJson(data);
+      final tempCard = Card.fromJson(data);
 
-      Map<String, Object?> newData;
-      if (card.timeIn == null) {
-        newData = {
-          'time_in': Timestamp.now(),
-          'time_out': null,
+      final now = Timestamp.now();
+
+      Map<String, dynamic> records = data['records'];
+
+      Map<String, Object?> dataUpdate;
+      //Đã ra, chưa vào -> Vào
+      if (tempCard.timeIn == null) {
+        records[DateTimeIntl.dateTimeToString(now.toDate())] = 'in';
+        dataUpdate = {
+          'time_in': now,
+          'records': records,
         };
+        data['time_in'] = now;
+        data['records'] = records;
+        //Đã vào -> Ra
       } else {
-        newData = {
+        records[DateTimeIntl.dateTimeToString(now.toDate())] = 'out';
+        dataUpdate = {
           'time_in': null,
-          'time_out': Timestamp.now(),
+          'time_out': now,
+          'records': records,
         };
+        data['time_in'] = null;
+        data['time_out'] = now;
+        data['records'] = records;
       }
 
-      snapshot.docs.first.reference.update(newData);
+      snapshot.docs.first.reference.update(dataUpdate);
+
+      return Card.fromJson(data);
     } catch (e) {
       rethrow;
     }
