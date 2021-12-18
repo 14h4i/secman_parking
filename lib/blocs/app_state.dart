@@ -14,9 +14,6 @@ abstract class AppState extends Equatable {
 class LoadingAppState extends AppState {
   const LoadingAppState() : super(status: AppStatus.loading);
 
-  // final AppStatus status;
-  // LoadingAppState({this.status = AppStatus.loading});
-
   @override
   List<Object?> get props => [status];
 }
