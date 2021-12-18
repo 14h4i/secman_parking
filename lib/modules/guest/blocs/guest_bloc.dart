@@ -141,14 +141,16 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
           fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
       String recentFileName = recentFile[1];
       if (recentFileName.contains('.jpg')) {
-        // final fil =  File('${directory.path}/$recentFileName');
-
         emit(TakePictureSuccessState(
             file: File('${directory.path}/$recentFileName')));
-        // _lastImageCameraCtrl.sink
-        //     .add(File('${directory.path}/$recentFileName'));
       }
       // setState(() {});
     }
+  }
+
+  @override
+  Future<void> close() {
+    controller!.dispose();
+    return super.close();
   }
 }

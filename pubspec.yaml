@@ -24,7 +24,6 @@ dependencies:
   fluttertoast: ^8.0.8
   json_annotation: ^4.3.0
   path_provider: ^2.0.8
-  rxdart: ^0.27.3
   shared_preferences: ^2.0.11
 
 dev_dependencies:
