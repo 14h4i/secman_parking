@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:secman_parking/blocs/app_state_bloc.dart';
-import 'package:secman_parking/providers/bloc_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:secman_parking/blocs/app_bloc.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  AppStateBloc? get appStateBloc => BlocProvider.of<AppStateBloc>(context);
+  AppBloc? get appStateBloc => BlocProvider.of<AppBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +76,6 @@ class _AppDrawerState extends State<AppDrawer> {
   }
 
   void _changeAppState() {
-    appStateBloc!.changeAppState(AppState.unAuthorized);
+    appStateBloc!.add(LogoutEvent());
   }
 }

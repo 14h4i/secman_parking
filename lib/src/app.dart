@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:secman_parking/blocs/app_state_bloc.dart';
-import 'package:secman_parking/providers/bloc_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:secman_parking/blocs/app_bloc.dart';
 import 'package:secman_parking/route/route_name.dart';
 import 'package:secman_parking/route/routes.dart';
 import 'package:secman_parking/src/settings/settings_controller.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final appStateBloc = AppStateBloc();
+  final appStateBloc = AppBloc();
   static final GlobalKey<State> key = GlobalKey();
 
   @override
@@ -30,40 +30,39 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      bloc: appStateBloc,
-      child: StreamBuilder<AppState>(
-          stream: appStateBloc.appState,
-          initialData: appStateBloc.initState,
-          builder: (context, snapshot) {
-            if (snapshot.data == AppState.loading) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                home: Container(
-                  color: Colors.white,
-                ),
-              );
-            }
-            if (snapshot.data == AppState.unAuthorized) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                themeMode: ThemeMode.light,
-                key: const ValueKey('UnAuthorized'),
-                initialRoute: RouteName.welcomePage,
-                builder: _builder,
-                onGenerateRoute: Routes.unAuthorizedRoute,
-              );
-            }
-
+      create: (_) => AppBloc()..add(LaunchAppEvent()),
+      child: BlocBuilder<AppBloc, AppState>(
+        builder: (context, state) {
+          if (state.status == AppStatus.loading) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Container(
+                color: Colors.white,
+              ),
+            );
+          }
+          if (state.status == AppStatus.unAuthorized) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               themeMode: ThemeMode.light,
-              key: key,
-              initialRoute: RouteName.dashboardPage,
-              navigatorKey: MyApp.navigatorKey,
+              key: const ValueKey('UnAuthorized'),
+              initialRoute: RouteName.welcomePage,
               builder: _builder,
-              onGenerateRoute: Routes.authorizedRoute,
+              onGenerateRoute: Routes.unAuthorizedRoute,
             );
-          }),
+          }
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            themeMode: ThemeMode.light,
+            key: key,
+            initialRoute: RouteName.dashboardPage,
+            navigatorKey: MyApp.navigatorKey,
+            builder: _builder,
+            onGenerateRoute: Routes.authorizedRoute,
+          );
+        },
+      ),
     );
   }
 
