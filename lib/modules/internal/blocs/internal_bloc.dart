@@ -30,28 +30,3 @@ class InternalBloc extends Bloc<InternalEvent, InternalState> {
     }
   }
 }
-
-
-
-// class InternalBloc extends BlocBase {
-//   final _scanCtrl = BehaviorSubject<Card?>();
-
-//   Stream<Card?> get scanStream => _scanCtrl.stream;
-
-//   Future<void> scan(String id) async {
-//     try {
-//       final res = await InternalRepo().scan(id);
-//       if (res != null) {
-//         _scanCtrl.sink.add(res);
-//       } else {
-//         _scanCtrl.sink.add(null);
-//         AppToast.showShortToast('Thẻ không có dữ liệu');
-//       }
-//     } catch (e) {
-//       _scanCtrl.sink.addError(e);
-//     }
-//   }
-
-//   @override
-//   void dispose() {}
-// }

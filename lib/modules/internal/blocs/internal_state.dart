@@ -17,7 +17,7 @@ class ScanSuccessState extends InternalState {
 }
 
 class ScanFailureState extends InternalState {
-  final Object error;
+  final Object? error;
   ScanFailureState({required this.error});
 
   @override
