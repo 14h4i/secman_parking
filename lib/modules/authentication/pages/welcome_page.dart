@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:secman_parking/blocs/app_state_bloc.dart';
-import 'package:secman_parking/providers/bloc_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:secman_parking/blocs/app_bloc.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  AppStateBloc? get appStateBloc => BlocProvider.of<AppStateBloc>(context);
+  AppBloc? get appStateBloc => BlocProvider.of<AppBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,6 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   void _changeAppState() {
-    appStateBloc!.changeAppState(AppState.authorized);
+    appStateBloc!.add(ChangeAppStateEvent(state: const AuthorizedAppState()));
   }
 }

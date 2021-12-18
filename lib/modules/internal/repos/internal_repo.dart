@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:secman_parking/models/card.dart';
 import 'package:secman_parking/utils/date_time_intl.dart';
 
-class DataCardRepo {
+class InternalRepo {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<Card?> scan(String id) async {

@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
+// import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
-import 'package:secman_parking/main.dart';
+// import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/guest_bloc.dart';
-import 'package:secman_parking/providers/bloc_provider.dart';
-import 'package:secman_parking/providers/log_provider.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -18,50 +17,38 @@ class GuestPage extends StatefulWidget {
 }
 
 class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
-  LogProvider get logger => const LogProvider('⚡️ Camera');
   GuestBloc? get bloc => BlocProvider.of<GuestBloc>(context);
-  CameraController? controller;
+  // CameraController? controller;
 
   // File? _imageFile;
 
   // Initial values
-  bool _isCameraInitialized = false;
+  // bool _isCameraInitialized = false;
   int _index = 0;
 
   // Current values
   // FlashMode? _currentFlashMode;
 
-  List<File> allFileList = [];
+  // List<File> allFileList = [];
 
   @override
   void initState() {
-    onNewCameraSelected(cameras[0]);
+    // onNewCameraSelected(cameras[0]);
     super.initState();
   }
 
   @override
   void dispose() {
-    controller?.dispose();
+    // controller?.dispose();
     super.dispose();
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    final CameraController? cameraController = controller;
+  void didChangeAppLifecycleState(AppLifecycleState appLifecycleState) {
+    bloc!.add(
+        ChangeAppLifecycleStateEvent(appLifecycleState: appLifecycleState));
 
-    // App state changed before we got the chance to initialize.
-    if (cameraController == null || !cameraController.value.isInitialized) {
-      return;
-    }
-
-    if (state == AppLifecycleState.inactive) {
-      // Free up memory when camera not active
-      cameraController.dispose();
-    } else if (state == AppLifecycleState.resumed) {
-      // Reinitialize the camera with same properties
-      onNewCameraSelected(cameraController.description);
-    }
-    super.didChangeAppLifecycleState(state);
+    super.didChangeAppLifecycleState(appLifecycleState);
   }
 
   @override
@@ -78,84 +65,19 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
           ),
           IconButton(
               onPressed: () async {
-                bloc!.takePicture(controller!);
+                bloc!.add(TakePictureEvent());
               },
-              //  {
-              //   XFile? rawImage = await takePicture();
-              //   File imageFile = File(rawImage!.path);
-
-              //   int currentUnix = DateTime.now().millisecondsSinceEpoch;
-
-              //   final directory = await getApplicationDocumentsDirectory();
-
-              //   String fileFormat = imageFile.path.split('.').last;
-
-              //   print(fileFormat);
-
-              //   await imageFile.copy(
-              //     '${directory.path}/$currentUnix.$fileFormat',
-              //   );
-
-              //   refreshAlreadyCapturedImages();
-              // },
               icon: const Icon(Icons.camera_alt))
         ],
       ),
       backgroundColor: _buildBackgroundColor(_index),
       drawer: const AppDrawer(),
-      body: _isCameraInitialized
-          ? Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Builder(builder: (context) {
-                if (_index == 1) {
-                  return const InfoCard(
-                    isIn: true,
-                    isGuest: false,
-                  );
-                }
-                if (_index == 2) {
-                  return StreamBuilder<File?>(
-                    stream: bloc!.lastImageCameraStream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const InfoCard(
-                          isIn: false,
-                          isGuest: true,
-                          urlImage: 'error',
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        final file = snapshot.data;
-                        return InfoCard(
-                          isIn: false,
-                          isGuest: true,
-                          urlImage: file?.path,
-                        );
-                      }
-                      return const InfoCard(
-                        isIn: false,
-                        isGuest: true,
-                        // urlImage: _imageFile != null ? _imageFile!.path : null,
-                      );
-                    },
-                  );
-                }
-                return const Center(
-                  child: AutoSizeText(
-                    'Quét mã...',
-                    maxLines: 1,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 100,
-                    ),
-                  ),
-                );
-              }),
-            )
-          : const Center(
+      body: BlocBuilder<GuestBloc, GuestState>(
+        builder: (context, state) {
+          if (state is InitialGuestState) {
+            return const Center(
               child: AutoSizeText(
-                'Đang khởi động máy ảnh',
+                'Đang Khởi động máy ảnh...',
                 maxLines: 1,
                 style: TextStyle(
                   color: Colors.white,
@@ -163,7 +85,85 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                   fontSize: 100,
                 ),
               ),
-            ),
+            );
+          }
+          if (state is CameraInitializedFailureState) {
+            return Center(
+              child: AutoSizeText(
+                'Khởi động máy ảnh thất bại.\n Error: ${state.error}',
+                maxLines: 1,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 100,
+                ),
+              ),
+            );
+          }
+          if (state is CameraInitializedState) {
+            return Center(
+              child: AutoSizeText(
+                'Khởi động máy ảnh: ${state.isCameraInitialized}',
+                maxLines: 1,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 100,
+                ),
+              ),
+            );
+          }
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Builder(builder: (context) {
+              if (_index == 1) {
+                return const InfoCard(
+                  isIn: true,
+                  isGuest: false,
+                );
+              }
+              if (_index == 2) {
+                // return BlocBuilder<GuestBloc, GuestState>(
+                //   builder: (context, state) {
+                if (state is TakePictureFailureState) {
+                  return InfoCard(
+                    isIn: false,
+                    isGuest: true,
+                    urlImage: '${state.error}',
+                  );
+                }
+                if (state is TakePictureSuccessState) {
+                  final file = state.file!;
+                  return InfoCard(
+                    isIn: false,
+                    isGuest: true,
+                    urlImage: file.path,
+                  );
+                }
+                return const InfoCard(
+                  isIn: false,
+                  isGuest: true,
+                  // urlImage: _imageFile != null ? _imageFile!.path : null,
+                );
+              }
+
+              //   );
+              // }
+              return const Center(
+                child: AutoSizeText(
+                  'Quét mã...',
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 100,
+                  ),
+                ),
+              );
+            }),
+          );
+        },
+      ),
     );
   }
 
@@ -190,87 +190,6 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
       });
     }
   }
-
-  void onNewCameraSelected(CameraDescription cameraDescription) async {
-    final previousCameraController = controller;
-    // Instantiating the camera controller
-    final CameraController cameraController = CameraController(
-      cameraDescription,
-      ResolutionPreset.medium,
-      imageFormatGroup: ImageFormatGroup.jpeg,
-    );
-
-    // Dispose the previous controller
-    await previousCameraController?.dispose();
-
-    // Replace with the new controller
-    if (mounted) {
-      setState(() {
-        controller = cameraController;
-      });
-    }
-
-    // Update UI if controller updated
-    cameraController.addListener(() {
-      if (mounted) setState(() {});
-    });
-
-    // Initialize controller
-    try {
-      await cameraController.initialize();
-      await cameraController.setFlashMode(FlashMode.auto);
-    } on CameraException catch (e) {
-      logger.log('Error initializing camera: $e');
-    }
-
-    // Update the Boolean
-    if (mounted) {
-      setState(() {
-        _isCameraInitialized = controller!.value.isInitialized;
-      });
-    }
-  }
-
-  // Future<XFile?> takePicture() async {
-  //   final CameraController? cameraController = controller;
-  //   if (cameraController!.value.isTakingPicture) {
-  //     // A capture is already pending, do nothing.
-  //     return null;
-  //   }
-  //   try {
-  //     XFile file = await cameraController.takePicture();
-  //     return file;
-  //   } on CameraException catch (e) {
-  //     logger.log('Error occured while taking picture: $e');
-  //     return null;
-  //   }
-  // }
-
-  // refreshAlreadyCapturedImages() async {
-  //   final directory = await getApplicationDocumentsDirectory();
-  //   List<FileSystemEntity> fileList = await directory.list().toList();
-  //   allFileList.clear();
-  //   List<Map<int, dynamic>> fileNames = [];
-
-  //   for (var file in fileList) {
-  //     if (file.path.contains('.jpg')) {
-  //       allFileList.add(File(file.path));
-
-  //       String name = file.path.split('/').last.split('.').first;
-  //       fileNames.add({0: int.parse(name), 1: file.path.split('/').last});
-  //     }
-  //   }
-
-  //   if (fileNames.isNotEmpty) {
-  //     final recentFile =
-  //         fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
-  //     String recentFileName = recentFile[1];
-  //     if (recentFileName.contains('.jpg')) {
-  //       _imageFile = File('${directory.path}/$recentFileName');
-  //     }
-  //     setState(() {});
-  //   }
-  // }
 }
 
 class InfoCard extends StatelessWidget {

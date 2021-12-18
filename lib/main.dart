@@ -1,8 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/providers/firebase_initializer.dart';
 import 'package:secman_parking/providers/log_provider.dart';
 
+import 'blocs/chatty_observer_bloc.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
@@ -21,9 +23,13 @@ void main() async {
   } on CameraException catch (e) {
     logger.log('Error in fetching the cameras: $e');
   }
-  runApp(
-    FirebaseInitializer(
-      child: MyApp(settingsController: settingsController),
+
+  BlocOverrides.runZoned(
+    () => runApp(
+      FirebaseInitializer(
+        child: MyApp(settingsController: settingsController),
+      ),
     ),
+    blocObserver: ChattyObserverBloc(),
   );
 }
