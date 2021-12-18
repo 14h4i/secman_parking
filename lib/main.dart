@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/providers/firebase_initializer.dart';
 import 'package:secman_parking/providers/log_provider.dart';
 
-import 'modules/guest/blocs/chatty_observer_bloc.dart';
+import 'blocs/chatty_observer_bloc.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
@@ -25,12 +25,11 @@ void main() async {
   }
 
   BlocOverrides.runZoned(
-    () {},
-    blocObserver: ChattyObserverBloc(),
-  );
-  runApp(
-    FirebaseInitializer(
-      child: MyApp(settingsController: settingsController),
+    () => runApp(
+      FirebaseInitializer(
+        child: MyApp(settingsController: settingsController),
+      ),
     ),
+    blocObserver: ChattyObserverBloc(),
   );
 }
