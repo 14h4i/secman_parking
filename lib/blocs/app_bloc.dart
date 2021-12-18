@@ -30,11 +30,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  Future<void> _changeAppState(
-      ChangeAppStateEvent event, Emitter<AppState> emit) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(PrefsKey.authorLevel, event.state.status.index);
-    emit(event.state);
+  Future<void> _changeAppState(AppEvent event, Emitter<AppState> emit) async {
+    if (event is ChangeAppStateEvent) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(PrefsKey.authorLevel, event.state.status.index);
+      emit(event.state);
+    }
   }
 
   Future<void> _logout(Emitter<AppState> emit) async {

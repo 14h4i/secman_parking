@@ -1,18 +1,57 @@
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/models/card.dart';
-import 'package:secman_parking/modules/internal/blocs/data_card_bloc.dart';
-import 'package:secman_parking/providers/bloc_provider.dart';
+import 'package:secman_parking/modules/internal/repos/internal_repo.dart';
 
-class InternalBloc extends BlocBase {
-  final DataCardBloc _dataCardBloc;
+part 'internal_event.dart';
+part 'internal_state.dart';
 
-  InternalBloc() : _dataCardBloc = DataCardBloc();
-
-  Stream<Card?> get scanStream => _dataCardBloc.scanStream;
-
-  Future<void> scan(String id) async {
-    _dataCardBloc.scan(id);
+class InternalBloc extends Bloc<InternalEvent, InternalState> {
+  InternalBloc() : super(InitialScanState()) {
+    on<ScanInternalCardEvent>(_scan);
   }
 
-  @override
-  void dispose() {}
+  Future<void> _scan(InternalEvent event, Emitter<InternalState> emit) async {
+    try {
+      if (event is ScanInternalCardEvent) {
+        final res = await InternalRepo().scan(event.id);
+
+        // _scanCtrl.sink.add(res);
+        emit(ScanSuccessState(card: res));
+
+        // _scanCtrl.sink.add(null);
+        // emit(ScanSuccessState());
+        // AppToast.showShortToast('Thẻ không có dữ liệu');
+
+      }
+    } catch (e) {
+      // _scanCtrl.sink.addError(e);
+      emit(ScanFailureState(error: e));
+    }
+  }
 }
+
+
+
+// class InternalBloc extends BlocBase {
+//   final _scanCtrl = BehaviorSubject<Card?>();
+
+//   Stream<Card?> get scanStream => _scanCtrl.stream;
+
+//   Future<void> scan(String id) async {
+//     try {
+//       final res = await InternalRepo().scan(id);
+//       if (res != null) {
+//         _scanCtrl.sink.add(res);
+//       } else {
+//         _scanCtrl.sink.add(null);
+//         AppToast.showShortToast('Thẻ không có dữ liệu');
+//       }
+//     } catch (e) {
+//       _scanCtrl.sink.addError(e);
+//     }
+//   }
+
+//   @override
+//   void dispose() {}
+// }
