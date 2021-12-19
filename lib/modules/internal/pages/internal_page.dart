@@ -45,7 +45,7 @@ class _InternalPageState extends State<InternalPage> {
           final data = state.card;
           if (data != null) {
             child = InfoCardInternal(card: data);
-            if (data.timeIn == null) {
+            if (!data.gotInto!) {
               _backgroundColor = Colors.redAccent;
             } else {
               _backgroundColor = Colors.green;

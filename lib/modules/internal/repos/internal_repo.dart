@@ -26,14 +26,16 @@ class InternalRepo {
 
       Map<String, Object?> dataUpdate;
       //Đã ra, chưa vào -> Vào
-      if (tempCard.timeIn == null) {
+      if (!tempCard.gotInto!) {
         records[DateTimeIntl.dateTimeToString(now.toDate())] = 'in';
         dataUpdate = {
           'time_in': now,
           'records': records,
+          'got_into': true,
         };
         data['time_in'] = now;
         data['records'] = records;
+        data['got_into'] = true;
         //Đã vào -> Ra
       } else {
         records[DateTimeIntl.dateTimeToString(now.toDate())] = 'out';
@@ -41,10 +43,12 @@ class InternalRepo {
           'time_in': null,
           'time_out': now,
           'records': records,
+          'got_into': false,
         };
         data['time_in'] = null;
         data['time_out'] = now;
         data['records'] = records;
+        data['got_into'] = false;
       }
 
       snapshot.docs.first.reference.update(dataUpdate);

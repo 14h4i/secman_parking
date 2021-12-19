@@ -1,10 +1,8 @@
 import 'dart:io';
 
-// import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
-// import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/guest_bloc.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:auto_size_text/auto_size_text.dart';

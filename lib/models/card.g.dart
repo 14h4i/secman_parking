@@ -14,6 +14,7 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
       timeOut: Card._datetimeFromTimestamp(json['time_out'] as Timestamp?),
       vehicleNumber: json['vehicle_number'] as String?,
       records: Card._mapFromJson(json['records'] as Map<String, dynamic>?),
+      gotInto: json['got_into'] as bool?,
     );
 
 Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
@@ -24,4 +25,5 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'time_out': Card._datetimeToTimestamp(instance.timeOut),
       'vehicle_number': instance.vehicleNumber,
       'records': Card._jsonToMap(instance.records),
+      'got_into': instance.gotInto,
     };

@@ -33,6 +33,9 @@ class Card {
   @JsonKey(name: 'records', fromJson: _mapFromJson, toJson: _jsonToMap)
   final Map<DateTime, String>? records;
 
+  @JsonKey(name: 'got_into')
+  final bool? gotInto;
+
   Card({
     this.id,
     this.currentPhoto,
@@ -41,6 +44,7 @@ class Card {
     this.timeOut,
     this.vehicleNumber,
     this.records,
+    this.gotInto,
   });
 
   factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
@@ -68,6 +72,7 @@ class Card {
     DateTime? timeIn,
     DateTime? timeOut,
     String? vehicleNumber,
+    bool? gotInto,
   }) {
     return Card(
       id: id ?? this.id,
@@ -76,6 +81,7 @@ class Card {
       timeIn: timeIn ?? this.timeIn,
       timeOut: timeOut ?? this.timeOut,
       vehicleNumber: vehicleNumber ?? this.vehicleNumber,
+      gotInto: gotInto ?? this.gotInto,
     );
   }
 }

@@ -74,7 +74,7 @@ class InfoCardInternal extends StatelessWidget {
                 ),
               const SizedBox(height: 40),
               Icon(
-                card.timeIn == null
+                !card.gotInto!
                     ? Icons.arrow_circle_up
                     : Icons.arrow_circle_down,
                 size: 150,
