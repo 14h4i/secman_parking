@@ -72,7 +72,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
       drawer: const AppDrawer(),
       body: BlocBuilder<GuestBloc, GuestState>(
         builder: (context, state) {
-          if (state is InitialGuestState) {
+          if (state is GuestInitial) {
             return const Center(
               child: AutoSizeText(
                 'Đang Khởi động máy ảnh...',
@@ -85,7 +85,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
               ),
             );
           }
-          if (state is CameraInitializedFailureState) {
+          if (state is GuestCameraInitializedFailure) {
             return Center(
               child: AutoSizeText(
                 'Khởi động máy ảnh thất bại.\n Error: ${state.error}',
@@ -98,7 +98,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
               ),
             );
           }
-          if (state is CameraInitializedState) {
+          if (state is GuestCameraInitialized) {
             return Center(
               child: AutoSizeText(
                 'Khởi động máy ảnh: ${state.isCameraInitialized}',
@@ -123,14 +123,14 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
               if (_index == 2) {
                 // return BlocBuilder<GuestBloc, GuestState>(
                 //   builder: (context, state) {
-                if (state is TakePictureFailureState) {
+                if (state is GuestTakePictureFailure) {
                   return InfoCard(
                     isIn: false,
                     isGuest: true,
                     urlImage: '${state.error}',
                   );
                 }
-                if (state is TakePictureSuccessState) {
+                if (state is GuestTakePictureSuccess) {
                   final file = state.file!;
                   return InfoCard(
                     isIn: false,

@@ -5,39 +5,39 @@ abstract class GuestState extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialGuestState extends GuestState {}
+class GuestInitial extends GuestState {}
 
-class TakePictureSuccessState extends GuestState {
+class GuestTakePictureSuccess extends GuestState {
   final File? file;
 
-  TakePictureSuccessState({required this.file});
+  GuestTakePictureSuccess({required this.file});
 
   @override
   List<Object?> get props => [file];
 }
 
-class TakePictureFailureState extends GuestState {
+class GuestTakePictureFailure extends GuestState {
   final Object? error;
 
-  TakePictureFailureState({this.error});
+  GuestTakePictureFailure({this.error});
 
   @override
   List<Object?> get props => [error];
 }
 
-class CameraInitializedState extends GuestState {
+class GuestCameraInitialized extends GuestState {
   final bool isCameraInitialized;
 
-  CameraInitializedState({required this.isCameraInitialized});
+  GuestCameraInitialized({required this.isCameraInitialized});
 
   @override
   List<Object?> get props => [isCameraInitialized];
 }
 
-class CameraInitializedFailureState extends GuestState {
+class GuestCameraInitializedFailure extends GuestState {
   final Object? error;
 
-  CameraInitializedFailureState({this.error});
+  GuestCameraInitializedFailure({this.error});
 
   @override
   List<Object?> get props => [error];

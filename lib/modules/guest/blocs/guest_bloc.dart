@@ -15,7 +15,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
 
   CameraController? controller;
 
-  GuestBloc() : super(InitialGuestState()) {
+  GuestBloc() : super(GuestInitial()) {
     on<TakePictureEvent>(takePicture);
     on<OnNewCameraEvent>(onNewCameraSelected);
     on<ChangeAppLifecycleStateEvent>(didChangeAppLifecycleState);
@@ -69,14 +69,14 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
         await cameraController.initialize();
         await cameraController.setFlashMode(FlashMode.auto);
       } on CameraException catch (e) {
-        emit(CameraInitializedFailureState(error: e));
+        emit(GuestCameraInitializedFailure(error: e));
         logger.log('Error initializing camera: $e');
       }
 
       // Update the Boolean
       // if (mounted) {
       //   setState(() {
-      emit(CameraInitializedState(
+      emit(GuestCameraInitialized(
           isCameraInitialized: controller!.value.isInitialized));
       // _isCameraInitialized = controller!.value.isInitialized;
       //   });
@@ -115,7 +115,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
       XFile file = await cameraController.takePicture();
       return file;
     } on CameraException catch (e) {
-      emit(TakePictureFailureState(error: e));
+      emit(GuestTakePictureFailure(error: e));
       logger.log('Error occured while taking picture: $e');
       return null;
     }
@@ -141,7 +141,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
           fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
       String recentFileName = recentFile[1];
       if (recentFileName.contains('.jpg')) {
-        emit(TakePictureSuccessState(
+        emit(GuestTakePictureSuccess(
             file: File('${directory.path}/$recentFileName')));
       }
       // setState(() {});
