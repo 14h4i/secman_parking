@@ -21,7 +21,6 @@ class AppTextStyle {
 
   static const dateTimeCard = TextStyle(
     color: Colors.white,
-    fontStyle: FontStyle.italic,
     fontSize: 25,
   );
 

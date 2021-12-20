@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
 import 'package:secman_parking/modules/history/blocs/history_bloc.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
-import 'package:secman_parking/themes/app_themes.dart';
 import 'package:secman_parking/utils/date_time_intl.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -84,34 +83,35 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                       DataCell(
                         Container(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            height: 100,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  !card.gotInto!
-                                      ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
-                                      : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
-                                  style: AppTextStyle.dateTimeHistory.copyWith(
-                                    color: !card.gotInto!
-                                        ? Colors.green
-                                        : Colors.redAccent,
-                                  ),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          height: 100,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                !card.gotInto!
+                                    ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
+                                    : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
+                                style: AppTextStyle.dateTimeHistory.copyWith(
+                                  color: !card.gotInto!
+                                      ? Colors.green
+                                      : Colors.redAccent,
                                 ),
-                                Text(
-                                  !card.gotInto!
-                                      ? 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}'
-                                      : 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
-                                  style: AppTextStyle.dateTimeHistory.copyWith(
-                                    color: !card.gotInto!
-                                        ? Colors.redAccent
-                                        : Colors.green,
-                                  ),
+                              ),
+                              Text(
+                                !card.gotInto!
+                                    ? 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}'
+                                    : 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
+                                style: AppTextStyle.dateTimeHistory.copyWith(
+                                  color: !card.gotInto!
+                                      ? Colors.redAccent
+                                      : Colors.green,
                                 ),
-                              ],
-                            )),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   );

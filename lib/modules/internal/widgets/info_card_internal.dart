@@ -30,17 +30,44 @@ class InfoCardInternal extends StatelessWidget {
           flex: 2,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AutoSizeText(
-                'Mã thẻ: ${card.id!}',
-                maxLines: 1,
-                style: AppTextStyle.uidCard,
-              ),
               AutoSizeText(
                 card.vehicleOwner!,
                 maxLines: 1,
                 style: AppTextStyle.vehicleOwnerCard,
               ),
+              Padding(
+                padding: const EdgeInsets.only(right: 40),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: AutoSizeText(
+                    'Đơn vị: ${card.unit!}',
+                    maxLines: 1,
+                    style: AppTextStyle.uidCard,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              AutoSizeText(
+                'Mã thẻ: ${card.id!}',
+                maxLines: 1,
+                style: AppTextStyle.dateTimeCard,
+              ),
+              const SizedBox(width: 20),
+              // Spacer(),
+              AutoSizeText(
+                'Loại xe: ${card.vehicleType!}',
+                maxLines: 1,
+                style: AppTextStyle.dateTimeCard,
+              ),
+              AutoSizeText(
+                'SĐT: ${card.phoneNumber!}',
+                maxLines: 1,
+                style: AppTextStyle.dateTimeCard,
+              ),
+              const SizedBox(height: 20),
               AutoSizeText(
                   !card.gotInto!
                       ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
