@@ -15,6 +15,10 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
       vehicleNumber: json['vehicle_number'] as String?,
       records: Card._mapFromJson(json['records'] as Map<String, dynamic>?),
       gotInto: json['got_into'] as bool?,
+      phoneNumber: json['phone_number'] as String?,
+      unit: json['unit'] as String?,
+      vehicleType: json['vehicle_type'] as String?,
+      vehicleOwner: json['vehicle_owner'] as String?,
     );
 
 Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
@@ -26,4 +30,8 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'vehicle_number': instance.vehicleNumber,
       'records': Card._jsonToMap(instance.records),
       'got_into': instance.gotInto,
+      'phone_number': instance.phoneNumber,
+      'unit': instance.unit,
+      'vehicle_type': instance.vehicleType,
+      'vehicle_owner': instance.vehicleOwner,
     };
