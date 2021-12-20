@@ -15,17 +15,9 @@ class InternalBloc extends Bloc<InternalEvent, InternalState> {
     try {
       if (event is ScanInternalCardEvent) {
         final res = await InternalRepo().scan(event.id);
-
-        // _scanCtrl.sink.add(res);
         emit(ScanSuccessState(card: res));
-
-        // _scanCtrl.sink.add(null);
-        // emit(ScanSuccessState());
-        // AppToast.showShortToast('Thẻ không có dữ liệu');
-
       }
     } catch (e) {
-      // _scanCtrl.sink.addError(e);
       emit(ScanFailureState(error: e));
     }
   }
