@@ -52,34 +52,45 @@ class InfoCardInternal extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              if (card.timeOut != null)
-                AutoSizeText(
-                  'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
-                  maxLines: 1,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 25,
-                  ),
-                ),
-              if (card.timeIn != null)
-                AutoSizeText(
-                  'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
-                  maxLines: 1,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 25,
-                  ),
-                ),
-              const SizedBox(height: 40),
-              Icon(
+              AutoSizeText(
                 !card.gotInto!
-                    ? Icons.arrow_circle_up
-                    : Icons.arrow_circle_down,
-                size: 150,
-                color: Colors.white,
+                    ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
+                    : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
+                maxLines: 1,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 25,
+                ),
               ),
+              AutoSizeText(
+                !card.gotInto!
+                    ? 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}'
+                    : 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
+                maxLines: 1,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 25,
+                ),
+              ),
+              const SizedBox(height: 40),
+              AutoSizeText(
+                !card.gotInto! ? 'RA' : 'VÀO',
+                maxLines: 1,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                  fontSize: 100,
+                ),
+              ),
+              // Icon(
+              //   !card.gotInto!
+              //       ? Icons.arrow_circle_up
+              //       : Icons.arrow_circle_down,
+              //   size: 150,
+              //   color: Colors.white,
+              // ),
             ],
           ),
         )

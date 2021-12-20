@@ -90,46 +90,38 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                       DataCell(
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          height: 100,
-                          child: card.gotInto!
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.redAccent,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.redAccent,
-                                      ),
-                                    ),
-                                  ],
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            height: 100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  !card.gotInto!
+                                      ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
+                                      : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: !card.gotInto!
+                                        ? Colors.green
+                                        : Colors.redAccent,
+                                  ),
                                 ),
-                        ),
+                                Text(
+                                  !card.gotInto!
+                                      ? 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}'
+                                      : 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: !card.gotInto!
+                                        ? Colors.redAccent
+                                        : Colors.green,
+                                  ),
+                                ),
+                              ],
+                            )),
                       ),
                     ],
                   );

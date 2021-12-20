@@ -40,12 +40,10 @@ class InternalRepo {
       } else {
         records[DateTimeIntl.dateTimeToString(now.toDate())] = 'out';
         dataUpdate = {
-          'time_in': null,
           'time_out': now,
           'records': records,
           'got_into': false,
         };
-        data['time_in'] = null;
         data['time_out'] = now;
         data['records'] = records;
         data['got_into'] = false;

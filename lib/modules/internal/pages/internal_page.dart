@@ -72,7 +72,10 @@ class _InternalPageState extends State<InternalPage> {
             ],
           ),
           drawer: const AppDrawer(),
-          body: child,
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: child,
+          ),
         );
       },
     );
