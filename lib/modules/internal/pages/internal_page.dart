@@ -5,6 +5,7 @@ import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
 import 'package:secman_parking/modules/internal/blocs/internal_bloc.dart';
 import 'package:secman_parking/modules/internal/widgets/info_card_internal.dart';
+import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 
 class InternalPage extends StatefulWidget {
@@ -28,11 +29,7 @@ class _InternalPageState extends State<InternalPage> {
             child: AutoSizeText(
               'Hãy quét thẻ...',
               maxLines: 1,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 100,
-              ),
+              style: AppTextStyle.largeTitleCard,
             ),
           ),
         );

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/blocs/app_bloc.dart';
+import 'package:secman_parking/themes/app_text_style.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             accountEmail: const Text(
               'Bảo vệ',
-              style: TextStyle(fontStyle: FontStyle.italic),
+              style: AppTextStyle.italic,
             ),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
@@ -68,7 +69,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     'Version: ...',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    style: AppTextStyle.italic,
                   )))
         ],
       ),

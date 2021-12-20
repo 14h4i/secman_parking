@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
 import 'package:secman_parking/modules/history/blocs/history_bloc.dart';
+import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:secman_parking/utils/date_time_intl.dart';
 
@@ -35,11 +36,7 @@ class _HistoryPageState extends State<HistoryPage> {
             return DataTable(
               columnSpacing: 0,
               dataRowHeight: 100,
-              headingTextStyle: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+              headingTextStyle: AppTextStyle.headingTable,
               columns: [
                 DataColumn(
                   label: SizedBox(
@@ -79,10 +76,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     child: AutoSizeText(
                                       '${card.vehicleNumber}',
                                       maxLines: 1,
-                                      style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w900,
-                                      ),
+                                      style: AppTextStyle.vehicleNumberHistory,
                                     ),
                                   ),
                                 ),
@@ -100,9 +94,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                   !card.gotInto!
                                       ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
                                       : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                  style: AppTextStyle.dateTimeHistory.copyWith(
                                     color: !card.gotInto!
                                         ? Colors.green
                                         : Colors.redAccent,
@@ -112,9 +104,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                   !card.gotInto!
                                       ? 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}'
                                       : 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                  style: AppTextStyle.dateTimeHistory.copyWith(
                                     color: !card.gotInto!
                                         ? Colors.redAccent
                                         : Colors.green,

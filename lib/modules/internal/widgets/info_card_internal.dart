@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:secman_parking/models/card.dart' as crd;
+import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/utils/date_time_intl.dart';
 
 class InfoCardInternal extends StatelessWidget {
@@ -21,11 +22,7 @@ class InfoCardInternal extends StatelessWidget {
             child: AutoSizeText(
               card.vehicleNumber!,
               maxLines: 1,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-                fontSize: 100,
-              ),
+              style: AppTextStyle.largeTitleCard,
             ),
           ),
         ),
@@ -37,60 +34,32 @@ class InfoCardInternal extends StatelessWidget {
               AutoSizeText(
                 'Mã thẻ: ${card.id!}',
                 maxLines: 1,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 20,
-                ),
-              ),
-              const AutoSizeText(
-                'Người tòa nhà',
-                maxLines: 1,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyle.uidCard,
               ),
               AutoSizeText(
-                !card.gotInto!
-                    ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
-                    : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
+                card.vehicleOwner!,
                 maxLines: 1,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 25,
-                ),
+                style: AppTextStyle.vehicleOwnerCard,
               ),
+              AutoSizeText(
+                  !card.gotInto!
+                      ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
+                      : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
+                  maxLines: 1,
+                  style: AppTextStyle.dateTimeCard),
               AutoSizeText(
                 !card.gotInto!
                     ? 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}'
                     : 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
                 maxLines: 1,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 25,
-                ),
+                style: AppTextStyle.dateTimeCard,
               ),
               const SizedBox(height: 40),
               AutoSizeText(
                 !card.gotInto! ? 'RA' : 'VÀO',
                 maxLines: 1,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  fontSize: 100,
-                ),
+                style: AppTextStyle.largeTitleCard,
               ),
-              // Icon(
-              //   !card.gotInto!
-              //       ? Icons.arrow_circle_up
-              //       : Icons.arrow_circle_down,
-              //   size: 150,
-              //   color: Colors.white,
-              // ),
             ],
           ),
         )

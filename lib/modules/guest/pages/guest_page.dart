@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
 import 'package:secman_parking/modules/guest/blocs/guest_bloc.dart';
+import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -77,11 +78,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
               child: AutoSizeText(
                 'Đang Khởi động máy ảnh...',
                 maxLines: 1,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 100,
-                ),
+                style: AppTextStyle.largeTitleCard,
               ),
             );
           }
@@ -90,11 +87,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
               child: AutoSizeText(
                 'Khởi động máy ảnh thất bại.\n Error: ${state.error}',
                 maxLines: 1,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 100,
-                ),
+                style: AppTextStyle.largeTitleCard,
               ),
             );
           }
@@ -103,11 +96,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
               child: AutoSizeText(
                 'Khởi động máy ảnh: ${state.isCameraInitialized}',
                 maxLines: 1,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 100,
-                ),
+                style: AppTextStyle.largeTitleCard,
               ),
             );
           }
@@ -144,18 +133,11 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                   // urlImage: _imageFile != null ? _imageFile!.path : null,
                 );
               }
-
-              //   );
-              // }
               return const Center(
                 child: AutoSizeText(
                   'Quét mã...',
                   maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 100,
-                  ),
+                  style: AppTextStyle.largeTitleCard,
                 ),
               );
             }),
@@ -219,50 +201,21 @@ class InfoCard extends StatelessWidget {
                           ),
                         ),
                       )
-                    // CachedNetworkImage(
-                    //     imageUrl: urlImage!,
-                    //     progressIndicatorBuilder:
-                    //         (context, url, downloadProgress) =>
-                    //             CircularProgressIndicator(
-                    //                 value: downloadProgress.progress),
-                    //     errorWidget: (context, url, error) => Container(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       decoration: BoxDecoration(
-                    //           border:
-                    //               Border.all(width: 3, color: Colors.white)),
-                    //       child: const AutoSizeText(
-                    //         'Không tải được ảnh',
-                    //         maxLines: 1,
-                    //         style: TextStyle(
-                    //           color: Colors.white,
-                    //           fontSize: 30,
-                    //           fontWeight: FontWeight.bold,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   )
                     : Container(
                         padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
                             border: Border.all(width: 3, color: Colors.white)),
-                        child: const AutoSizeText(
+                        child: AutoSizeText(
                           'Không tìm thấy ảnh',
                           maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: AppTextStyle.vehicleOwnerCard
+                              .copyWith(fontSize: 30),
                         ),
                       )
                 : const AutoSizeText(
                     '123.45',
                     maxLines: 1,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 100,
-                    ),
+                    style: AppTextStyle.largeTitleCard,
                   ),
           ),
         ),
@@ -274,29 +227,17 @@ class InfoCard extends StatelessWidget {
               const AutoSizeText(
                 'Mã thẻ ...........',
                 maxLines: 1,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 20,
-                ),
+                style: AppTextStyle.uidCard,
               ),
               AutoSizeText(
                 isGuest ? 'Khách vãng lai' : 'Người tòa nhà',
                 maxLines: 1,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyle.vehicleOwnerCard,
               ),
               const AutoSizeText(
                 '20:30 14/12/2021',
                 maxLines: 1,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 25,
-                ),
+                style: AppTextStyle.dateTimeCard,
               ),
               const SizedBox(height: 40),
               Icon(
