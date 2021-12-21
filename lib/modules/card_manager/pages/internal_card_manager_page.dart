@@ -15,6 +15,10 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
       appBar: AppBar(
         title: const Text('Quản lý thẻ nội bộ'),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {},
+      ),
     );
   }
 }

@@ -25,7 +25,7 @@ class InternalRepo {
       Map<String, Object?> dataUpdate;
 
       records.add(now);
-      final Timestamp previousTime = data['current_time'];
+      final previousTime = data['current_time'];
       dataUpdate = {
         'current_time': now,
         'previous_time': previousTime,

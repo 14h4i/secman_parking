@@ -91,7 +91,9 @@ class InfoCardInternal extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               AutoSizeText(
-                'Trước đó: ${DateTimeIntl.dateTimeToString(card.previousTime!)}',
+                card.previousTime == null
+                    ? ''
+                    : ' Trước đó: ${DateTimeIntl.dateTimeToString(card.previousTime!)}',
                 maxLines: 1,
                 style: AppTextStyle.dateTimeCard,
               ),
