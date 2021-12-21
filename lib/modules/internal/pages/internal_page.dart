@@ -1,12 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
 import 'package:secman_parking/modules/internal/blocs/internal_bloc.dart';
 import 'package:secman_parking/modules/internal/widgets/info_card_internal.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
+import 'package:secman_parking/utils/text_to_speech_util.dart';
 
 class InternalPage extends StatefulWidget {
   const InternalPage({Key? key}) : super(key: key);
@@ -17,7 +19,14 @@ class InternalPage extends StatefulWidget {
 
 class _InternalPageState extends State<InternalPage> {
   InternalBloc? get bloc => BlocProvider.of<InternalBloc>(context);
+  late FlutterTts _flutterTts;
   Color _backgroundColor = Colors.blue;
+
+  @override
+  void initState() {
+    _initTts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +50,7 @@ class _InternalPageState extends State<InternalPage> {
         if (state is ScanSuccessState) {
           final data = state.card;
           if (data != null) {
+            _speak(data.vehicleNumber!);
             child = InfoCardInternal(card: data);
             _backgroundColor = Colors.green;
           } else {
@@ -58,7 +68,7 @@ class _InternalPageState extends State<InternalPage> {
             actions: [
               IconButton(
                 onPressed: () async {
-                  bloc!.add(ScanInternalCardEvent(id: 'abc001'));
+                  bloc!.add(ScanInternalCardEvent(id: 'abc002'));
                 },
                 icon: const Icon(Icons.send),
               )
@@ -72,5 +82,17 @@ class _InternalPageState extends State<InternalPage> {
         );
       },
     );
+  }
+
+  void _initTts() {
+    _flutterTts = FlutterTts();
+    _flutterTts.setLanguage('vi-VN');
+  }
+
+  Future<void> _speak(String number) async {
+    final text = TextToSpeechUtil.vehicleToText(number);
+    if (text != null) {
+      _flutterTts.speak(text);
+    }
   }
 }
