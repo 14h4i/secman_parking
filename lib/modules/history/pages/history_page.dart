@@ -90,23 +90,17 @@ class _HistoryPageState extends State<HistoryPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                !card.gotInto!
-                                    ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
-                                    : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
+                                DateTimeIntl.dateTimeToString(
+                                    card.previousTime!),
                                 style: AppTextStyle.dateTimeHistory.copyWith(
-                                  color: !card.gotInto!
-                                      ? Colors.green
-                                      : Colors.redAccent,
+                                  color: Colors.redAccent,
                                 ),
                               ),
                               Text(
-                                !card.gotInto!
-                                    ? 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}'
-                                    : 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
+                                DateTimeIntl.dateTimeToString(
+                                    card.currentTime!),
                                 style: AppTextStyle.dateTimeHistory.copyWith(
-                                  color: !card.gotInto!
-                                      ? Colors.redAccent
-                                      : Colors.green,
+                                  color: Colors.green,
                                 ),
                               ),
                             ],

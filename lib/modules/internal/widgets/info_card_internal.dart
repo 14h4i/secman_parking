@@ -16,13 +16,35 @@ class InfoCardInternal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 20),
         Expanded(
           flex: 1,
-          child: Center(
-            child: AutoSizeText(
-              card.vehicleNumber!,
-              maxLines: 1,
-              style: AppTextStyle.largeTitleCard,
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                border: Border.all(
+              width: 9,
+              color: Colors.white,
+            )),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: AutoSizeText(
+                    card.subVehicle!,
+                    maxLines: 1,
+                    style: AppTextStyle.largeTitleCard,
+                  ),
+                ),
+                Expanded(
+                  child: AutoSizeText(
+                    card.vehicleNumber!,
+                    maxLines: 1,
+                    style: AppTextStyle.largeTitleCard,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -69,24 +91,21 @@ class InfoCardInternal extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               AutoSizeText(
-                  !card.gotInto!
-                      ? 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}'
-                      : 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}',
-                  maxLines: 1,
-                  style: AppTextStyle.dateTimeCard),
-              AutoSizeText(
-                !card.gotInto!
-                    ? 'Ra: ${DateTimeIntl.dateTimeToString(card.timeOut!)}'
-                    : 'Vào: ${DateTimeIntl.dateTimeToString(card.timeIn!)}',
+                'Trước đó: ${DateTimeIntl.dateTimeToString(card.previousTime!)}',
                 maxLines: 1,
                 style: AppTextStyle.dateTimeCard,
               ),
-              const SizedBox(height: 40),
               AutoSizeText(
-                !card.gotInto! ? 'RA' : 'VÀO',
+                'Hiện tại: ${DateTimeIntl.dateTimeToString(card.currentTime!)}',
                 maxLines: 1,
-                style: AppTextStyle.largeTitleCard,
+                style: AppTextStyle.dateTimeCard,
               ),
+              // const SizedBox(height: 40),
+              // AutoSizeText(
+              //   !card.gotInto! ? 'RA' : 'VÀO',
+              //   maxLines: 1,
+              //   style: AppTextStyle.largeTitleCard,
+              // ),
             ],
           ),
         )
