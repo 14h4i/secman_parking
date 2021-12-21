@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/blocs/app_bloc.dart';
+import 'package:secman_parking/route/route_name.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -29,20 +30,22 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
-              child: CachedNetworkImage(
-                imageUrl: '',
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) =>
-                    const Icon(Icons.error, color: Colors.red),
-              ),
+              // child: CachedNetworkImage(
+              //   imageUrl: '',
+              //   progressIndicatorBuilder: (context, url, downloadProgress) =>
+              //       CircularProgressIndicator(value: downloadProgress.progress),
+              //   errorWidget: (context, url, error) =>
+              //       const Icon(Icons.error, color: Colors.red),
+              // ),
             ),
           ),
 
           ListTile(
             title: const Text('Quản lý thẻ nội bộ'),
             leading: const Icon(Icons.manage_search),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, RouteName.internalCardManagerPage);
+            },
           ),
 
           // ListTile(
