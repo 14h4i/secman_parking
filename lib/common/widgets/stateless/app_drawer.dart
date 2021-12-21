@@ -38,26 +38,18 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
           ),
+
           ListTile(
-            title: const Text('Thông tin cá nhân'),
-            leading: const Icon(Icons.person),
+            title: const Text('Quản lý thẻ nội bộ'),
+            leading: const Icon(Icons.manage_search),
             onTap: () {},
           ),
-          ListTile(
-            title: const Text('Hướng dẫn'),
-            leading: const Icon(Icons.import_contacts),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text('Báo cáo sự cố'),
-            leading: const Icon(Icons.report),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text('Cài đặt'),
-            leading: const Icon(Icons.settings),
-            onTap: () {},
-          ),
+
+          // ListTile(
+          //   title: const Text('Cài đặt'),
+          //   leading: const Icon(Icons.settings),
+          //   onTap: () {},
+          // ),
           const Divider(),
           ListTile(
             title: const Text('Đăng xuất'),
