@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:secman_parking/modules/card_manager/blocs/add_internal_card_bloc.dart';
+import 'package:secman_parking/modules/card_manager/blocs/add/add_internal_card_bloc.dart';
 
 class AddInternalCardPage extends StatefulWidget {
   const AddInternalCardPage({Key? key}) : super(key: key);

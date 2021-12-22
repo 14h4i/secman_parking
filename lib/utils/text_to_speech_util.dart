@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class TextToSpeechUtil {
   static String? vehicleToText(String? number) {
     if (number == null) {
