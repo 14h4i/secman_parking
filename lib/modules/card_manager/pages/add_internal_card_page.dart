@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:secman_parking/modules/card_manager/blocs/card_manager_bloc.dart';
+import 'package:secman_parking/modules/card_manager/blocs/add_internal_card_bloc.dart';
 
 class AddInternalCardPage extends StatefulWidget {
   const AddInternalCardPage({Key? key}) : super(key: key);
@@ -11,7 +11,8 @@ class AddInternalCardPage extends StatefulWidget {
 }
 
 class _AddInternalCardPageState extends State<AddInternalCardPage> {
-  CardManagerBloc? get bloc => BlocProvider.of<CardManagerBloc>(context);
+  AddInternalCardBloc? get bloc =>
+      BlocProvider.of<AddInternalCardBloc>(context);
 
   FormGroup buildForm() => FormGroup({
         'id': FormControl<String>(validators: [Validators.required]),

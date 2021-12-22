@@ -2,16 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:secman_parking/modules/card_manager/repos/add_internal_card_repo.dart';
 
-part 'card_manager_event.dart';
-part 'card_manager_state.dart';
+part 'add_internal_card_event.dart';
+part 'add_internal_card_state.dart';
 
-class CardManagerBloc extends Bloc<CardManagerEvent, CardManagerState> {
-  CardManagerBloc() : super(CardManagerInitial()) {
+class AddInternalCardBloc
+    extends Bloc<AddInternalCardEvent, AddInternalCardState> {
+  AddInternalCardBloc() : super(CardManagerInitial()) {
     on<AddInternalCard>(_addInternalCard);
   }
 
   Future<void> _addInternalCard(
-      CardManagerEvent event, Emitter<CardManagerState> emit) async {
+      AddInternalCardEvent event, Emitter<AddInternalCardState> emit) async {
     try {
       if (event is AddInternalCard) {
         final value = event.mapValue;

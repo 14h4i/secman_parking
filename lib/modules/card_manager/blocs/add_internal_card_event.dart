@@ -1,13 +1,13 @@
-part of 'card_manager_bloc.dart';
+part of 'add_internal_card_bloc.dart';
 
-abstract class CardManagerEvent extends Equatable {
-  const CardManagerEvent();
+abstract class AddInternalCardEvent extends Equatable {
+  const AddInternalCardEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class AddInternalCard extends CardManagerEvent {
+class AddInternalCard extends AddInternalCardEvent {
   final Map<String, dynamic> mapValue;
 
   const AddInternalCard({required this.mapValue});
