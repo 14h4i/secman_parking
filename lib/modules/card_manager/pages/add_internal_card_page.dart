@@ -173,14 +173,7 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
                   ),
                   const Divider(height: 50),
                   ElevatedButton(
-                    onPressed: () {
-                      if (form.valid) {
-                        bloc!.add(AddInternalCard(mapValue: form.value));
-                        Navigator.pop(context);
-                      } else {
-                        form.markAllAsTouched();
-                      }
-                    },
+                    onPressed: () => _submitForm(form),
                     child: const Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -197,5 +190,14 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
         ),
       ),
     );
+  }
+
+  void _submitForm(FormGroup form) {
+    if (form.valid) {
+      bloc!.add(AddInternalCard(mapValue: form.value));
+      Navigator.pop(context);
+    } else {
+      form.markAllAsTouched();
+    }
   }
 }
