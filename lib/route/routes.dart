@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/modules/authentication/pages/welcome_page.dart';
+import 'package:secman_parking/modules/card_manager/blocs/card_manager_bloc.dart';
 import 'package:secman_parking/modules/card_manager/pages/add_internal_card_page.dart';
 import 'package:secman_parking/modules/card_manager/pages/internal_card_manager_page.dart';
 import 'package:secman_parking/modules/dashboard/pages/dashboard_page.dart';
@@ -22,7 +24,10 @@ class Routes {
       case RouteName.addInternalCardPage:
         return _buildRoute(
           settings,
-          const AddInternalCardPage(),
+          BlocProvider(
+            create: (context) => CardManagerBloc(),
+            child: const AddInternalCardPage(),
+          ),
         );
 
       default:
