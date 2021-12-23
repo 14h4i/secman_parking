@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:secman_parking/models/card.dart';
 import 'package:secman_parking/modules/manager/repos/add_internal_card_repo.dart';
 import 'package:secman_parking/modules/manager/repos/get_internal_cards_repo.dart';
+import 'package:secman_parking/modules/manager/repos/get_master_cards_repo.dart';
 
 part 'manager_event.dart';
 part 'manager_state.dart';
@@ -16,12 +17,12 @@ class ManagerBloc extends Bloc<ManagerEvent, ManagerState> {
   Future<void> _onGetCards(
       ManagerEvent event, Emitter<ManagerState> emit) async {
     try {
-      final res = await GetInternalCardsRepo().get();
-      if (res != null) {
-        emit(GetCardsSuccess(cards: res));
-      } else {
-        emit(GetCardsSuccess(cards: res));
-      }
+      final internalCards = await GetInternalCardsRepo().get();
+      final masterCards = await GetMasterCardsRepo().get();
+      emit(GetCardsSuccess(
+        internalCards: internalCards,
+        masterCards: masterCards,
+      ));
     } catch (e) {
       emit(GetCardsFailure(error: e));
     }

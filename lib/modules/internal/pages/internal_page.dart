@@ -68,7 +68,7 @@ class _InternalPageState extends State<InternalPage> {
             actions: [
               IconButton(
                 onPressed: () async {
-                  bloc!.add(ScanInternalCardEvent(id: 'kkkk001'));
+                  bloc!.add(ScanInternalCardEvent(id: '1234'));
                 },
                 icon: const Icon(Icons.send),
               )

@@ -10,12 +10,13 @@ abstract class ManagerState extends Equatable {
 class ManagerInitial extends ManagerState {}
 
 class GetCardsSuccess extends ManagerState {
-  final List<Card>? cards;
+  final List<Card>? internalCards;
+  final List<String>? masterCards;
 
-  const GetCardsSuccess({this.cards});
+  const GetCardsSuccess({this.internalCards, this.masterCards});
 
   @override
-  List<Object?> get props => [cards];
+  List<Object?> get props => [internalCards, masterCards];
 }
 
 class GetCardsFailure extends ManagerState {
