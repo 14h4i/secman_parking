@@ -9,19 +9,19 @@ abstract class ManagerState extends Equatable {
 
 class ManagerInitial extends ManagerState {}
 
-class GetInternalCardsSuccess extends ManagerState {
+class GetCardsSuccess extends ManagerState {
   final List<Card>? cards;
 
-  const GetInternalCardsSuccess({this.cards});
+  const GetCardsSuccess({this.cards});
 
   @override
   List<Object?> get props => [cards];
 }
 
-class GetInternalCardsFailure extends ManagerState {
+class GetCardsFailure extends ManagerState {
   final Object? error;
 
-  const GetInternalCardsFailure({this.error});
+  const GetCardsFailure({this.error});
 
   @override
   List<Object?> get props => [error];

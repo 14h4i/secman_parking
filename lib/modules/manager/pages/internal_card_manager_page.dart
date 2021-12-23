@@ -17,7 +17,7 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
 
   @override
   void initState() {
-    bloc!.add(GetInternalCards());
+    bloc!.add(GetCards());
     super.initState();
   }
 
@@ -29,12 +29,12 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
       ),
       body: BlocBuilder<ManagerBloc, ManagerState>(
         builder: (context, state) {
-          if (state is GetInternalCardsFailure) {
+          if (state is GetCardsFailure) {
             return Center(
               child: Text('${state.error}'),
             );
           }
-          if (state is GetInternalCardsSuccess) {
+          if (state is GetCardsSuccess) {
             final cards = state.cards;
             if (cards != null) {
               return SizedBox(

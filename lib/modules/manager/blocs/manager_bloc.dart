@@ -9,21 +9,21 @@ part 'manager_state.dart';
 
 class ManagerBloc extends Bloc<ManagerEvent, ManagerState> {
   ManagerBloc() : super(ManagerInitial()) {
-    on<GetInternalCards>(_onGetInternalCards);
+    on<GetCards>(_onGetCards);
     on<AddInternalCard>(_onAddInternalCard);
   }
 
-  Future<void> _onGetInternalCards(
+  Future<void> _onGetCards(
       ManagerEvent event, Emitter<ManagerState> emit) async {
     try {
       final res = await GetInternalCardsRepo().get();
       if (res != null) {
-        emit(GetInternalCardsSuccess(cards: res));
+        emit(GetCardsSuccess(cards: res));
       } else {
-        emit(GetInternalCardsSuccess(cards: res));
+        emit(GetCardsSuccess(cards: res));
       }
     } catch (e) {
-      emit(GetInternalCardsFailure(error: e));
+      emit(GetCardsFailure(error: e));
     }
   }
 
@@ -43,7 +43,7 @@ class ManagerBloc extends Bloc<ManagerEvent, ManagerState> {
         );
       }
       emit(AddInternalCardSuccess());
-      add(GetInternalCards());
+      add(GetCards());
     } catch (e) {
       emit(AddInternalCardFailure());
     }

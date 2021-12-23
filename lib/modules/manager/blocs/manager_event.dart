@@ -7,7 +7,7 @@ abstract class ManagerEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetInternalCards extends ManagerEvent {}
+class GetCards extends ManagerEvent {}
 
 class AddInternalCard extends ManagerEvent {
   final Map<String, dynamic> value;
