@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:secman_parking/modules/card_manager/blocs/add/add_internal_card_bloc.dart';
+import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
 
 class AddInternalCardPage extends StatefulWidget {
   const AddInternalCardPage({Key? key}) : super(key: key);
@@ -11,8 +11,7 @@ class AddInternalCardPage extends StatefulWidget {
 }
 
 class _AddInternalCardPageState extends State<AddInternalCardPage> {
-  AddInternalCardBloc? get bloc =>
-      BlocProvider.of<AddInternalCardBloc>(context);
+  ManagerBloc? get bloc => BlocProvider.of<ManagerBloc>(context);
 
   FormGroup buildForm() => FormGroup({
         'id': FormControl<String>(validators: [Validators.required]),
@@ -194,7 +193,7 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
 
   void _submitForm(FormGroup form) {
     if (form.valid) {
-      bloc!.add(AddInternalCard(mapValue: form.value));
+      bloc!.add(AddInternalCard(value: form.value));
       Navigator.pop(context);
     } else {
       form.markAllAsTouched();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:secman_parking/modules/card_manager/blocs/get/get_internal_cards_bloc.dart';
-import 'package:secman_parking/modules/card_manager/widgets/scan_nfc_bottom_sheet.dart';
+import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
+import 'package:secman_parking/modules/manager/widgets/scan_nfc_bottom_sheet.dart';
 import 'package:secman_parking/route/route_name.dart';
 
 class InternalCardManagerPage extends StatefulWidget {
@@ -13,8 +13,13 @@ class InternalCardManagerPage extends StatefulWidget {
 }
 
 class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
-  GetInternalCardsBloc? get bloc =>
-      BlocProvider.of<GetInternalCardsBloc>(context);
+  ManagerBloc? get bloc => BlocProvider.of<ManagerBloc>(context);
+
+  @override
+  void initState() {
+    bloc!.add(GetInternalCards());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,7 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
       appBar: AppBar(
         title: const Text('Quản lý thẻ nội bộ'),
       ),
-      body: BlocBuilder<GetInternalCardsBloc, GetInternalCardsState>(
+      body: BlocBuilder<ManagerBloc, ManagerState>(
         builder: (context, state) {
           if (state is GetInternalCardsFailure) {
             return Center(

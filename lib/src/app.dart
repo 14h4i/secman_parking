@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/blocs/app_bloc.dart';
+import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
 import 'package:secman_parking/route/route_name.dart';
 import 'package:secman_parking/route/routes.dart';
 import 'package:secman_parking/src/settings/settings_controller.dart';
@@ -52,14 +53,17 @@ class _MyAppState extends State<MyApp> {
             );
           }
 
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            themeMode: ThemeMode.light,
-            key: key,
-            initialRoute: RouteName.dashboardPage,
-            navigatorKey: MyApp.navigatorKey,
-            builder: _builder,
-            onGenerateRoute: Routes.authorizedRoute,
+          return BlocProvider(
+            create: (context) => ManagerBloc(),
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              themeMode: ThemeMode.light,
+              key: key,
+              initialRoute: RouteName.dashboardPage,
+              navigatorKey: MyApp.navigatorKey,
+              builder: _builder,
+              onGenerateRoute: Routes.authorizedRoute,
+            ),
           );
         },
       ),

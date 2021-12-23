@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/modules/authentication/pages/welcome_page.dart';
-import 'package:secman_parking/modules/card_manager/blocs/add/add_internal_card_bloc.dart';
-import 'package:secman_parking/modules/card_manager/blocs/get/get_internal_cards_bloc.dart';
-import 'package:secman_parking/modules/card_manager/pages/add_internal_card_page.dart';
-import 'package:secman_parking/modules/card_manager/pages/internal_card_manager_page.dart';
+import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
+import 'package:secman_parking/modules/manager/pages/add_internal_card_page.dart';
+import 'package:secman_parking/modules/manager/pages/internal_card_manager_page.dart';
 import 'package:secman_parking/modules/dashboard/pages/dashboard_page.dart';
 import 'package:secman_parking/route/route_name.dart';
 
@@ -19,20 +18,13 @@ class Routes {
       case RouteName.internalCardManagerPage:
         return _buildRoute(
           settings,
-          BlocProvider(
-            create: (context) =>
-                GetInternalCardsBloc()..add(GetInternalCards()),
-            child: const InternalCardManagerPage(),
-          ),
+          const InternalCardManagerPage(),
         );
 
       case RouteName.addInternalCardPage:
         return _buildRoute(
           settings,
-          BlocProvider(
-            create: (context) => AddInternalCardBloc(),
-            child: const AddInternalCardPage(),
-          ),
+          const AddInternalCardPage(),
         );
 
       default:
