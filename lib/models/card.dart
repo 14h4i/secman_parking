@@ -27,13 +27,10 @@ class Card {
   final DateTime? currentTime;
 
   @JsonKey(name: 'vehicle_number')
-  final String? vehicleNumber;
+  final String? fullVehicleNumber;
 
-  @JsonKey(name: 'sub_vehicle')
-  final String? subVehicle;
-
-  @JsonKey(name: 'records', fromJson: _fromTimestamp, toJson: _toTimestamp)
-  final List<DateTime>? records;
+  // @JsonKey(name: 'records', fromJson: _fromTimestamp, toJson: _toTimestamp)
+  // final List<DateTime>? records;
 
   @JsonKey(name: 'phone_number')
   final String? phoneNumber;
@@ -53,14 +50,17 @@ class Card {
     this.isGuest,
     this.previousTime,
     this.currentTime,
-    this.vehicleNumber,
-    this.subVehicle,
-    this.records,
+    this.fullVehicleNumber,
+    // this.records,
     this.phoneNumber,
     this.unit,
     this.vehicleType,
     this.vehicleOwner,
   });
+
+  String? get subVehicle => fullVehicleNumber?.split('-')[0];
+
+  String? get vehicleNumber => fullVehicleNumber?.split('-')[1];
 
   factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
 
@@ -72,11 +72,11 @@ class Card {
   static Timestamp? _datetimeToTimestamp(DateTime? time) =>
       time != null ? Timestamp.fromDate(time) : null;
 
-  static List<DateTime>? _fromTimestamp(List<dynamic>? list) =>
-      list?.map((e) => (e as Timestamp).toDate()).toList();
+  // static List<DateTime>? _fromTimestamp(List<dynamic>? list) =>
+  //     list?.map((e) => (e as Timestamp).toDate()).toList();
 
-  static List<Timestamp>? _toTimestamp(List<DateTime>? list) =>
-      list?.map((e) => Timestamp.fromDate(e)).toList();
+  // static List<Timestamp>? _toTimestamp(List<DateTime>? list) =>
+  //     list?.map((e) => Timestamp.fromDate(e)).toList();
 
   Card? copyWith({
     String? id,
@@ -84,8 +84,7 @@ class Card {
     bool? isGuest,
     DateTime? previousTime,
     DateTime? currentTime,
-    String? vehicleNumber,
-    String? subVehicle,
+    String? fullVehicleNumber,
     String? phoneNumber,
     String? unit,
     String? vehicleType,
@@ -97,8 +96,7 @@ class Card {
       isGuest: isGuest ?? this.isGuest,
       currentTime: currentTime ?? this.currentTime,
       previousTime: previousTime ?? this.previousTime,
-      vehicleNumber: vehicleNumber ?? this.vehicleNumber,
-      subVehicle: subVehicle ?? this.subVehicle,
+      fullVehicleNumber: fullVehicleNumber ?? this.fullVehicleNumber,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       unit: unit ?? this.unit,
       vehicleType: vehicleType ?? this.vehicleType,
