@@ -50,65 +50,47 @@ class InfoCardInternal extends StatelessWidget {
         ),
         Expanded(
           flex: 2,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AutoSizeText(
-                card.vehicleOwner!,
-                maxLines: 1,
-                style: AppTextStyle.vehicleOwnerCard,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 40),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: AutoSizeText(
-                    'Đơn vị: ${card.unit!}',
-                    maxLines: 1,
-                    style: AppTextStyle.uidCard,
-                  ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AutoSizeText(
+                  card.vehicleOwner!,
+                  maxLines: 1,
+                  style: AppTextStyle.vehicleOwnerCard,
                 ),
-              ),
-              const SizedBox(height: 20),
+                AutoSizeText(
+                  '(Đơn vị: ${card.unit!})',
+                  maxLines: 1,
+                  style: AppTextStyle.uidCard,
+                ),
+                const SizedBox(height: 20),
+                // Spacer(),
+                AutoSizeText(
+                  'Loại xe: ${card.vehicleType!}',
+                  maxLines: 1,
+                  style: AppTextStyle.dateTimeCard
+                      .copyWith(fontStyle: FontStyle.normal),
+                ),
 
-              AutoSizeText(
-                'Mã thẻ: ${card.id!}',
-                maxLines: 1,
-                style: AppTextStyle.dateTimeCard,
-              ),
-              const SizedBox(width: 20),
-              // Spacer(),
-              AutoSizeText(
-                'Loại xe: ${card.vehicleType!}',
-                maxLines: 1,
-                style: AppTextStyle.dateTimeCard,
-              ),
-              AutoSizeText(
-                'SĐT: ${card.phoneNumber!}',
-                maxLines: 1,
-                style: AppTextStyle.dateTimeCard,
-              ),
-              const SizedBox(height: 20),
-              AutoSizeText(
-                card.previousTime == null
-                    ? ''
-                    : ' Trước đó: ${DateTimeIntl.dateTimeToString(card.previousTime!)}',
-                maxLines: 1,
-                style: AppTextStyle.dateTimeCard,
-              ),
-              AutoSizeText(
-                'Hiện tại: ${DateTimeIntl.dateTimeToString(card.currentTime!)}',
-                maxLines: 1,
-                style: AppTextStyle.dateTimeCard,
-              ),
-              // const SizedBox(height: 40),
-              // AutoSizeText(
-              //   !card.gotInto! ? 'RA' : 'VÀO',
-              //   maxLines: 1,
-              //   style: AppTextStyle.largeTitleCard,
-              // ),
-            ],
+                const SizedBox(height: 20),
+                AutoSizeText(
+                  card.previousTime == null
+                      ? ''
+                      : ' Trước đó: ${DateTimeIntl.dateTimeToString(card.previousTime!)}',
+                  maxLines: 1,
+                  style: AppTextStyle.dateTimeCard
+                      .copyWith(color: Colors.purpleAccent),
+                ),
+                AutoSizeText(
+                  'Hiện tại: ${DateTimeIntl.dateTimeToString(card.currentTime!)}',
+                  maxLines: 1,
+                  style: AppTextStyle.dateTimeCard
+                      .copyWith(color: Colors.redAccent),
+                ),
+              ],
+            ),
           ),
         )
       ],

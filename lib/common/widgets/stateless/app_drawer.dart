@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/blocs/app_bloc.dart';
@@ -20,11 +19,11 @@ class _AppDrawerState extends State<AppDrawer> {
     return Drawer(
       child: Column(
         children: [
-          UserAccountsDrawerHeader(
-            accountName: const Text(
+          const UserAccountsDrawerHeader(
+            accountName: Text(
               'Name worker',
             ),
-            accountEmail: const Text(
+            accountEmail: Text(
               'Bảo vệ',
               style: AppTextStyle.italic,
             ),
