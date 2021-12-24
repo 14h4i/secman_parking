@@ -6,9 +6,9 @@ class TextToSpeechUtil {
     String text = '';
     final listNumber = number.split('');
     for (int i = 0; i < listNumber.length; i++) {
-      text += listNumber[i];
-      if (i != listNumber.length - 1) {
-        if (listNumber[i + 1] != "." && listNumber[i] != ".") {
+      if (listNumber[i] != '.') {
+        text += listNumber[i];
+        if (i != listNumber.length - 1) {
           text += ' ';
         }
       }
