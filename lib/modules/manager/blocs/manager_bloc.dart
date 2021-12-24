@@ -39,7 +39,6 @@ class ManagerBloc extends Bloc<ManagerEvent, ManagerState> {
           value['phone_number'],
           value['unit'],
           value['vehicle_type'],
-          value['sub_vehicle'],
           value['vehicle_number'],
         );
       }

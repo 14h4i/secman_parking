@@ -23,10 +23,6 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
         ]),
         'unit': FormControl<String>(validators: [Validators.required]),
         'vehicle_type': FormControl<String>(validators: [Validators.required]),
-        'sub_vehicle': FormControl<String>(validators: [
-          Validators.required,
-          Validators.minLength(2),
-        ]),
         'vehicle_number': FormControl<String>(validators: [
           Validators.required,
           Validators.minLength(4),
@@ -134,23 +130,6 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
                         child: Text('Xe ôtô'),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 16),
-                  ReactiveTextField<String>(
-                    formControlName: 'sub_vehicle',
-                    validationMessages: (control) => {
-                      ValidationMessage.required: 'Không được để trống',
-                      ValidationMessage.maxLength: 'Không hợp lệ',
-                      ValidationMessage.minLength: 'Không hợp lệ',
-                    },
-                    textInputAction: TextInputAction.next,
-                    maxLength: 8,
-                    decoration: const InputDecoration(
-                      labelText: 'Mã vùng/Seri',
-                      helperStyle: TextStyle(height: 0.7),
-                      errorStyle: TextStyle(height: 0.7),
-                      border: OutlineInputBorder(),
-                    ),
                   ),
                   const SizedBox(height: 16),
                   ReactiveTextField<String>(
