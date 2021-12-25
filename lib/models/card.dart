@@ -29,9 +29,6 @@ class Card {
   @JsonKey(name: 'vehicle_number')
   final String? fullVehicleNumber;
 
-  // @JsonKey(name: 'records', fromJson: _fromTimestamp, toJson: _toTimestamp)
-  // final List<DateTime>? records;
-
   @JsonKey(name: 'phone_number')
   final String? phoneNumber;
 
@@ -74,12 +71,6 @@ class Card {
 
   static Timestamp? _datetimeToTimestamp(DateTime? time) =>
       time != null ? Timestamp.fromDate(time) : null;
-
-  // static List<DateTime>? _fromTimestamp(List<dynamic>? list) =>
-  //     list?.map((e) => (e as Timestamp).toDate()).toList();
-
-  // static List<Timestamp>? _toTimestamp(List<DateTime>? list) =>
-  //     list?.map((e) => Timestamp.fromDate(e)).toList();
 
   Card? copyWith({
     String? id,
