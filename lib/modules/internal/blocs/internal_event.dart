@@ -5,11 +5,29 @@ abstract class InternalEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class ScanInternalCardEvent extends InternalEvent {
+class ScanInternalCard extends InternalEvent {
   final String id;
 
-  ScanInternalCardEvent({required this.id});
+  ScanInternalCard({required this.id});
 
   @override
   List<Object?> get props => [id];
+}
+
+class SendInInternalCard extends InternalEvent {
+  final Card card;
+
+  SendInInternalCard({required this.card});
+
+  @override
+  List<Object?> get props => [card];
+}
+
+class SendOutInternalCard extends InternalEvent {
+  final Card card;
+
+  SendOutInternalCard({required this.card});
+
+  @override
+  List<Object?> get props => [card];
 }

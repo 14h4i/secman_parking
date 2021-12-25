@@ -4,6 +4,48 @@ import 'package:secman_parking/models/card.dart';
 class InternalRepo {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<DateTime> sendIn(String docId) async {
+    try {
+      final now = Timestamp.now();
+
+      final doc = _firestore.collection('cards').doc(docId);
+
+      doc.update({
+        'time_in': now,
+      });
+
+      doc.collection('records').add({
+        'time': now,
+        'status': 'in',
+      });
+
+      return now.toDate();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<DateTime> sendOut(String docId) async {
+    try {
+      final now = Timestamp.now();
+
+      final doc = _firestore.collection('cards').doc(docId);
+
+      doc.update({
+        'time_out': now,
+      });
+
+      doc.collection('records').add({
+        'time': now,
+        'status': 'out',
+      });
+
+      return now.toDate();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Card?> scan(String id) async {
     try {
       final snapshot = await _firestore
@@ -18,25 +60,6 @@ class InternalRepo {
 
       Map<String, dynamic> data = snapshot.docs.first.data();
       data['doc_id'] = snapshot.docs.first.id;
-
-      // final now = Timestamp.now();
-
-      // List records = data['records'];
-
-      // Map<String, Object?> dataUpdate;
-
-      // records.add(now);
-      // final previousTime = data['current_time'];
-      // dataUpdate = {
-      //   'current_time': now,
-      //   'previous_time': previousTime,
-      //   'records': records,
-      // };
-      // data['current_time'] = now;
-      // data['previous_time'] = previousTime;
-      // data['records'] = records;
-
-      // snapshot.docs.first.reference.update(dataUpdate);
 
       return Card.fromJson(data);
     } catch (e) {

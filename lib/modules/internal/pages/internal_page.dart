@@ -5,7 +5,9 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
 import 'package:secman_parking/modules/internal/blocs/internal_bloc.dart';
+import 'package:secman_parking/modules/internal/widgets/button_in_out.dart';
 import 'package:secman_parking/modules/internal/widgets/info_card_internal.dart';
+import 'package:secman_parking/modules/internal/widgets/time_in_out.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:secman_parking/utils/text_to_speech_util.dart';
@@ -20,7 +22,7 @@ class InternalPage extends StatefulWidget {
 class _InternalPageState extends State<InternalPage> {
   InternalBloc? get bloc => BlocProvider.of<InternalBloc>(context);
   late FlutterTts _flutterTts;
-  Color _backgroundColor = Colors.blue;
+  final Color _backgroundColor = Colors.blue;
 
   @override
   void initState() {
@@ -42,21 +44,77 @@ class _InternalPageState extends State<InternalPage> {
             ),
           ),
         );
-        if (state is ScanFailureState) {
+        if (state is Failure) {
           child = Center(
             child: Text(state.error.toString()),
           );
         }
-        if (state is ScanSuccessState) {
+        if (state is ScanSuccess) {
           final data = state.card;
           if (data != null) {
             _speak(data.vehicleNumber!);
-            child = InfoCardInternal(card: data);
-            _backgroundColor = Colors.green;
+            child = Column(
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: InfoCardInternal(card: data),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ButtonInOut(
+                    onPressedIn: () {
+                      bloc!.add(SendInInternalCard(card: data));
+                    },
+                    onPressedOut: () {
+                      bloc!.add(SendOutInternalCard(card: data));
+                    },
+                  ),
+                )
+              ],
+            );
           } else {
             AppToast.showShortToast('Thẻ không có dữ liệu');
-            _backgroundColor = Colors.blue;
           }
+        }
+
+        if (state is SendInSuccess) {
+          final data = state.card;
+          child = Column(
+            children: [
+              Expanded(
+                flex: 4,
+                child: InfoCardInternal(card: data),
+              ),
+              Expanded(
+                flex: 1,
+                child: TimeInOut(
+                  isIn: true,
+                  timeIn: state.timeIn,
+                  timeOut: data.timeOut,
+                ),
+              )
+            ],
+          );
+        }
+
+        if (state is SendOutSuccess) {
+          final data = state.card;
+          child = Column(
+            children: [
+              Expanded(
+                flex: 4,
+                child: InfoCardInternal(card: data),
+              ),
+              Expanded(
+                flex: 1,
+                child: TimeInOut(
+                  isIn: false,
+                  timeIn: data.timeIn,
+                  timeOut: state.timeOut,
+                ),
+              )
+            ],
+          );
         }
 
         return Scaffold(
@@ -68,7 +126,7 @@ class _InternalPageState extends State<InternalPage> {
             actions: [
               IconButton(
                 onPressed: () async {
-                  bloc!.add(ScanInternalCardEvent(id: '1234'));
+                  bloc!.add(ScanInternalCard(id: 'abc002'));
                 },
                 icon: const Icon(Icons.send),
               )

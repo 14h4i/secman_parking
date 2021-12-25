@@ -7,18 +7,45 @@ part 'internal_event.dart';
 part 'internal_state.dart';
 
 class InternalBloc extends Bloc<InternalEvent, InternalState> {
-  InternalBloc() : super(InitialScanState()) {
-    on<ScanInternalCardEvent>(_scan);
+  InternalBloc() : super(ScanInitial()) {
+    on<ScanInternalCard>(_onScanInternalCard);
+    on<SendInInternalCard>(_onSendInInternalCard);
+    on<SendOutInternalCard>(_onSendOutInternalCard);
   }
 
-  Future<void> _scan(InternalEvent event, Emitter<InternalState> emit) async {
+  Future<void> _onScanInternalCard(
+      InternalEvent event, Emitter<InternalState> emit) async {
     try {
-      if (event is ScanInternalCardEvent) {
+      if (event is ScanInternalCard) {
         final res = await InternalRepo().scan(event.id);
-        emit(ScanSuccessState(card: res));
+        emit(ScanSuccess(card: res));
       }
     } catch (e) {
-      emit(ScanFailureState(error: e));
+      emit(Failure(error: e));
+    }
+  }
+
+  Future<void> _onSendInInternalCard(
+      InternalEvent event, Emitter<InternalState> emit) async {
+    try {
+      if (event is SendInInternalCard) {
+        final res = await InternalRepo().sendIn(event.card.docId!);
+        emit(SendInSuccess(timeIn: res, card: event.card));
+      }
+    } catch (e) {
+      emit(Failure(error: e));
+    }
+  }
+
+  Future<void> _onSendOutInternalCard(
+      InternalEvent event, Emitter<InternalState> emit) async {
+    try {
+      if (event is SendOutInternalCard) {
+        final res = await InternalRepo().sendOut(event.card.docId!);
+        emit(SendOutSuccess(timeOut: res, card: event.card));
+      }
+    } catch (e) {
+      emit(Failure(error: e));
     }
   }
 }

@@ -5,21 +5,47 @@ abstract class InternalState extends Equatable {
   List<Object?> get props => [];
 }
 
-class InitialScanState extends InternalState {}
+class ScanInitial extends InternalState {}
 
-class ScanSuccessState extends InternalState {
+class ScanSuccess extends InternalState {
   final Card? card;
 
-  ScanSuccessState({this.card});
+  ScanSuccess({this.card});
 
   @override
   List<Object?> get props => [card];
 }
 
-class ScanFailureState extends InternalState {
+class Failure extends InternalState {
   final Object? error;
-  ScanFailureState({required this.error});
+  Failure({required this.error});
 
   @override
   List<Object?> get props => [error];
+}
+
+class SendInSuccess extends InternalState {
+  final DateTime timeIn;
+  final Card card;
+
+  SendInSuccess({
+    required this.timeIn,
+    required this.card,
+  });
+
+  @override
+  List<Object?> get props => [timeIn, card];
+}
+
+class SendOutSuccess extends InternalState {
+  final DateTime timeOut;
+  final Card card;
+
+  SendOutSuccess({
+    required this.timeOut,
+    required this.card,
+  });
+
+  @override
+  List<Object?> get props => [timeOut, card];
 }
