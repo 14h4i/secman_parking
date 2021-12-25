@@ -15,13 +15,13 @@ class Card {
   final bool? isGuest;
 
   @JsonKey(
-      name: 'time_out',
+      name: 'time_in',
       fromJson: _datetimeFromTimestamp,
       toJson: _datetimeToTimestamp)
   final DateTime? timeIn;
 
   @JsonKey(
-      name: 'time_in',
+      name: 'time_out',
       fromJson: _datetimeFromTimestamp,
       toJson: _datetimeToTimestamp)
   final DateTime? timeOut;
