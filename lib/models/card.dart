@@ -15,16 +15,16 @@ class Card {
   final bool? isGuest;
 
   @JsonKey(
-      name: 'previous_time',
+      name: 'time_out',
       fromJson: _datetimeFromTimestamp,
       toJson: _datetimeToTimestamp)
-  final DateTime? previousTime;
+  final DateTime? timeIn;
 
   @JsonKey(
-      name: 'current_time',
+      name: 'time_in',
       fromJson: _datetimeFromTimestamp,
       toJson: _datetimeToTimestamp)
-  final DateTime? currentTime;
+  final DateTime? timeOut;
 
   @JsonKey(name: 'vehicle_number')
   final String? fullVehicleNumber;
@@ -51,10 +51,9 @@ class Card {
     this.id,
     this.currentPhoto,
     this.isGuest,
-    this.previousTime,
-    this.currentTime,
+    this.timeIn,
+    this.timeOut,
     this.fullVehicleNumber,
-    // this.records,
     this.phoneNumber,
     this.unit,
     this.vehicleType,
@@ -86,8 +85,8 @@ class Card {
     String? id,
     String? currentPhoto,
     bool? isGuest,
-    DateTime? previousTime,
-    DateTime? currentTime,
+    DateTime? timeIn,
+    DateTime? timeOut,
     String? fullVehicleNumber,
     String? phoneNumber,
     String? unit,
@@ -99,8 +98,8 @@ class Card {
       id: id ?? this.id,
       currentPhoto: currentPhoto ?? this.currentPhoto,
       isGuest: isGuest ?? this.isGuest,
-      currentTime: currentTime ?? this.currentTime,
-      previousTime: previousTime ?? this.previousTime,
+      timeIn: timeIn ?? this.timeIn,
+      timeOut: timeOut ?? this.timeOut,
       fullVehicleNumber: fullVehicleNumber ?? this.fullVehicleNumber,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       unit: unit ?? this.unit,

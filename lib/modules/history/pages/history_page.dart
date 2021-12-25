@@ -90,19 +90,19 @@ class _HistoryPageState extends State<HistoryPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                card.previousTime == null
+                                card.timeOut == null
                                     ? ''
                                     : DateTimeIntl.dateTimeToString(
-                                        card.previousTime!),
+                                        card.timeOut!),
                                 style: AppTextStyle.dateTimeHistory.copyWith(
                                   color: Colors.redAccent,
                                 ),
                               ),
                               Text(
-                                card.currentTime == null
+                                card.timeIn == null
                                     ? ''
                                     : DateTimeIntl.dateTimeToString(
-                                        card.currentTime!),
+                                        card.timeIn!),
                                 style: AppTextStyle.dateTimeHistory.copyWith(
                                   color: Colors.green,
                                 ),
