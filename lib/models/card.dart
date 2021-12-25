@@ -44,6 +44,9 @@ class Card {
   @JsonKey(name: 'vehicle_owner')
   final String? vehicleOwner;
 
+  @JsonKey(name: 'doc_id')
+  final String? docId;
+
   Card({
     this.id,
     this.currentPhoto,
@@ -56,6 +59,7 @@ class Card {
     this.unit,
     this.vehicleType,
     this.vehicleOwner,
+    this.docId,
   });
 
   String? get subVehicle => fullVehicleNumber?.split('-')[0];
@@ -89,6 +93,7 @@ class Card {
     String? unit,
     String? vehicleType,
     String? vehicleOwner,
+    String? docId,
   }) {
     return Card(
       id: id ?? this.id,
@@ -101,6 +106,7 @@ class Card {
       unit: unit ?? this.unit,
       vehicleType: vehicleType ?? this.vehicleType,
       vehicleOwner: vehicleOwner ?? this.vehicleOwner,
+      docId: docId ?? this.docId,
     );
   }
 }

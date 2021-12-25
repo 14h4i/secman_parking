@@ -17,25 +17,26 @@ class InternalRepo {
       }
 
       Map<String, dynamic> data = snapshot.docs.first.data();
+      data['doc_id'] = snapshot.docs.first.id;
 
-      final now = Timestamp.now();
+      // final now = Timestamp.now();
 
-      List records = data['records'];
+      // List records = data['records'];
 
-      Map<String, Object?> dataUpdate;
+      // Map<String, Object?> dataUpdate;
 
-      records.add(now);
-      final previousTime = data['current_time'];
-      dataUpdate = {
-        'current_time': now,
-        'previous_time': previousTime,
-        'records': records,
-      };
-      data['current_time'] = now;
-      data['previous_time'] = previousTime;
-      data['records'] = records;
+      // records.add(now);
+      // final previousTime = data['current_time'];
+      // dataUpdate = {
+      //   'current_time': now,
+      //   'previous_time': previousTime,
+      //   'records': records,
+      // };
+      // data['current_time'] = now;
+      // data['previous_time'] = previousTime;
+      // data['records'] = records;
 
-      snapshot.docs.first.reference.update(dataUpdate);
+      // snapshot.docs.first.reference.update(dataUpdate);
 
       return Card.fromJson(data);
     } catch (e) {

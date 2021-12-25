@@ -19,6 +19,7 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
       unit: json['unit'] as String?,
       vehicleType: json['vehicle_type'] as String?,
       vehicleOwner: json['vehicle_owner'] as String?,
+      docId: json['doc_id'] as String?,
     );
 
 Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
@@ -32,4 +33,5 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'unit': instance.unit,
       'vehicle_type': instance.vehicleType,
       'vehicle_owner': instance.vehicleOwner,
+      'doc_id': instance.docId,
     };
