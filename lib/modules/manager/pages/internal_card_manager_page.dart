@@ -15,11 +15,10 @@ class InternalCardManagerPage extends StatefulWidget {
 
 class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
   ManagerBloc? get bloc => BlocProvider.of<ManagerBloc>(context);
-  List masterCards = [];
 
   @override
   void initState() {
-    bloc!.add(GetCards());
+    bloc!.add(GetInternalCards());
     super.initState();
   }
 
@@ -30,14 +29,13 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
         Widget body = const Center(
           child: CircularProgressIndicator(),
         );
-        if (state is GetCardsFailure) {
+        if (state is GetInternalCardsFailure) {
           body = Center(
             child: Text('${state.error}'),
           );
         }
-        if (state is GetCardsSuccess) {
+        if (state is GetInternalCardsSuccess) {
           final cards = state.internalCards;
-          masterCards = state.masterCards ?? [];
           if (cards != null) {
             body = SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -70,40 +68,26 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () async {
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.transparent,
-                builder: (BuildContext context) {
-                  return ScanNfcBottomSheet(
-                    title: 'Quét thẻ Master',
-                    subTitle: 'Giữ điện thoại lại gần thẻ master',
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  );
-                },
-              );
-              await Future.delayed(const Duration(seconds: 3), () {});
-              if (masterCards.contains('master1')) {
-                Navigator.pop(context);
-                showModalBottomSheet(
-                    context: context,
-                    backgroundColor: Colors.transparent,
-                    builder: (BuildContext context) {
-                      return ScanNfcBottomSheet(
-                        title: 'Quét thẻ cần thêm',
-                        subTitle: 'Giữ điện thoại lại gần thẻ cần thêm',
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      );
-                    });
-                await Future.delayed(const Duration(seconds: 3), () {});
-                Navigator.pop(context);
-                Navigator.pushNamed(context, RouteName.addInternalCardPage);
-              } else {
-                AppToast.showShortToast('Thẻ master không đúng');
-              }
+              // if (masterCards.contains('master1')) {
+              //   Navigator.pop(context);
+              //   showModalBottomSheet(
+              //       context: context,
+              //       backgroundColor: Colors.transparent,
+              //       builder: (BuildContext context) {
+              //         return ScanNfcBottomSheet(
+              //           title: 'Quét thẻ cần thêm',
+              //           subTitle: 'Giữ điện thoại lại gần thẻ cần thêm',
+              //           onPressed: () {
+              //             Navigator.pop(context);
+              //           },
+              //         );
+              //       });
+              //   await Future.delayed(const Duration(seconds: 3), () {});
+              //   Navigator.pop(context);
+              //   Navigator.pushNamed(context, RouteName.addInternalCardPage);
+              // } else {
+              //   AppToast.showShortToast('Thẻ master không đúng');
+              // }
             },
           ),
         );

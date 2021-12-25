@@ -10,21 +10,38 @@ part 'manager_state.dart';
 
 class ManagerBloc extends Bloc<ManagerEvent, ManagerState> {
   ManagerBloc() : super(ManagerInitial()) {
-    on<GetCards>(_onGetCards);
+    on<GetInternalCards>(_onGetInternalCards);
     on<AddInternalCard>(_onAddInternalCard);
+    on<CheckMasterCards>(_onCheckMasterCards);
   }
 
-  Future<void> _onGetCards(
+  Future<void> _onGetInternalCards(
       ManagerEvent event, Emitter<ManagerState> emit) async {
-    try {
-      final internalCards = await GetInternalCardsRepo().get();
-      final masterCards = await GetMasterCardsRepo().get();
-      emit(GetCardsSuccess(
-        internalCards: internalCards,
-        masterCards: masterCards,
-      ));
-    } catch (e) {
-      emit(GetCardsFailure(error: e));
+    if (event is GetInternalCards) {
+      try {
+        final internalCards = await GetInternalCardsRepo().get();
+        emit(GetInternalCardsSuccess(
+          internalCards: internalCards,
+        ));
+      } catch (e) {
+        emit(GetInternalCardsFailure(error: e));
+      }
+    }
+  }
+
+  Future<void> _onCheckMasterCards(
+      ManagerEvent event, Emitter<ManagerState> emit) async {
+    if (event is CheckMasterCards) {
+      try {
+        final masterCards = await GetMasterCardsRepo().get();
+        if (masterCards != null) {
+          emit(CheckMasterCardComplete(status: masterCards.contains(event.id)));
+        } else {
+          emit(const CheckMasterCardComplete(status: false));
+        }
+      } catch (e) {
+        emit(GetMasterCardsFailure(error: e));
+      }
     }
   }
 
@@ -43,7 +60,7 @@ class ManagerBloc extends Bloc<ManagerEvent, ManagerState> {
         );
       }
       emit(AddInternalCardSuccess());
-      add(GetCards());
+      add(GetInternalCards());
     } catch (e) {
       emit(AddInternalCardFailure());
     }

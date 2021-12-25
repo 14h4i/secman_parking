@@ -7,7 +7,16 @@ abstract class ManagerEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetCards extends ManagerEvent {}
+class GetInternalCards extends ManagerEvent {}
+
+class CheckMasterCards extends ManagerEvent {
+  final String id;
+
+  const CheckMasterCards({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
 
 class AddInternalCard extends ManagerEvent {
   final Map<String, dynamic> value;
