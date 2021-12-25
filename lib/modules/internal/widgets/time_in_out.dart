@@ -18,6 +18,7 @@ class TimeInOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: isIn
           ? [
               AutoSizeText(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
+import 'package:secman_parking/main.dart';
+import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
+import 'package:secman_parking/modules/guest/pages/guest_page.dart';
 // import 'package:secman_parking/main.dart';
 // import 'package:secman_parking/modules/guest/blocs/guest_bloc.dart';
 import 'package:secman_parking/modules/history/blocs/history_bloc.dart';
@@ -23,12 +26,11 @@ class _DashboardPageState extends State<DashboardPage> {
       create: (_) => InternalBloc(),
       child: const InternalPage(),
     ),
-    // BlocProvider(
-    //   create: (_) =>
-    //       GuestBloc()..add(OnNewCameraEvent(cameraDescription: cameras[0])),
-    //   child: const GuestPage(),
-    // ),
-    // const GuestPage(),
+    BlocProvider(
+      create: (_) =>
+          CameraBloc()..add(NewCamera(cameraDescription: cameras[0])),
+      child: const GuestPage(),
+    ),
     BlocProvider(
       create: (_) => HistoryBloc()..add(GetHistories()),
       child: const HistoryPage(),
@@ -49,10 +51,10 @@ class _DashboardPageState extends State<DashboardPage> {
             icon: Icon(Icons.business_outlined),
             label: 'Nội bộ',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.nfc),
-          //   label: 'Khách',
-          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Khách',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: 'History',

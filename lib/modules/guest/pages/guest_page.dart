@@ -1,9 +1,10 @@
-import 'dart:io';
-
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
-import 'package:secman_parking/modules/guest/blocs/guest_bloc.dart';
+import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
+import 'package:secman_parking/modules/internal/widgets/button_in_out.dart';
+import 'package:secman_parking/modules/internal/widgets/time_in_out.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -16,14 +17,14 @@ class GuestPage extends StatefulWidget {
 }
 
 class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
-  GuestBloc? get bloc => BlocProvider.of<GuestBloc>(context);
+  CameraBloc? get bloc => BlocProvider.of<CameraBloc>(context);
+  final _backgroudColor = Colors.blue;
   // CameraController? controller;
 
   // File? _imageFile;
 
   // Initial values
   // bool _isCameraInitialized = false;
-  int _index = 0;
 
   // Current values
   // FlashMode? _currentFlashMode;
@@ -44,8 +45,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState appLifecycleState) {
-    bloc!.add(
-        ChangeAppLifecycleStateEvent(appLifecycleState: appLifecycleState));
+    bloc!.add(ChangeAppLifecycle(appLifecycleState: appLifecycleState));
 
     super.didChangeAppLifecycleState(appLifecycleState);
   }
@@ -54,201 +54,90 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: _buildBackgroundColor(_index),
+        backgroundColor: _backgroudColor,
         iconTheme: AppThemes.iconThemeAppBar,
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: _onTap,
-            icon: const Icon(Icons.ac_unit),
-          ),
-          IconButton(
               onPressed: () async {
-                bloc!.add(TakePictureEvent());
+                bloc!.add(TakePicture());
               },
               icon: const Icon(Icons.camera_alt))
         ],
       ),
-      backgroundColor: _buildBackgroundColor(_index),
+      backgroundColor: _backgroudColor,
       drawer: const AppDrawer(),
-      body: BlocBuilder<GuestBloc, GuestState>(
+      body: BlocBuilder<CameraBloc, CameraState>(
         builder: (context, state) {
-          if (state is GuestInitial) {
-            return const Center(
-              child: AutoSizeText(
-                'Đang Khởi động máy ảnh...',
-                maxLines: 1,
-                style: AppTextStyle.largeTitleCard,
-              ),
-            );
-          }
-          if (state is GuestCameraInitializedFailure) {
+          if (state is CameraFailure) {
             return Center(
               child: AutoSizeText(
-                'Khởi động máy ảnh thất bại.\n Error: ${state.error}',
+                'Error: ${state.error}',
                 maxLines: 1,
                 style: AppTextStyle.largeTitleCard,
               ),
             );
           }
-          if (state is GuestCameraInitialized) {
-            return Center(
-              child: AutoSizeText(
-                'Khởi động máy ảnh: ${state.isCameraInitialized}',
-                maxLines: 1,
-                style: AppTextStyle.largeTitleCard,
-              ),
-            );
-          }
-          return Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Builder(builder: (context) {
-              if (_index == 1) {
-                return const InfoCard(
-                  isIn: true,
-                  isGuest: false,
-                );
-              }
-              if (_index == 2) {
-                // return BlocBuilder<GuestBloc, GuestState>(
-                //   builder: (context, state) {
-                if (state is GuestTakePictureFailure) {
-                  return InfoCard(
-                    isIn: false,
-                    isGuest: true,
-                    urlImage: '${state.error}',
-                  );
-                }
-                if (state is GuestTakePictureSuccess) {
-                  final file = state.file!;
-                  return InfoCard(
-                    isIn: false,
-                    isGuest: true,
-                    urlImage: file.path,
-                  );
-                }
-                return const InfoCard(
-                  isIn: false,
-                  isGuest: true,
-                  // urlImage: _imageFile != null ? _imageFile!.path : null,
-                );
-              }
+          if (state is CameraInitialized) {
+            if (state.controller!.value.isInitialized) {
+              return CameraPreview(
+                state.controller!,
+                // child: LayoutBuilder(builder:
+                //     (BuildContext context, BoxConstraints constraints) {
+                //   return GestureDetector(
+                //     behavior: HitTestBehavior.opaque,
+                //     onScaleStart: _handleScaleStart,
+                //     onScaleUpdate: _handleScaleUpdate,
+                //     onTapDown: (details) =>
+                //         onViewFinderTap(details, constraints),
+                //   );
+                // }),
+              );
+            } else {
               return const Center(
                 child: AutoSizeText(
-                  'Quét mã...',
+                  'Không thể khởi động máy ảnh',
                   maxLines: 1,
                   style: AppTextStyle.largeTitleCard,
                 ),
               );
-            }),
+            }
+          }
+
+          if (state is TakePictureSuccess) {
+            return Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: state.file != null
+                      ? Image.file(state.file!)
+                      : Container(),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: ButtonInOut(
+                      onPressedIn: () {},
+                      onPressedOut: () {},
+                    ),
+                    // child: Padding(
+                    //   padding: const EdgeInsets.only(top: 80),
+                    //   child: TimeInOut(
+                    //     isIn: true,
+                    //     timeIn: DateTime.now(),
+                    //     timeOut: DateTime.now(),
+                    //   ),
+                    // ),
+                  ),
+                ),
+              ],
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         },
       ),
-    );
-  }
-
-  Color _buildBackgroundColor(int index) {
-    switch (index) {
-      case 0:
-        return Colors.blue;
-      case 1:
-        return Colors.green;
-      case 2:
-        return Colors.redAccent;
-    }
-    return Colors.blue;
-  }
-
-  void _onTap() {
-    if (_index == 2) {
-      setState(() {
-        _index = 0;
-      });
-    } else {
-      setState(() {
-        _index++;
-      });
-    }
-  }
-}
-
-class InfoCard extends StatelessWidget {
-  final bool isIn;
-  final bool isGuest;
-  final String? urlImage;
-
-  const InfoCard({
-    Key? key,
-    required this.isIn,
-    required this.isGuest,
-    this.urlImage,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 1,
-          child: Center(
-            child: isGuest
-                ? urlImage != null
-                    ? Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: FileImage(File(urlImage!)),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      )
-                    : Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 3, color: Colors.white)),
-                        child: AutoSizeText(
-                          'Không tìm thấy ảnh',
-                          maxLines: 1,
-                          style: AppTextStyle.vehicleOwnerCard
-                              .copyWith(fontSize: 30),
-                        ),
-                      )
-                : const AutoSizeText(
-                    '123.45',
-                    maxLines: 1,
-                    style: AppTextStyle.largeTitleCard,
-                  ),
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const AutoSizeText(
-                'Mã thẻ ...........',
-                maxLines: 1,
-                style: AppTextStyle.uidCard,
-              ),
-              AutoSizeText(
-                isGuest ? 'Khách vãng lai' : 'Người tòa nhà',
-                maxLines: 1,
-                style: AppTextStyle.vehicleOwnerCard,
-              ),
-              const AutoSizeText(
-                '20:30 14/12/2021',
-                maxLines: 1,
-                style: AppTextStyle.dateTimeCard,
-              ),
-              const SizedBox(height: 40),
-              Icon(
-                isIn ? Icons.arrow_downward : Icons.arrow_upward,
-                size: 150,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        )
-      ],
     );
   }
 }

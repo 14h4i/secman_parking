@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
 import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
-import 'package:secman_parking/modules/manager/widgets/scan_nfc_bottom_sheet.dart';
-import 'package:secman_parking/route/route_name.dart';
 
 class InternalCardManagerPage extends StatefulWidget {
   const InternalCardManagerPage({Key? key}) : super(key: key);
