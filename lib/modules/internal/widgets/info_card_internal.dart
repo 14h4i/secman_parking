@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:secman_parking/models/card.dart' as crd;
 import 'package:secman_parking/themes/app_text_style.dart';
-import 'package:secman_parking/utils/date_time_intl.dart';
 
 class InfoCardInternal extends StatelessWidget {
   final crd.Card card;
@@ -49,7 +48,7 @@ class InfoCardInternal extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 1,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -74,21 +73,21 @@ class InfoCardInternal extends StatelessWidget {
                       .copyWith(fontStyle: FontStyle.normal),
                 ),
 
-                const SizedBox(height: 20),
-                AutoSizeText(
-                  card.previousTime == null
-                      ? ''
-                      : ' Trước đó: ${DateTimeIntl.dateTimeToString(card.previousTime!)}',
-                  maxLines: 1,
-                  style: AppTextStyle.dateTimeCard
-                      .copyWith(color: Colors.purpleAccent),
-                ),
-                AutoSizeText(
-                  'Hiện tại: ${DateTimeIntl.dateTimeToString(card.currentTime!)}',
-                  maxLines: 1,
-                  style: AppTextStyle.dateTimeCard
-                      .copyWith(color: Colors.redAccent),
-                ),
+                // const SizedBox(height: 20),
+                // AutoSizeText(
+                //   card.previousTime == null
+                //       ? ''
+                //       : ' Trước đó: ${DateTimeIntl.dateTimeToString(card.previousTime!)}',
+                //   maxLines: 1,
+                //   style: AppTextStyle.dateTimeCard
+                //       .copyWith(color: Colors.purpleAccent),
+                // ),
+                // AutoSizeText(
+                //   'Hiện tại: ${DateTimeIntl.dateTimeToString(card.currentTime!)}',
+                //   maxLines: 1,
+                //   style: AppTextStyle.dateTimeCard
+                //       .copyWith(color: Colors.redAccent),
+                // ),
               ],
             ),
           ),
