@@ -17,7 +17,7 @@ class InternalBloc extends Bloc<InternalEvent, InternalState> {
       InternalEvent event, Emitter<InternalState> emit) async {
     try {
       if (event is ScanInternalCard) {
-        final res = await InternalRepo().scan(event.id);
+        final res = await InternalRepo().getCard(event.id);
         emit(ScanSuccess(card: res));
       }
     } catch (e) {

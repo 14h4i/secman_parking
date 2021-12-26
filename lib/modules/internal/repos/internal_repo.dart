@@ -46,7 +46,7 @@ class InternalRepo {
     }
   }
 
-  Future<Card?> scan(String id) async {
+  Future<Card?> getCard(String id) async {
     try {
       final snapshot = await _firestore
           .collection('cards')
