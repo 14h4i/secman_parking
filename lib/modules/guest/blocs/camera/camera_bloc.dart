@@ -15,7 +15,7 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
 
   CameraController? controller;
 
-  CameraBloc() : super(GuestInitial()) {
+  CameraBloc() : super(CameraInitial()) {
     on<TakePicture>(_onTakePicture);
     on<NewCamera>(_onNewCamera);
     on<ChangeAppLifecycle>(_onChangeAppLifecycle);
@@ -89,19 +89,21 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
       XFile? rawImage = await _takePicture(emit);
       File imageFile = File(rawImage!.path);
 
-      int currentUnix = DateTime.now().millisecondsSinceEpoch;
+      emit(TakePictureSuccess(file: imageFile));
 
-      final directory = await getApplicationDocumentsDirectory();
+      // int currentUnix = DateTime.now().millisecondsSinceEpoch;
 
-      String fileFormat = imageFile.path.split('.').last;
+      // final directory = await getApplicationDocumentsDirectory();
 
-      logger.log(fileFormat);
+      // String fileFormat = imageFile.path.split('.').last;
 
-      await imageFile.copy(
-        '${directory.path}/$currentUnix.$fileFormat',
-      );
+      // logger.log(fileFormat);
 
-      await _refreshAlreadyCapturedImages(emit);
+      // await imageFile.copy(
+      //   '${directory.path}/$currentUnix.$fileFormat',
+      // );
+
+      // await _refreshAlreadyCapturedImages(emit);
     }
   }
 

@@ -5,7 +5,7 @@ abstract class CameraState extends Equatable {
   List<Object?> get props => [];
 }
 
-class GuestInitial extends CameraState {}
+class CameraInitial extends CameraState {}
 
 class TakePictureSuccess extends CameraState {
   final File? file;
