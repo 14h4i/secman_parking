@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/blocs/app_bloc.dart';
+import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
 import 'package:secman_parking/route/route_name.dart';
 import 'package:secman_parking/route/routes.dart';
@@ -53,8 +54,15 @@ class _MyAppState extends State<MyApp> {
             );
           }
 
-          return BlocProvider(
-            create: (context) => ManagerBloc(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => ManagerBloc(),
+              ),
+              BlocProvider(
+                create: (context) => CameraBloc(),
+              ),
+            ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               themeMode: ThemeMode.light,

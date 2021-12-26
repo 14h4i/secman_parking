@@ -1,10 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
+import 'package:secman_parking/common/widgets/stateless/circular_progress_center.dart';
+import 'package:secman_parking/common/widgets/stateless/floating_text_button.dart';
+import 'package:secman_parking/common/widgets/stateless/text_error.dart';
+import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
+import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
 import 'package:secman_parking/modules/internal/widgets/button_in_out.dart';
-import 'package:secman_parking/modules/internal/widgets/time_in_out.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -17,7 +22,8 @@ class GuestPage extends StatefulWidget {
 }
 
 class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
-  CameraBloc? get bloc => BlocProvider.of<CameraBloc>(context);
+  CameraBloc? get cameraBloc => BlocProvider.of<CameraBloc>(context);
+  GuestBloc? get bloc => BlocProvider.of<GuestBloc>(context);
   final _backgroudColor = Colors.blue;
   // CameraController? controller;
 
@@ -34,6 +40,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
   @override
   void initState() {
     // onNewCameraSelected(cameras[0]);
+    cameraBloc!.add(NewCamera(cameraDescription: cameras[0]));
     super.initState();
   }
 
@@ -45,7 +52,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState appLifecycleState) {
-    bloc!.add(ChangeAppLifecycle(appLifecycleState: appLifecycleState));
+    cameraBloc!.add(ChangeAppLifecycle(appLifecycleState: appLifecycleState));
 
     super.didChangeAppLifecycleState(appLifecycleState);
   }
@@ -60,83 +67,69 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
         actions: [
           IconButton(
               onPressed: () async {
-                bloc!.add(TakePicture());
+                bloc!.add(const ScanGuestCard(id: 'aaa002'));
               },
               icon: const Icon(Icons.camera_alt))
         ],
       ),
       backgroundColor: _backgroudColor,
       drawer: const AppDrawer(),
-      body: BlocBuilder<CameraBloc, CameraState>(
-        builder: (context, state) {
-          if (state is CameraFailure) {
-            return Center(
-              child: AutoSizeText(
-                'Error: ${state.error}',
-                maxLines: 1,
-                style: AppTextStyle.largeTitleCard,
-              ),
-            );
-          }
-          if (state is CameraInitialized) {
-            if (state.controller!.value.isInitialized) {
-              return CameraPreview(
-                state.controller!,
-                // child: LayoutBuilder(builder:
-                //     (BuildContext context, BoxConstraints constraints) {
-                //   return GestureDetector(
-                //     behavior: HitTestBehavior.opaque,
-                //     onScaleStart: _handleScaleStart,
-                //     onScaleUpdate: _handleScaleUpdate,
-                //     onTapDown: (details) =>
-                //         onViewFinderTap(details, constraints),
-                //   );
-                // }),
-              );
-            } else {
-              return const Center(
-                child: AutoSizeText(
-                  'Không thể khởi động máy ảnh',
-                  maxLines: 1,
-                  style: AppTextStyle.largeTitleCard,
-                ),
-              );
-            }
-          }
-
-          if (state is TakePictureSuccess) {
-            return Column(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: state.file != null
-                      ? Image.file(state.file!)
-                      : Container(),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: ButtonInOut(
-                      onPressedIn: () {},
-                      onPressedOut: () {},
+      body: BlocBuilder<GuestBloc, GuestState>(
+        bloc: bloc,
+        builder: (context, stateGuest) => BlocBuilder(
+            bloc: cameraBloc,
+            builder: (context, stateCamera) {
+              if (stateGuest is GuestFailure) {
+                return TextError(error: stateGuest.error);
+              }
+              if (stateGuest is GuestInitial) {
+                if (stateCamera is CameraInitialized) {
+                  return CameraPreview(stateCamera.controller!);
+                }
+              }
+              if (stateGuest is InGuestSuccess) {
+                if (stateCamera is TakePictureSuccess) {
+                  return Column(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Center(child: Image.file(stateCamera.file!)),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: FloatingTextButton(
+                          backgroundColor: Colors.green,
+                          content: 'VÀO',
+                          onPressedIn: () {},
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              }
+              if (stateGuest is OutGuestSuccess) {
+                return Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: CachedNetworkImage(
+                        imageUrl: stateGuest.card!.currentPhoto!,
+                      ),
                     ),
-                    // child: Padding(
-                    //   padding: const EdgeInsets.only(top: 80),
-                    //   child: TimeInOut(
-                    //     isIn: true,
-                    //     timeIn: DateTime.now(),
-                    //     timeOut: DateTime.now(),
-                    //   ),
-                    // ),
-                  ),
-                ),
-              ],
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+                    Expanded(
+                      flex: 1,
+                      child: FloatingTextButton(
+                        backgroundColor: Colors.redAccent,
+                        content: 'RA',
+                        onPressedIn: () {},
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              return const CircularProgressCenter();
+            }),
       ),
     );
   }
