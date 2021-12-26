@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
-import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
+import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
 import 'package:secman_parking/modules/guest/pages/guest_page.dart';
-// import 'package:secman_parking/main.dart';
-// import 'package:secman_parking/modules/guest/blocs/guest_bloc.dart';
 import 'package:secman_parking/modules/history/blocs/history_bloc.dart';
 import 'package:secman_parking/modules/history/pages/history_page.dart';
-// import 'package:secman_parking/modules/guest/pages/guest_page.dart';
 import 'package:secman_parking/modules/internal/blocs/internal_bloc.dart';
 import 'package:secman_parking/modules/internal/pages/internal_page.dart';
 
@@ -27,8 +24,7 @@ class _DashboardPageState extends State<DashboardPage> {
       child: const InternalPage(),
     ),
     BlocProvider(
-      create: (_) =>
-          CameraBloc()..add(NewCamera(cameraDescription: cameras[0])),
+      create: (context) => GuestBloc(BlocProvider.of<CameraBloc>(context)),
       child: const GuestPage(),
     ),
     BlocProvider(
