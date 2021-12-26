@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:secman_parking/providers/log_provider.dart';
 
 part 'camera_event.dart';
@@ -123,32 +123,32 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
     }
   }
 
-  Future<void> _refreshAlreadyCapturedImages(Emitter<CameraState> emit) async {
-    final directory = await getApplicationDocumentsDirectory();
-    List<FileSystemEntity> fileList = await directory.list().toList();
-    List<File> allFileList = [];
-    List<Map<int, dynamic>> fileNames = [];
+  // Future<void> _refreshAlreadyCapturedImages(Emitter<CameraState> emit) async {
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   List<FileSystemEntity> fileList = await directory.list().toList();
+  //   List<File> allFileList = [];
+  //   List<Map<int, dynamic>> fileNames = [];
 
-    for (var file in fileList) {
-      if (file.path.contains('.jpg')) {
-        allFileList.add(File(file.path));
+  //   for (var file in fileList) {
+  //     if (file.path.contains('.jpg')) {
+  //       allFileList.add(File(file.path));
 
-        String name = file.path.split('/').last.split('.').first;
-        fileNames.add({0: int.parse(name), 1: file.path.split('/').last});
-      }
-    }
+  //       String name = file.path.split('/').last.split('.').first;
+  //       fileNames.add({0: int.parse(name), 1: file.path.split('/').last});
+  //     }
+  //   }
 
-    if (fileNames.isNotEmpty) {
-      final recentFile =
-          fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
-      String recentFileName = recentFile[1];
-      if (recentFileName.contains('.jpg')) {
-        emit(TakePictureSuccess(
-            file: File('${directory.path}/$recentFileName')));
-      }
-      // setState(() {});
-    }
-  }
+  //   if (fileNames.isNotEmpty) {
+  //     final recentFile =
+  //         fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
+  //     String recentFileName = recentFile[1];
+  //     if (recentFileName.contains('.jpg')) {
+  //       emit(TakePictureSuccess(
+  //           file: File('${directory.path}/$recentFileName')));
+  //     }
+  //     // setState(() {});
+  //   }
+  // }
 
   @override
   Future<void> close() {

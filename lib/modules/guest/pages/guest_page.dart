@@ -9,10 +9,7 @@ import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
-import 'package:secman_parking/modules/internal/widgets/button_in_out.dart';
-import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class GuestPage extends StatefulWidget {
   const GuestPage({Key? key}) : super(key: key);
@@ -76,7 +73,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
       drawer: const AppDrawer(),
       body: BlocBuilder<GuestBloc, GuestState>(
         bloc: bloc,
-        builder: (context, stateGuest) => BlocBuilder(
+        builder: (context, stateGuest) => BlocBuilder<CameraBloc, CameraState>(
             bloc: cameraBloc,
             builder: (context, stateCamera) {
               if (stateGuest is GuestFailure) {
