@@ -9,6 +9,7 @@ import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
+import 'package:secman_parking/modules/internal/widgets/time_in_out.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 
 class GuestPage extends StatefulWidget {
@@ -97,7 +98,10 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                         child: FloatingTextButton(
                           backgroundColor: Colors.green,
                           content: 'VÀO',
-                          onPressedIn: () {},
+                          onPressedIn: () {
+                            bloc!.add(SendIn(
+                                card: stateGuest.card!, url: stateGuest.url!));
+                          },
                         ),
                       ),
                     ],
@@ -109,8 +113,10 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                   children: [
                     Expanded(
                       flex: 3,
-                      child: CachedNetworkImage(
-                        imageUrl: stateGuest.card!.currentPhoto!,
+                      child: Center(
+                        child: CachedNetworkImage(
+                          imageUrl: stateGuest.card!.currentPhoto!,
+                        ),
                       ),
                     ),
                     Expanded(
@@ -118,7 +124,61 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                       child: FloatingTextButton(
                         backgroundColor: Colors.redAccent,
                         content: 'RA',
-                        onPressedIn: () {},
+                        onPressedIn: () {
+                          bloc!.add(SendOut(card: stateGuest.card!));
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              if (stateGuest is GuestSendedIn) {
+                return Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                        child: CachedNetworkImage(
+                          imageUrl: stateGuest.url,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 50),
+                        child: TimeInOut(
+                          isIn: true,
+                          timeIn: stateGuest.timeIn,
+                          timeOut: stateGuest.card.timeOut,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              if (stateGuest is GuestSendedOut) {
+                return Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Center(
+                        child: CachedNetworkImage(
+                          imageUrl: stateGuest.card.currentPhoto!,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 50),
+                        child: TimeInOut(
+                          isIn: false,
+                          timeIn: stateGuest.card.timeIn,
+                          timeOut: stateGuest.timeOut,
+                        ),
                       ),
                     ),
                   ],
