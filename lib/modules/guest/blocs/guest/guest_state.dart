@@ -9,20 +9,20 @@ abstract class GuestState extends Equatable {
 
 class GuestInitial extends GuestState {}
 
-class InGuestSuccess extends GuestState {
+class GuestInSuccess extends GuestState {
   final String? url;
   final Card? card;
 
-  const InGuestSuccess({required this.url, required this.card});
+  const GuestInSuccess({required this.url, required this.card});
 
   @override
   List<Object?> get props => [url, card];
 }
 
-class OutGuestSuccess extends GuestState {
+class GuestOutSuccess extends GuestState {
   final Card? card;
 
-  const OutGuestSuccess({required this.card});
+  const GuestOutSuccess({required this.card});
 
   @override
   List<Object?> get props => [card];
@@ -37,20 +37,20 @@ class GuestFailure extends GuestState {
   List<Object?> get props => [error];
 }
 
-// class UploadSuccess extends GuestState {
-//   final String url;
+class GuestSendedIn extends GuestState {
+  final DateTime timeIn;
 
-//   const UploadSuccess({required this.url});
+  const GuestSendedIn({required this.timeIn});
 
-//   @override
-//   List<Object?> get props => [url];
-// }
+  @override
+  List<Object?> get props => [timeIn];
+}
 
-// class UploadFailure extends GuestState {
-//   final Object? error;
+class GuestSendedOut extends GuestState {
+  final DateTime timeOut;
 
-//   const UploadFailure({required this.error});
+  const GuestSendedOut({required this.timeOut});
 
-//   @override
-//   List<Object?> get props => [error];
-// }
+  @override
+  List<Object?> get props => [timeOut];
+}

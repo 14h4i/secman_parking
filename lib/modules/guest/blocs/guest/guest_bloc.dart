@@ -48,7 +48,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
     if (event is InGuest) {
       try {
         final url = await GuestRepo().upload(event.file!);
-        emit(InGuestSuccess(url: url, card: event.card));
+        emit(GuestInSuccess(url: url, card: event.card));
       } catch (e) {
         emit(GuestFailure(error: e));
       }
@@ -58,7 +58,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
   Future<void> _onOutGuest(GuestEvent event, Emitter<GuestState> emit) async {
     if (event is OutGuest) {
       try {
-        emit(OutGuestSuccess(card: event.card));
+        emit(GuestOutSuccess(card: event.card));
       } catch (e) {
         emit(GuestFailure(error: e));
       }
