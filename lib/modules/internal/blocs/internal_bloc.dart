@@ -29,8 +29,8 @@ class InternalBloc extends Bloc<InternalEvent, InternalState> {
       InternalEvent event, Emitter<InternalState> emit) async {
     try {
       if (event is SendInInternalCard) {
-        final res = await InternalRepo().sendIn(event.card.docId!);
-        emit(SendInSuccess(timeIn: res, card: event.card));
+        final timeIn = await InternalRepo().sendIn(event.card.docId!);
+        emit(SendInSuccess(timeIn: timeIn, card: event.card));
       }
     } catch (e) {
       emit(Failure(error: e));
@@ -41,8 +41,8 @@ class InternalBloc extends Bloc<InternalEvent, InternalState> {
       InternalEvent event, Emitter<InternalState> emit) async {
     try {
       if (event is SendOutInternalCard) {
-        final res = await InternalRepo().sendOut(event.card.docId!);
-        emit(SendOutSuccess(timeOut: res, card: event.card));
+        final timeOut = await InternalRepo().sendOut(event.card.docId!);
+        emit(SendOutSuccess(timeOut: timeOut, card: event.card));
       }
     } catch (e) {
       emit(Failure(error: e));

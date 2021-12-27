@@ -18,6 +18,8 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
     on<ScanGuestCard>(_onScanGuestCard);
     on<InGuest>(_onInGuest);
     on<OutGuest>(_onOutGuest);
+    on<SendIn>(_onSendIn);
+    on<SendOut>(_onSendOut);
   }
 
   Future<void> _onScanGuestCard(
@@ -59,6 +61,29 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
     if (event is OutGuest) {
       try {
         emit(GuestOutSuccess(card: event.card));
+      } catch (e) {
+        emit(GuestFailure(error: e));
+      }
+    }
+  }
+
+  Future<void> _onSendIn(GuestEvent event, Emitter<GuestState> emit) async {
+    if (event is SendIn) {
+      try {
+        final timeIn = await GuestRepo().sendIn(event.card.docId!, event.url);
+        emit(GuestSendedIn(timeIn: timeIn, card: event.card, url: event.url));
+      } catch (e) {
+        emit(GuestFailure(error: e));
+      }
+    }
+  }
+
+  Future<void> _onSendOut(GuestEvent event, Emitter<GuestState> emit) async {
+    if (event is SendOut) {
+      try {
+        final timeOut = await GuestRepo()
+            .sendOut(event.card.docId!, event.card.currentPhoto!);
+        emit(GuestSendedOut(timeOut: timeOut, card: event.card));
       } catch (e) {
         emit(GuestFailure(error: e));
       }

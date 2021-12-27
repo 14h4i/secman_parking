@@ -36,19 +36,25 @@ class OutGuest extends GuestEvent {
 }
 
 class SendIn extends GuestEvent {
-  final String docId;
+  final Card card;
+  final String url;
 
-  const SendIn({required this.docId});
+  const SendIn({
+    required this.card,
+    required this.url,
+  });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [card, url];
 }
 
 class SendOut extends GuestEvent {
-  final String docId;
+  final Card card;
 
-  const SendOut({required this.docId});
+  const SendOut({
+    required this.card,
+  });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [card];
 }
