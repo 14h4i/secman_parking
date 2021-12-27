@@ -84,7 +84,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                   return CameraPreview(stateCamera.controller!);
                 }
               }
-              if (stateGuest is InGuestSuccess) {
+              if (stateGuest is GuestInSuccess) {
                 if (stateCamera is TakePictureSuccess) {
                   return Column(
                     children: [
@@ -104,7 +104,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                   );
                 }
               }
-              if (stateGuest is OutGuestSuccess) {
+              if (stateGuest is GuestOutSuccess) {
                 return Column(
                   children: [
                     Expanded(
