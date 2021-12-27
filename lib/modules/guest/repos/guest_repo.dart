@@ -42,4 +42,48 @@ class GuestRepo {
       rethrow;
     }
   }
+
+  Future<DateTime> sendIn(String docId, String url) async {
+    try {
+      final now = Timestamp.now();
+
+      final doc = _firestore.collection('cards').doc(docId);
+
+      doc.update({
+        'time_in': now,
+      });
+
+      doc.collection('records').add({
+        'time': now,
+        'status': 'in',
+        'image': url,
+      });
+
+      return now.toDate();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<DateTime> sendOut(String docId, String url) async {
+    try {
+      final now = Timestamp.now();
+
+      final doc = _firestore.collection('cards').doc(docId);
+
+      doc.update({
+        'time_out': now,
+      });
+
+      doc.collection('records').add({
+        'time': now,
+        'status': 'out',
+        'image': url,
+      });
+
+      return now.toDate();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
