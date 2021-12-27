@@ -51,12 +51,13 @@ class GuestRepo {
 
       doc.update({
         'time_in': now,
+        'current_photo': url,
       });
 
       doc.collection('records').add({
         'time': now,
         'status': 'in',
-        'image': url,
+        'photo': url,
       });
 
       return now.toDate();
@@ -73,12 +74,13 @@ class GuestRepo {
 
       doc.update({
         'time_out': now,
+        'current_photo': null,
       });
 
       doc.collection('records').add({
         'time': now,
         'status': 'out',
-        'image': url,
+        'photo': url,
       });
 
       return now.toDate();
