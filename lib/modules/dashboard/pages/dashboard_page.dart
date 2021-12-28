@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
+import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
 import 'package:secman_parking/modules/guest/pages/guest_page.dart';

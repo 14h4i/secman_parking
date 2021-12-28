@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
+import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/circular_progress_center.dart';
 import 'package:secman_parking/common/widgets/stateless/floating_text_button.dart';
 import 'package:secman_parking/common/widgets/stateless/text_error.dart';

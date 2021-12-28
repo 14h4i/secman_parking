@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:secman_parking/common/widgets/stateless/app_drawer.dart';
+import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
 import 'package:secman_parking/modules/internal/blocs/internal_bloc.dart';
 import 'package:secman_parking/modules/internal/widgets/button_in_out.dart';
