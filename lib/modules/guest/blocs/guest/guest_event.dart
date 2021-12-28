@@ -60,3 +60,5 @@ class SendOut extends GuestEvent {
   @override
   List<Object?> get props => [card];
 }
+
+class ResetPage extends GuestEvent {}

@@ -6,6 +6,7 @@ import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/circular_progress_center.dart';
 import 'package:secman_parking/common/widgets/stateless/floating_text_button.dart';
 import 'package:secman_parking/common/widgets/stateless/text_error.dart';
+import 'package:secman_parking/common/widgets/stateless/text_time_in_out.dart';
 import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
@@ -64,10 +65,17 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () async {
-                bloc!.add(const ScanGuestCard(id: 'aaa002'));
-              },
-              icon: const Icon(Icons.camera_alt))
+            onPressed: () async {
+              bloc!.add(const ScanGuestCard(id: 'aaa002'));
+            },
+            icon: const Icon(Icons.camera_alt),
+          ),
+          IconButton(
+            onPressed: () async {
+              bloc!.add(ResetPage());
+            },
+            icon: const Icon(Icons.refresh),
+          ),
         ],
       ),
       backgroundColor: _backgroudColor,
@@ -150,10 +158,9 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 50),
-                        child: TimeInOut(
+                        child: TextTimeInOut(
                           isIn: true,
-                          timeIn: stateGuest.timeIn,
-                          timeOut: stateGuest.card.timeOut,
+                          time: stateGuest.timeIn,
                         ),
                       ),
                     ),

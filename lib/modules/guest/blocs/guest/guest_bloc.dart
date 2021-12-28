@@ -20,6 +20,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
     on<OutGuest>(_onOutGuest);
     on<SendIn>(_onSendIn);
     on<SendOut>(_onSendOut);
+    on<ResetPage>(_onResetPage);
   }
 
   Future<void> _onScanGuestCard(
@@ -78,8 +79,6 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
           url: event.url,
           file: event.file,
         ));
-        await Future.delayed(const Duration(seconds: 3), () {});
-        emit(GuestInitial());
       } catch (e) {
         emit(GuestFailure(error: e));
       }
@@ -92,11 +91,15 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
         final timeOut = await GuestRepo()
             .sendOut(event.card.docId!, event.card.currentPhoto!);
         emit(GuestSendedOut(timeOut: timeOut, card: event.card));
-        await Future.delayed(const Duration(seconds: 3), () {});
-        emit(GuestInitial());
       } catch (e) {
         emit(GuestFailure(error: e));
       }
+    }
+  }
+
+  void _onResetPage(GuestEvent event, Emitter<GuestState> emit) {
+    if (event is ResetPage) {
+      emit(GuestInitial());
     }
   }
 
