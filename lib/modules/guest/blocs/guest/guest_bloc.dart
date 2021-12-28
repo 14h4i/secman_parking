@@ -12,7 +12,7 @@ part 'guest_state.dart';
 
 class GuestBloc extends Bloc<GuestEvent, GuestState> {
   final CameraBloc _cameraBloc;
-  late StreamSubscription cameraSubscription;
+  late StreamSubscription? cameraSubscription;
 
   GuestBloc(this._cameraBloc) : super(GuestInitial()) {
     on<ScanGuestCard>(_onScanGuestCard);
@@ -34,6 +34,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
               final file = state.file;
               if (file != null) {
                 add(InGuest(file: file, card: card));
+                _cameraBloc.add(ResetCamera());
               }
             }
           });
@@ -50,7 +51,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
     if (event is InGuest) {
       try {
         final url = await GuestRepo().upload(event.file!);
-        emit(GuestInSuccess(url: url, card: event.card));
+        emit(GuestInSuccess(url: url, card: event.card, file: event.file!));
       } catch (e) {
         emit(GuestFailure(error: e));
       }
@@ -71,7 +72,14 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
     if (event is SendIn) {
       try {
         final timeIn = await GuestRepo().sendIn(event.card.docId!, event.url);
-        emit(GuestSendedIn(timeIn: timeIn, card: event.card, url: event.url));
+        emit(GuestSendedIn(
+          timeIn: timeIn,
+          card: event.card,
+          url: event.url,
+          file: event.file,
+        ));
+        await Future.delayed(const Duration(seconds: 3), () {});
+        emit(GuestInitial());
       } catch (e) {
         emit(GuestFailure(error: e));
       }
@@ -84,6 +92,8 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
         final timeOut = await GuestRepo()
             .sendOut(event.card.docId!, event.card.currentPhoto!);
         emit(GuestSendedOut(timeOut: timeOut, card: event.card));
+        await Future.delayed(const Duration(seconds: 3), () {});
+        emit(GuestInitial());
       } catch (e) {
         emit(GuestFailure(error: e));
       }
@@ -92,7 +102,6 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
 
   @override
   Future<void> close() {
-    cameraSubscription.cancel();
     return super.close();
   }
 }

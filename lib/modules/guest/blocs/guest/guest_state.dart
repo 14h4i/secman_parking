@@ -11,12 +11,14 @@ class GuestInitial extends GuestState {}
 
 class GuestInSuccess extends GuestState {
   final String? url;
+  final File file;
   final Card? card;
 
-  const GuestInSuccess({required this.url, required this.card});
+  const GuestInSuccess(
+      {required this.url, required this.card, required this.file});
 
   @override
-  List<Object?> get props => [url, card];
+  List<Object?> get props => [url, card, file];
 }
 
 class GuestOutSuccess extends GuestState {
@@ -41,15 +43,17 @@ class GuestSendedIn extends GuestState {
   final DateTime timeIn;
   final Card card;
   final String url;
+  final File file;
 
   const GuestSendedIn({
     required this.timeIn,
     required this.card,
     required this.url,
+    required this.file,
   });
 
   @override
-  List<Object?> get props => [timeIn, card, url];
+  List<Object?> get props => [timeIn, card, url, file];
 }
 
 class GuestSendedOut extends GuestState {

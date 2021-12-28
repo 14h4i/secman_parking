@@ -38,14 +38,16 @@ class OutGuest extends GuestEvent {
 class SendIn extends GuestEvent {
   final Card card;
   final String url;
+  final File file;
 
   const SendIn({
     required this.card,
     required this.url,
+    required this.file,
   });
 
   @override
-  List<Object?> get props => [card, url];
+  List<Object?> get props => [card, url, file];
 }
 
 class SendOut extends GuestEvent {
