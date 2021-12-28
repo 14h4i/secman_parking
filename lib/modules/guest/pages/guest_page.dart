@@ -82,31 +82,35 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
               }
               if (stateGuest is GuestInitial) {
                 if (stateCamera is CameraInitialized) {
-                  return CameraPreview(stateCamera.controller!);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: CameraPreview(stateCamera.controller!),
+                  );
                 }
               }
               if (stateGuest is GuestInSuccess) {
-                if (stateCamera is TakePictureSuccess) {
-                  return Column(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Center(child: Image.file(stateCamera.file!)),
+                return Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Center(child: Image.file(stateGuest.file)),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: FloatingTextButton(
+                        backgroundColor: Colors.green,
+                        content: 'VÀO',
+                        onPressedIn: () {
+                          bloc!.add(SendIn(
+                            card: stateGuest.card!,
+                            url: stateGuest.url!,
+                            file: stateGuest.file,
+                          ));
+                        },
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: FloatingTextButton(
-                          backgroundColor: Colors.green,
-                          content: 'VÀO',
-                          onPressedIn: () {
-                            bloc!.add(SendIn(
-                                card: stateGuest.card!, url: stateGuest.url!));
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                }
+                    ),
+                  ],
+                );
               }
               if (stateGuest is GuestOutSuccess) {
                 return Column(
@@ -139,9 +143,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                     Expanded(
                       flex: 3,
                       child: Center(
-                        child: CachedNetworkImage(
-                          imageUrl: stateGuest.url,
-                        ),
+                        child: Image.file(stateGuest.file),
                       ),
                     ),
                     Expanded(
