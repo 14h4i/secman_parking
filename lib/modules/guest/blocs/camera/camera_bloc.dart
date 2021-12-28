@@ -19,6 +19,7 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
     on<TakePicture>(_onTakePicture);
     on<NewCamera>(_onNewCamera);
     on<ChangeAppLifecycle>(_onChangeAppLifecycle);
+    on<ResetCamera>(_onResetCamera);
   }
 
   void _onChangeAppLifecycle(CameraEvent event, Emitter<CameraState> emit) {
@@ -149,6 +150,12 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
   //     // setState(() {});
   //   }
   // }
+
+  void _onResetCamera(CameraEvent event, Emitter<CameraState> emit) {
+    if (event is ResetCamera) {
+      emit(CameraInitialized(controller: controller));
+    }
+  }
 
   @override
   Future<void> close() {

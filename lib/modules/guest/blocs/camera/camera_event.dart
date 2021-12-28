@@ -24,3 +24,5 @@ class ChangeAppLifecycle extends CameraEvent {
   @override
   List<Object?> get props => [appLifecycleState];
 }
+
+class ResetCamera extends CameraEvent {}
