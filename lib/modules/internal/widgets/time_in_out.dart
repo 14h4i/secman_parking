@@ -1,7 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:secman_parking/themes/app_text_style.dart';
-import 'package:secman_parking/utils/date_time_intl.dart';
+import 'package:secman_parking/common/widgets/stateless/text_time_in_out.dart';
 
 class TimeInOut extends StatelessWidget {
   final DateTime? timeIn;
@@ -21,31 +19,23 @@ class TimeInOut extends StatelessWidget {
       // mainAxisAlignment: MainAxisAlignment.center,
       children: isIn
           ? [
-              AutoSizeText(
-                'Ra: ${timeOut != null ? DateTimeIntl.dateTimeToString(timeOut!) : ''}',
-                maxLines: 1,
-                style:
-                    AppTextStyle.dateTimeCard.copyWith(color: Colors.redAccent),
+              TextTimeInOut(
+                isIn: false,
+                time: timeOut,
               ),
-              AutoSizeText(
-                'Vào: ${timeIn != null ? DateTimeIntl.dateTimeToString(timeIn!) : ''}',
-                maxLines: 1,
-                style: AppTextStyle.dateTimeCard
-                    .copyWith(color: Colors.greenAccent),
+              TextTimeInOut(
+                isIn: true,
+                time: timeIn,
               ),
             ]
           : [
-              AutoSizeText(
-                'Vào: ${timeIn != null ? DateTimeIntl.dateTimeToString(timeIn!) : ''}',
-                maxLines: 1,
-                style: AppTextStyle.dateTimeCard
-                    .copyWith(color: Colors.greenAccent),
+              TextTimeInOut(
+                isIn: true,
+                time: timeIn,
               ),
-              AutoSizeText(
-                'Ra: ${timeOut != null ? DateTimeIntl.dateTimeToString(timeOut!) : ''}',
-                maxLines: 1,
-                style:
-                    AppTextStyle.dateTimeCard.copyWith(color: Colors.redAccent),
+              TextTimeInOut(
+                isIn: false,
+                time: timeOut,
               ),
             ],
     );
