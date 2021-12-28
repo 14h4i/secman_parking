@@ -58,7 +58,8 @@ class Card {
     this.docId,
   });
 
-  String? get subVehicle => fullVehicleNumber?.split('-')[0];
+  String? get subVehicle =>
+      '${fullVehicleNumber?.split('-')[0].substring(0, 2)}-${fullVehicleNumber?.split('-')[0].substring(2)}';
 
   String? get vehicleNumber => fullVehicleNumber?.split('-')[1];
 
