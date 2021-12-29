@@ -42,7 +42,6 @@ class _AppDrawerState extends State<AppDrawer> {
               // ),
             ),
           ),
-
           ListTile(
             title: const Text('Quản lý thẻ nội bộ'),
             leading: const Icon(Icons.manage_search),
@@ -94,12 +93,13 @@ class _AppDrawerState extends State<AppDrawer> {
               // }
             },
           ),
-
-          // ListTile(
-          //   title: const Text('Cài đặt'),
-          //   leading: const Icon(Icons.settings),
-          //   onTap: () {},
-          // ),
+          ListTile(
+            title: const Text('Quản lý tiền'),
+            leading: const Icon(Icons.settings),
+            onTap: () {
+              Navigator.pushNamed(context, RouteName.feePage);
+            },
+          ),
           const Divider(),
           ListTile(
             title: const Text('Đăng xuất'),
