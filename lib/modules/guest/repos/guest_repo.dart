@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:secman_parking/models/card.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:secman_parking/utils/fee_util.dart';
 import 'package:secman_parking/utils/random_util.dart';
 
 class GuestRepo {
@@ -84,6 +85,26 @@ class GuestRepo {
       });
 
       return now.toDate();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> sendFee(DateTime timeOut, Card card, FeeType type) async {
+    try {
+      final fees = _firestore.collection('fees');
+
+      final snapshot = await fees.doc('values').get();
+      final values = snapshot.data();
+
+      fees.add({
+        'fee': type == FeeType.day ? values!['day'] : values!['night'],
+        'time_in': Timestamp.fromDate(card.timeIn!),
+        'time_out': Timestamp.fromDate(timeOut),
+        'photo': card.currentPhoto,
+        'id': card.id,
+        'type': type == FeeType.day ? 'day' : 'night',
+      });
     } catch (e) {
       rethrow;
     }
