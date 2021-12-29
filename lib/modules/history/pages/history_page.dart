@@ -3,6 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
+import 'package:secman_parking/common/widgets/stateless/circular_progress_center.dart';
+import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/modules/history/blocs/history_bloc.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/utils/date_time_intl.dart';
@@ -26,9 +28,7 @@ class _HistoryPageState extends State<HistoryPage> {
       body: BlocBuilder<HistoryBloc, HistoryState>(
         builder: (context, state) {
           if (state is HistoryFailure) {
-            return Center(
-              child: Text('${state.error}'),
-            );
+            return TextError(error: state.error);
           }
 
           if (state is HistorySuccess) {
@@ -118,8 +118,8 @@ class _HistoryPageState extends State<HistoryPage> {
             );
           }
 
-          return const Center(
-            child: CircularProgressIndicator(),
+          return const CircularProgressCenter(
+            color: Colors.blue,
           );
         },
       ),

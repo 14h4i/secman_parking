@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
 
 class InternalCardManagerPage extends StatefulWidget {
@@ -27,9 +28,7 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
           child: CircularProgressIndicator(),
         );
         if (state is GetInternalCardsFailure) {
-          body = Center(
-            child: Text('${state.error}'),
-          );
+          body = TextError(error: state.error);
         }
         if (state is GetInternalCardsSuccess) {
           final cards = state.internalCards;

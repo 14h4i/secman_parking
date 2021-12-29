@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
+import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/modules/internal/blocs/internal_bloc.dart';
 import 'package:secman_parking/modules/internal/widgets/button_in_out.dart';
 import 'package:secman_parking/modules/internal/widgets/info_card_internal.dart';
-import 'package:secman_parking/modules/internal/widgets/time_in_out.dart';
+import 'package:secman_parking/common/widgets/stateless/time_in_out.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 import 'package:secman_parking/utils/text_to_speech_util.dart';
@@ -45,9 +46,7 @@ class _InternalPageState extends State<InternalPage> {
           ),
         );
         if (state is Failure) {
-          child = Center(
-            child: Text(state.error.toString()),
-          );
+          child = TextError(error: state.error);
         }
         if (state is ScanSuccess) {
           final data = state.card;

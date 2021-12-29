@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:secman_parking/common/widgets/stateless/circular_progress_center.dart';
+import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 
 class FirebaseInitializer extends StatefulWidget {
   final Widget child;
@@ -22,17 +24,15 @@ class _FirebaseState extends State<FirebaseInitializer> {
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Center(
-            child: Text('${snapshot.error}'),
-          );
+          return TextError(error: snapshot.error);
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
           return widget.child;
         }
 
-        return const Center(
-          child: CircularProgressIndicator(),
+        return const CircularProgressCenter(
+          color: Colors.blue,
         );
       },
     );
