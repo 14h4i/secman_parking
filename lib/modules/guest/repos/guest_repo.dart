@@ -104,6 +104,7 @@ class GuestRepo {
         'photo': card.currentPhoto,
         'id': card.id,
         'type': type == FeeType.day ? 'day' : 'night',
+        'collected': false,
       });
     } catch (e) {
       rethrow;
