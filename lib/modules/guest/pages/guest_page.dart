@@ -10,7 +10,7 @@ import 'package:secman_parking/common/widgets/stateless/text_time_in_out.dart';
 import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
-import 'package:secman_parking/modules/internal/widgets/time_in_out.dart';
+import 'package:secman_parking/common/widgets/stateless/time_in_out.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 
 class GuestPage extends StatefulWidget {
