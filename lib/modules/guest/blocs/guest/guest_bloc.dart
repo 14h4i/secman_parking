@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:secman_parking/models/card.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/guest/repos/guest_repo.dart';
+import 'package:secman_parking/utils/fee_util.dart';
 
 part 'guest_event.dart';
 part 'guest_state.dart';
@@ -90,6 +91,8 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
       try {
         final timeOut = await GuestRepo()
             .sendOut(event.card.docId!, event.card.currentPhoto!);
+        final type = FeeUtil.chargeFee(event.card.timeIn!, timeOut);
+        GuestRepo().sendFee(timeOut, event.card, type);
         emit(GuestSendedOut(timeOut: timeOut, card: event.card));
       } catch (e) {
         emit(GuestFailure(error: e));
