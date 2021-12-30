@@ -1,4 +1,4 @@
-enum FeeType { day, night }
+import 'package:secman_parking/modules/fee/models/fee.dart';
 
 class FeeUtil {
   static FeeType chargeFee(DateTime timeIn, DateTime timeOut) {
