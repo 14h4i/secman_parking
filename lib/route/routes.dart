@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/modules/authentication/pages/welcome_page.dart';
+import 'package:secman_parking/modules/fee/blocs/fee_bloc.dart';
 import 'package:secman_parking/modules/fee/pages/fee_page.dart';
 import 'package:secman_parking/modules/manager/pages/add_internal_card_page.dart';
 import 'package:secman_parking/modules/manager/pages/internal_card_manager_page.dart';
@@ -28,7 +30,10 @@ class Routes {
       case RouteName.feePage:
         return _buildRoute(
           settings,
-          const FeePage(),
+          BlocProvider(
+            create: (_) => FeeBloc()..add(GetListFee()),
+            child: const FeePage(),
+          ),
         );
 
       default:
