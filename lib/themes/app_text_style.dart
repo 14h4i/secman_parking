@@ -8,6 +8,12 @@ class AppTextStyle {
     fontSize: 100,
   );
 
+  static const h2 = TextStyle(
+    fontSize: 90,
+    fontWeight: FontWeight.w900,
+    color: Colors.white,
+  );
+
   static const italic = TextStyle(
     fontStyle: FontStyle.italic,
   );
