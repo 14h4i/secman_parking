@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
 
-const dateFormat = "dd/MM/yyyy HH:mm:ss";
-
 class DateTimeIntl {
+  static const _dateFormat = "dd/MM/yyyy HH:mm:ss";
+
   static bool checkTimeNow(String time, int earlier, int later) {
-    DateTime dateTime = DateFormat(dateFormat).parse(time);
+    DateTime dateTime = DateFormat(_dateFormat).parse(time);
     var now = DateTime.now();
     var early = dateTime.subtract(Duration(minutes: earlier));
 
@@ -14,7 +14,7 @@ class DateTimeIntl {
   }
 
   static DateTime stringToDateTime(String strTime) {
-    return DateFormat(dateFormat).parse(strTime);
+    return DateFormat(_dateFormat).parse(strTime);
   }
 
   static DateTime stringToDateTimeCustom(String strTime, String dateFormat) {
@@ -22,7 +22,7 @@ class DateTimeIntl {
   }
 
   static String dateTimeToString(DateTime dateTime) {
-    return DateFormat(dateFormat).format(dateTime);
+    return DateFormat(_dateFormat).format(dateTime);
   }
 
   static String dateTimeToStringCustom(DateTime dateTime, String dateFormat) {
@@ -34,7 +34,7 @@ class DateTimeIntl {
   }
 
   static String dateTimeNowToString() {
-    return DateFormat(dateFormat).format(DateTime.now());
+    return DateFormat(_dateFormat).format(DateTime.now());
   }
 
   static String dateTimeNowToStringCustom(String dateFormat) {
