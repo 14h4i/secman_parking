@@ -182,9 +182,14 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                       ),
                     ),
                     Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Center(
                         child: AutoSizeText(
-                      '${stateGuest.fee}',
-                      style: AppTextStyle.h2,
+                          'Thu tiền: ${stateGuest.fee} VNĐ',
+                          style: AppTextStyle.h2,
+                        ),
+                      ),
                     )),
                     Expanded(
                       flex: 1,
