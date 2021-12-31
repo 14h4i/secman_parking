@@ -5,15 +5,17 @@ import 'package:secman_parking/modules/fee/models/fee.dart';
 class FeeRepo {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> sendFee(DateTime timeOut, Card card, FeeType type) async {
+  Future<int> sendFee(DateTime timeOut, Card card, FeeType type) async {
     try {
       final fees = _firestore.collection('fees');
 
       final snapshot = await fees.doc('values').get();
       final values = snapshot.data();
 
+      int fee = type == FeeType.day ? values!['day'] : values!['night'];
+
       fees.add({
-        'fee': type == FeeType.day ? values!['day'] : values!['night'],
+        'fee': fee,
         'time_in': Timestamp.fromDate(card.timeIn!),
         'time_out': Timestamp.fromDate(timeOut),
         'photo': card.currentPhoto,
@@ -21,6 +23,7 @@ class FeeRepo {
         'type': type == FeeType.day ? 'day' : 'night',
         'collected': false,
       });
+      return fee;
     } catch (e) {
       rethrow;
     }
