@@ -59,12 +59,14 @@ class GuestSendedIn extends GuestState {
 class GuestSendedOut extends GuestState {
   final DateTime timeOut;
   final Card card;
+  final int fee;
 
   const GuestSendedOut({
     required this.timeOut,
     required this.card,
+    required this.fee,
   });
 
   @override
-  List<Object?> get props => [timeOut, card];
+  List<Object?> get props => [timeOut, card, fee];
 }
