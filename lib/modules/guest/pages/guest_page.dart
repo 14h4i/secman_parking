@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:secman_parking/main.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/time_in_out.dart';
+import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/themes/app_themes.dart';
 
 class GuestPage extends StatefulWidget {
@@ -172,7 +174,7 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                 return Column(
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 6,
                       child: Center(
                         child: CachedNetworkImage(
                           imageUrl: stateGuest.card.currentPhoto!,
@@ -180,14 +182,16 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                       ),
                     ),
                     Expanded(
+                        child: AutoSizeText(
+                      '${stateGuest.fee}',
+                      style: AppTextStyle.h2,
+                    )),
+                    Expanded(
                       flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 50),
-                        child: TimeInOut(
-                          isIn: false,
-                          timeIn: stateGuest.card.timeIn,
-                          timeOut: stateGuest.timeOut,
-                        ),
+                      child: TimeInOut(
+                        isIn: false,
+                        timeIn: stateGuest.card.timeIn,
+                        timeOut: stateGuest.timeOut,
                       ),
                     ),
                   ],
