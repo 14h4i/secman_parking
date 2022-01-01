@@ -14,6 +14,11 @@ class AppTextStyle {
     color: Colors.white,
   );
 
+  static const h3 = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.w900,
+  );
+
   static const italic = TextStyle(
     fontStyle: FontStyle.italic,
   );
