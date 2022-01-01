@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:secman_parking/modules/authentication/pages/login_page.dart';
+import 'package:secman_parking/modules/authentication/pages/password_page.dart';
+import 'package:secman_parking/modules/authentication/pages/pin_code_page.dart';
 import 'package:secman_parking/modules/authentication/pages/welcome_page.dart';
 import 'package:secman_parking/modules/fee/blocs/fee_bloc.dart';
 import 'package:secman_parking/modules/fee/pages/fee_page.dart';
@@ -47,6 +50,22 @@ class Routes {
         return _buildRoute(
           settings,
           const WelcomePage(),
+        );
+      case RouteName.loginPage:
+        return _buildRoute(
+          settings,
+          const LoginPage(),
+        );
+
+      case RouteName.pinCodePage:
+        return _buildRoute(
+          settings,
+          const PinCodePage(),
+        );
+      case RouteName.passwordPage:
+        return _buildRoute(
+          settings,
+          const PasswordPage(),
         );
       default:
         return _errorRoute();
