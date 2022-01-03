@@ -87,8 +87,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  void _onPress() {
-    Navigator.pushNamed(context, RouteName.pinCodePage);
-  }
 }
