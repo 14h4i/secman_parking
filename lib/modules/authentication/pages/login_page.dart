@@ -5,14 +5,9 @@ import 'package:secman_parking/route/route_name.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/utils/ui_data.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   FormGroup buildForm() => fb.group({
         'phone':
             FormControl<String>(value: null, validators: [Validators.required]),
