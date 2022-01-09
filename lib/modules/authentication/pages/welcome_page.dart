@@ -37,8 +37,4 @@ class WelcomePage extends StatelessWidget {
       ),
     );
   }
-
-  // void _changeAppState() {
-  //   appStateBloc!.add(ChangeAppStateEvent(state: const AuthorizedAppState()));
-  // }
 }
