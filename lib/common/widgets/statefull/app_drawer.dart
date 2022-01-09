@@ -70,27 +70,6 @@ class _AppDrawerState extends State<AppDrawer> {
                   AppToast.showShortToast('Thẻ master không đúng');
                 }
               }
-
-              // if (masterCards.contains('master1')) {
-              // Navigator.pop(context);
-              // showModalBottomSheet(
-              //     context: context,
-              //     backgroundColor: Colors.transparent,
-              //     builder: (BuildContext context) {
-              //       return ScanNfcBottomSheet(
-              //         title: 'Quét thẻ cần thêm',
-              //         subTitle: 'Giữ điện thoại lại gần thẻ cần thêm',
-              //         onPressed: () {
-              //           Navigator.pop(context);
-              //         },
-              //       );
-              //     });
-              // await Future.delayed(const Duration(seconds: 3), () {});
-
-              // Navigator.pushNamed(context, RouteName.addInternalCardPage);
-              // } else {
-              //   AppToast.showShortToast('Thẻ master không đúng');
-              // }
             },
           ),
           ListTile(
