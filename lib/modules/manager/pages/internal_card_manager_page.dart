@@ -63,28 +63,7 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
           body: body,
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
-            onPressed: () async {
-              // if (masterCards.contains('master1')) {
-              //   Navigator.pop(context);
-              //   showModalBottomSheet(
-              //       context: context,
-              //       backgroundColor: Colors.transparent,
-              //       builder: (BuildContext context) {
-              //         return ScanNfcBottomSheet(
-              //           title: 'Quét thẻ cần thêm',
-              //           subTitle: 'Giữ điện thoại lại gần thẻ cần thêm',
-              //           onPressed: () {
-              //             Navigator.pop(context);
-              //           },
-              //         );
-              //       });
-              //   await Future.delayed(const Duration(seconds: 3), () {});
-              //   Navigator.pop(context);
-              //   Navigator.pushNamed(context, RouteName.addInternalCardPage);
-              // } else {
-              //   AppToast.showShortToast('Thẻ master không đúng');
-              // }
-            },
+            onPressed: () async {},
           ),
         );
       },
