@@ -26,17 +26,6 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
   CameraBloc? get cameraBloc => BlocProvider.of<CameraBloc>(context);
   GuestBloc? get bloc => BlocProvider.of<GuestBloc>(context);
   final _backgroudColor = Colors.blue;
-  // CameraController? controller;
-
-  // File? _imageFile;
-
-  // Initial values
-  // bool _isCameraInitialized = false;
-
-  // Current values
-  // FlashMode? _currentFlashMode;
-
-  // List<File> allFileList = [];
 
   @override
   void initState() {
