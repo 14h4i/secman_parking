@@ -9,7 +9,6 @@ class LogProvider {
     if (kReleaseMode) {
       return;
     }
-
     // ignore: avoid_print
     print('$prefix $content');
   }
