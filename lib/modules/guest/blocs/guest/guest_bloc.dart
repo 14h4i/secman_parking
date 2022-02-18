@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
 import 'package:secman_parking/models/card.dart';
 import 'package:secman_parking/modules/fee/repos/fee_repo.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
@@ -30,19 +31,23 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
     try {
       if (event is ScanGuestCard) {
         final card = await GuestRepo().getCard(event.id);
-        if (card?.currentPhoto == null) {
-          _cameraBloc.add(TakePicture());
-          cameraSubscription = _cameraBloc.stream.listen((state) async {
-            if (state is TakePictureSuccess) {
-              final file = state.file;
-              if (file != null) {
-                add(InGuest(file: file, card: card));
-                _cameraBloc.add(ResetCamera());
+        if (card != null) {
+          if (card.currentPhoto == null) {
+            _cameraBloc.add(TakePicture());
+            cameraSubscription = _cameraBloc.stream.listen((state) async {
+              if (state is TakePictureSuccess) {
+                final file = state.file;
+                if (file != null) {
+                  add(InGuest(file: file, card: card));
+                  _cameraBloc.add(ResetCamera());
+                }
               }
-            }
-          });
+            });
+          } else {
+            add(OutGuest(card: card));
+          }
         } else {
-          add(OutGuest(card: card));
+          AppToast.showShortToast('Thẻ không có dữ liệu');
         }
       }
     } catch (e) {
