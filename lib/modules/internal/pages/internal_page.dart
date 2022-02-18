@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
 import 'package:secman_parking/common/widgets/stateless/text_error.dart';
@@ -25,10 +26,19 @@ class _InternalPageState extends State<InternalPage> {
   late FlutterTts _flutterTts;
   final Color _backgroundColor = Colors.blue;
 
+  final _nfc = NfcManager.instance;
+
   @override
   void initState() {
     _initTts();
+    _startNfc();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nfc.stopSession();
+    super.dispose();
   }
 
   @override
@@ -122,14 +132,14 @@ class _InternalPageState extends State<InternalPage> {
             iconTheme: AppThemes.iconThemeAppBar,
             backgroundColor: _backgroundColor,
             elevation: 0,
-            actions: [
-              IconButton(
-                onPressed: () async {
-                  bloc!.add(ScanInternalCard(id: 'abc002'));
-                },
-                icon: const Icon(Icons.send),
-              )
-            ],
+            // actions: [
+            //   IconButton(
+            //     onPressed: () async {
+            //       bloc!.add(ScanInternalCard(id: 'abc002'));
+            //     },
+            //     icon: const Icon(Icons.send),
+            //   )
+            // ],
           ),
           drawer: const AppDrawer(),
           body: Padding(
@@ -144,6 +154,12 @@ class _InternalPageState extends State<InternalPage> {
   void _initTts() {
     _flutterTts = FlutterTts();
     _flutterTts.setLanguage('vi-VN');
+  }
+
+  void _startNfc() {
+    _nfc.startSession(onDiscovered: (NfcTag tag) async {
+      bloc!.add(ScanInternalCard(id: 'abc002'));
+    });
   }
 
   Future<void> _speak(String number) async {
