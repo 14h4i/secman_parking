@@ -57,9 +57,6 @@ class _MyAppState extends State<MyApp> {
           return MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => ManagerBloc(),
-              ),
-              BlocProvider(
                 create: (context) => CameraBloc(),
               ),
             ],

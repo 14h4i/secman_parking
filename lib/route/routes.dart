@@ -6,9 +6,11 @@ import 'package:secman_parking/modules/authentication/pages/pin_code_page.dart';
 import 'package:secman_parking/modules/authentication/pages/welcome_page.dart';
 import 'package:secman_parking/modules/fee/blocs/fee_bloc.dart';
 import 'package:secman_parking/modules/fee/pages/fee_page.dart';
+import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
 import 'package:secman_parking/modules/manager/pages/add_internal_card_page.dart';
 import 'package:secman_parking/modules/manager/pages/internal_card_manager_page.dart';
 import 'package:secman_parking/modules/dashboard/pages/dashboard_page.dart';
+import 'package:secman_parking/modules/manager/pages/manager_page.dart';
 import 'package:secman_parking/route/route_name.dart';
 
 class Routes {
@@ -19,11 +21,11 @@ class Routes {
           settings,
           const DashboardPage(),
         );
-      case RouteName.internalCardManagerPage:
-        return _buildRoute(
-          settings,
-          const InternalCardManagerPage(),
-        );
+      // case RouteName.internalCardManagerPage:
+      //   return _buildRoute(
+      //     settings,
+      //     const InternalCardManagerPage(),
+      //   );
 
       case RouteName.addInternalCardPage:
         return _buildRoute(
@@ -36,6 +38,14 @@ class Routes {
           BlocProvider(
             create: (_) => FeeBloc()..add(GetListFee()),
             child: const FeePage(),
+          ),
+        );
+      case RouteName.managerPage:
+        return _buildRoute(
+          settings,
+          BlocProvider(
+            create: (_) => ManagerBloc(),
+            child: const ManagerPage(),
           ),
         );
 
