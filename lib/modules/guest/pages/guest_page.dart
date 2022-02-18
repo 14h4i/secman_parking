@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/circular_progress_center.dart';
 import 'package:secman_parking/common/widgets/stateless/floating_text_button.dart';
@@ -27,16 +28,21 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
   GuestBloc? get bloc => BlocProvider.of<GuestBloc>(context);
   final _backgroudColor = Colors.blue;
 
+  final _nfc = NfcManager.instance;
+
   @override
   void initState() {
     // onNewCameraSelected(cameras[0]);
     cameraBloc!.add(NewCamera(cameraDescription: cameras[0]));
+
+    _startNfc();
     super.initState();
   }
 
   @override
   void dispose() {
     // controller?.dispose();
+    // _nfc.stopSession();
     super.dispose();
   }
 
@@ -55,12 +61,12 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
         iconTheme: AppThemes.iconThemeAppBar,
         elevation: 0,
         actions: [
-          IconButton(
-            onPressed: () async {
-              bloc!.add(const ScanGuestCard(id: 'aaa002'));
-            },
-            icon: const Icon(Icons.camera_alt),
-          ),
+          // IconButton(
+          //   onPressed: () async {
+          //     bloc!.add(const ScanGuestCard(id: 'aaa002'));
+          //   },
+          //   icon: const Icon(Icons.camera_alt),
+          // ),
           IconButton(
             onPressed: () async {
               bloc!.add(ResetPage());
@@ -82,8 +88,10 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
               if (stateGuest is GuestInitial) {
                 if (stateCamera is CameraInitialized) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: CameraPreview(stateCamera.controller!),
+                    padding:
+                        const EdgeInsets.only(left: 80, right: 80, bottom: 80),
+                    child:
+                        Center(child: CameraPreview(stateCamera.controller!)),
                   );
                 }
               }
@@ -196,5 +204,11 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
             }),
       ),
     );
+  }
+
+  void _startNfc() {
+    _nfc.startSession(onDiscovered: (NfcTag tag) async {
+      bloc!.add(ScanGuestCard(id: '${tag.data['nfca']['identifier']}'));
+    });
   }
 }

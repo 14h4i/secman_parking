@@ -37,7 +37,7 @@ class _InternalPageState extends State<InternalPage> {
 
   @override
   void dispose() {
-    _nfc.stopSession();
+    // _nfc.stopSession();
     super.dispose();
   }
 
@@ -158,7 +158,7 @@ class _InternalPageState extends State<InternalPage> {
 
   void _startNfc() {
     _nfc.startSession(onDiscovered: (NfcTag tag) async {
-      bloc!.add(ScanInternalCard(id: 'abc002'));
+      bloc!.add(ScanInternalCard(id: '${tag.data['nfca']['identifier']}'));
     });
   }
 
