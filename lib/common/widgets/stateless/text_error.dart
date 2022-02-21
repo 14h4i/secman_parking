@@ -15,7 +15,7 @@ class TextError extends StatelessWidget {
       child: AutoSizeText(
         'Error: $error',
         maxLines: 1,
-        style: AppTextStyle.largeTitleCard,
+        style: AppTextStyle.largeTitleCard.copyWith(color: Colors.black),
       ),
     );
   }
