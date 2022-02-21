@@ -27,8 +27,7 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
   }
 
   FormGroup buildForm() => FormGroup({
-        'id': FormControl<String>(
-            validators: [Validators.required], value: id, disabled: true),
+        'id': FormControl<String>(validators: [Validators.required], value: id),
         'vehicle_owner': FormControl<String>(validators: [Validators.required]),
         'phone_number': FormControl<String>(validators: [
           Validators.required,
@@ -39,7 +38,7 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
         'vehicle_type': FormControl<String>(validators: [Validators.required]),
         'vehicle_number': FormControl<String>(validators: [
           Validators.required,
-          Validators.minLength(4),
+          Validators.minLength(11),
         ]),
       });
 
@@ -73,6 +72,7 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
                             validationMessages: (control) => {
                               ValidationMessage.required: 'Không được để trống',
                             },
+                            readOnly: true,
                             textInputAction: TextInputAction.next,
                             decoration: const InputDecoration(
                               labelText: 'id',
