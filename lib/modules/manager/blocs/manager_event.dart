@@ -18,6 +18,17 @@ class CheckMasterCards extends ManagerEvent {
   List<Object> get props => [id];
 }
 
+class CheckNewCard extends ManagerEvent {
+  final String id;
+
+  const CheckNewCard({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
+
+class PressAddButton extends ManagerEvent {}
+
 class AddInternalCard extends ManagerEvent {
   final Map<String, dynamic> value;
 

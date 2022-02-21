@@ -18,10 +18,10 @@ class GetInternalCardsSuccess extends ManagerState {
   List<Object?> get props => [internalCards];
 }
 
-class GetInternalCardsFailure extends ManagerState {
+class ManagerFailure extends ManagerState {
   final Object? error;
 
-  const GetInternalCardsFailure({this.error});
+  const ManagerFailure({this.error});
 
   @override
   List<Object?> get props => [error];
@@ -36,15 +36,6 @@ class GetInternalCardsFailure extends ManagerState {
 //   List<Object?> get props => [masterCards];
 // }
 
-class GetMasterCardsFailure extends ManagerState {
-  final Object? error;
-
-  const GetMasterCardsFailure({this.error});
-
-  @override
-  List<Object?> get props => [error];
-}
-
 class CheckMasterCardComplete extends ManagerState {
   final bool status;
 
@@ -54,6 +45,15 @@ class CheckMasterCardComplete extends ManagerState {
   List<Object?> get props => [status];
 }
 
+class CheckNewCardComplete extends ManagerState {
+  final bool status;
+
+  const CheckNewCardComplete({required this.status});
+
+  @override
+  List<Object?> get props => [status];
+}
+
 class AddInternalCardSuccess extends ManagerState {}
 
-class AddInternalCardFailure extends ManagerState {}
+class PressAddState extends ManagerState {}
