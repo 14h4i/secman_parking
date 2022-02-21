@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
+import 'package:secman_parking/route/route_name.dart';
 
 class InternalCardManagerPage extends StatefulWidget {
   const InternalCardManagerPage({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
         Widget body = const Center(
           child: CircularProgressIndicator(),
         );
-        if (state is GetInternalCardsFailure) {
+        if (state is ManagerFailure) {
           body = TextError(error: state.error);
         }
         if (state is GetInternalCardsSuccess) {
@@ -63,7 +64,10 @@ class _InternalCardManagerPageState extends State<InternalCardManagerPage> {
           body: body,
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
-            onPressed: () async {},
+            onPressed: () async {
+              bloc!.add(PressAddButton());
+              Navigator.pushNamed(context, RouteName.addInternalCardPage);
+            },
           ),
         );
       },

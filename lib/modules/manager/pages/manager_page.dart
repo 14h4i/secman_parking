@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/modules/manager/blocs/manager_bloc.dart';
 import 'package:secman_parking/modules/manager/pages/internal_card_manager_page.dart';
 import 'package:secman_parking/modules/manager/widgets/scan_nfc_bottom_sheet.dart';
@@ -57,6 +58,12 @@ class _ManagerPageState extends State<ManagerPage> {
           }
         }
 
+        if (state is ManagerFailure) {
+          return Scaffold(
+            body: TextError(error: state.error),
+          );
+        }
+
         return const InternalCardManagerPage();
       },
     );
@@ -64,7 +71,6 @@ class _ManagerPageState extends State<ManagerPage> {
 
   void _startNfc() {
     _nfc.startSession(onDiscovered: (NfcTag tag) async {
-      // print('${tag.data['nfca']['identifier']}');
       bloc!.add(CheckMasterCards(id: '${tag.data['nfca']['identifier']}'));
     });
   }

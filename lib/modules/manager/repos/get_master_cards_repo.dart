@@ -3,12 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class GetMasterCardsRepo {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<String>?> get() async {
+  Future<bool> check(String id) async {
     try {
-      final snapshot = await _firestore.collection('master_cards').get();
+      final snapshot = await _firestore
+          .collection('master_cards')
+          .where('id', isEqualTo: id)
+          .limit(1)
+          .get();
 
-      final data = snapshot.docs;
-      return data.map((e) => e.data()['id'].toString()).toList();
+      if (snapshot.docs.isEmpty) {
+        return false;
+      }
+      return true;
     } catch (e) {
       rethrow;
     }
