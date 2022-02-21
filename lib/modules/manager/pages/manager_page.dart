@@ -41,6 +41,22 @@ class _ManagerPageState extends State<ManagerPage> {
           );
         }
 
+        if (state is CheckMasterCardComplete) {
+          if (!state.status) {
+            return Scaffold(
+              body: Center(
+                child: ScanNfcBottomSheet(
+                  title: 'Quét thẻ Master',
+                  subTitle: 'Giữ điện thoại lại gần thẻ master',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            );
+          }
+        }
+
         return const InternalCardManagerPage();
       },
     );
@@ -48,7 +64,8 @@ class _ManagerPageState extends State<ManagerPage> {
 
   void _startNfc() {
     _nfc.startSession(onDiscovered: (NfcTag tag) async {
-      bloc!.add(const CheckMasterCards(id: 'master1'));
+      // print('${tag.data['nfca']['identifier']}');
+      bloc!.add(CheckMasterCards(id: '${tag.data['nfca']['identifier']}'));
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
 import 'package:secman_parking/models/card.dart';
 import 'package:secman_parking/modules/manager/repos/add_internal_card_repo.dart';
 import 'package:secman_parking/modules/manager/repos/get_internal_cards_repo.dart';
@@ -37,6 +38,7 @@ class ManagerBloc extends Bloc<ManagerEvent, ManagerState> {
         if (masterCards != null) {
           emit(CheckMasterCardComplete(status: masterCards.contains(event.id)));
         } else {
+          AppToast.showShortToast('Thẻ không có dữ liệu');
           emit(const CheckMasterCardComplete(status: false));
         }
       } catch (e) {
