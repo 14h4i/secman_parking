@@ -59,6 +59,9 @@ class _MyAppState extends State<MyApp> {
               BlocProvider(
                 create: (context) => CameraBloc(),
               ),
+              BlocProvider(
+                create: (context) => ManagerBloc(),
+              ),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
