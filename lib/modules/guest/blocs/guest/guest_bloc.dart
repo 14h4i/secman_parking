@@ -97,8 +97,8 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
       try {
         final timeOut = await GuestRepo()
             .sendOut(event.card.docId!, event.card.currentPhoto!);
-        final type = FeeUtil.chargeFee(event.card.timeIn!, timeOut);
-        final fee = await FeeRepo().sendFee(timeOut, event.card, type);
+        final range = FeeUtil.chargeRangeTime(event.card.timeIn!, timeOut);
+        final fee = await FeeRepo().sendFee(timeOut, event.card, range);
         emit(GuestSendedOut(timeOut: timeOut, card: event.card, fee: fee));
       } catch (e) {
         emit(GuestFailure(error: e));
