@@ -3,8 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'fee.g.dart';
 
-enum FeeType { day, night }
-
 @JsonSerializable()
 class Fee {
   @JsonKey(name: 'id')
@@ -28,8 +26,8 @@ class Fee {
   @JsonKey(name: 'photo')
   final String? photo;
 
-  @JsonKey(name: 'type', fromJson: _typeFromString, toJson: _typeToString)
-  final FeeType? type;
+  @JsonKey(name: 'range')
+  final int? range;
 
   @JsonKey(name: 'collected')
   final bool? collected;
@@ -43,7 +41,7 @@ class Fee {
     this.fee,
     this.timeIn,
     this.timeOut,
-    this.type,
+    this.range,
     this.collected,
     this.docId,
   });
@@ -58,25 +56,13 @@ class Fee {
   static Timestamp? _datetimeToTimestamp(DateTime? time) =>
       time != null ? Timestamp.fromDate(time) : null;
 
-  static FeeType? _typeFromString(String? string) => string != null
-      ? string == 'night'
-          ? FeeType.night
-          : FeeType.day
-      : null;
-
-  static String? _typeToString(FeeType? type) => type != null
-      ? type == FeeType.night
-          ? 'night'
-          : 'day'
-      : null;
-
   Fee? copyWith({
     String? id,
     String? photo,
     int? fee,
     DateTime? timeIn,
     DateTime? timeOut,
-    FeeType? type,
+    int? range,
     bool? collected,
     String? docId,
   }) {
@@ -86,7 +72,7 @@ class Fee {
       fee: fee ?? this.fee,
       timeIn: timeIn ?? this.timeIn,
       timeOut: timeOut ?? this.timeOut,
-      type: type ?? this.type,
+      range: range ?? this.range,
       collected: collected ?? this.collected,
       docId: docId ?? this.docId,
     );

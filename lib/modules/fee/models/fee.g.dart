@@ -12,7 +12,7 @@ Fee _$FeeFromJson(Map<String, dynamic> json) => Fee(
       fee: json['fee'] as int?,
       timeIn: Fee._datetimeFromTimestamp(json['time_in'] as Timestamp?),
       timeOut: Fee._datetimeFromTimestamp(json['time_out'] as Timestamp?),
-      type: Fee._typeFromString(json['type'] as String?),
+      range: json['range'] as int?,
       collected: json['collected'] as bool?,
       docId: json['doc_id'] as String?,
     );
@@ -23,7 +23,7 @@ Map<String, dynamic> _$FeeToJson(Fee instance) => <String, dynamic>{
       'time_in': Fee._datetimeToTimestamp(instance.timeIn),
       'time_out': Fee._datetimeToTimestamp(instance.timeOut),
       'photo': instance.photo,
-      'type': Fee._typeToString(instance.type),
+      'range': instance.range,
       'collected': instance.collected,
       'doc_id': instance.docId,
     };
