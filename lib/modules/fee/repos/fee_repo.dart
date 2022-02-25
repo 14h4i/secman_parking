@@ -45,4 +45,18 @@ class FeeRepo {
       rethrow;
     }
   }
+
+  Future<void> collectFees(List<Fee> listFee) async {
+    try {
+      for (int i = 0; i < listFee.length; i++) {
+        if (listFee[i].collected == false) {
+          _firestore.collection('fees').doc(listFee[i].docId).update({
+            'collected': true,
+          });
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

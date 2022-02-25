@@ -129,11 +129,15 @@ class _FeePageState extends State<FeePage> {
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     primary: Colors.redAccent),
-                                onPressed: () {},
+                                onPressed: () {
+                                  feeBloc!.add(CollectFees(state.listFee));
+                                },
                                 child: const Text('Thu phí'),
                               ),
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  feeBloc!.add(GetListFee());
+                                },
                                 child: const Text('Cập nhật'),
                               ),
                             ],

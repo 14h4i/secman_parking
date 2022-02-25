@@ -9,6 +9,7 @@ part 'fee_state.dart';
 class FeeBloc extends Bloc<FeeEvent, FeeState> {
   FeeBloc() : super(FeeInitial()) {
     on<GetListFee>(_onGetListFee);
+    on<CollectFees>(_onCollectFees);
   }
 
   Future<void> _onGetListFee(FeeEvent event, Emitter<FeeState> emit) async {
@@ -35,6 +36,18 @@ class FeeBloc extends Bloc<FeeEvent, FeeState> {
             notCollected: notCollected,
           ),
         );
+      } catch (e) {
+        emit(FeeFailure(error: e));
+      }
+    }
+  }
+
+  Future<void> _onCollectFees(FeeEvent event, Emitter<FeeState> emit) async {
+    if (event is CollectFees) {
+      try {
+        FeeRepo().collectFees(event.listFee);
+
+        add(GetListFee());
       } catch (e) {
         emit(FeeFailure(error: e));
       }

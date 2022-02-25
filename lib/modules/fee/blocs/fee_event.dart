@@ -8,3 +8,12 @@ abstract class FeeEvent extends Equatable {
 }
 
 class GetListFee extends FeeEvent {}
+
+class CollectFees extends FeeEvent {
+  final List<Fee> listFee;
+
+  const CollectFees(this.listFee);
+
+  @override
+  List<Object> get props => [listFee];
+}
