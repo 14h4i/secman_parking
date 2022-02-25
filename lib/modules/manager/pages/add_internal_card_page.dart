@@ -38,7 +38,7 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
         'vehicle_type': FormControl<String>(validators: [Validators.required]),
         'vehicle_number': FormControl<String>(validators: [
           Validators.required,
-          Validators.minLength(11),
+          Validators.minLength(6),
         ]),
       });
 
@@ -158,16 +158,15 @@ class _AddInternalCardPageState extends State<AddInternalCardPage> {
                           const SizedBox(height: 16),
                           ReactiveTextField<String>(
                             formControlName: 'vehicle_number',
-                            keyboardType: TextInputType.number,
                             validationMessages: (control) => {
                               ValidationMessage.required: 'Không được để trống',
                               ValidationMessage.maxLength: 'Không hợp lệ',
                               ValidationMessage.minLength: 'Không hợp lệ',
                             },
-                            maxLength: 6,
+                            maxLength: 11,
                             textInputAction: TextInputAction.done,
                             decoration: const InputDecoration(
-                              labelText: 'Số xe',
+                              labelText: 'Số xe - VD: 63F1-123.45',
                               helperStyle: TextStyle(height: 0.7),
                               errorStyle: TextStyle(height: 0.7),
                               border: OutlineInputBorder(),
