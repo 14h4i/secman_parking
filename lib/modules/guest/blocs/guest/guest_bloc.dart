@@ -30,6 +30,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
       GuestEvent event, Emitter<GuestState> emit) async {
     try {
       if (event is ScanGuestCard) {
+        emit(GuestLoading());
         final card = await GuestRepo().getCard(event.id);
         if (card != null) {
           if (card.currentPhoto == null) {
@@ -47,6 +48,7 @@ class GuestBloc extends Bloc<GuestEvent, GuestState> {
             add(OutGuest(card: card));
           }
         } else {
+          emit(GuestInitial());
           AppToast.showShortToast('Thẻ không có dữ liệu');
         }
       }

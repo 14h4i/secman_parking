@@ -5,6 +5,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/app_toast.dart';
+import 'package:secman_parking/common/widgets/stateless/circular_progress_center.dart';
 import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/modules/internal/blocs/internal_bloc.dart';
 import 'package:secman_parking/modules/internal/widgets/button_in_out.dart';
@@ -124,6 +125,10 @@ class _InternalPageState extends State<InternalPage> {
               )
             ],
           );
+        }
+
+        if (state is ScanLoading) {
+          child = const CircularProgressCenter();
         }
 
         return Scaffold(

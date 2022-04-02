@@ -200,6 +200,10 @@ class _GuestPageState extends State<GuestPage> with WidgetsBindingObserver {
                 );
               }
 
+              if (stateGuest is GuestLoading) {
+                return const CircularProgressCenter();
+              }
+
               return const CircularProgressCenter();
             }),
       ),

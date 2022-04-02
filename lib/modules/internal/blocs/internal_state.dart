@@ -7,6 +7,8 @@ abstract class InternalState extends Equatable {
 
 class ScanInitial extends InternalState {}
 
+class ScanLoading extends InternalState {}
+
 class ScanSuccess extends InternalState {
   final Card? card;
 

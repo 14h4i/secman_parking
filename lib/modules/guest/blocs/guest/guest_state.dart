@@ -9,6 +9,8 @@ abstract class GuestState extends Equatable {
 
 class GuestInitial extends GuestState {}
 
+class GuestLoading extends GuestState {}
+
 class GuestInSuccess extends GuestState {
   final String? url;
   final File file;
