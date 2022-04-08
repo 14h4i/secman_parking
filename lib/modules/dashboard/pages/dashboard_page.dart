@@ -1,5 +1,8 @@
+import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/modules/guest/blocs/camera/camera_bloc.dart';
 import 'package:secman_parking/modules/guest/blocs/guest/guest_bloc.dart';
@@ -17,7 +20,37 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  bool? _isConnected;
   int _index = 0;
+  late StreamSubscription subscription;
+
+  @override
+  void initState() {
+    subscription = InternetConnectionChecker().onStatusChange.listen((status) {
+      switch (status) {
+        case InternetConnectionStatus.connected:
+          setState(() {
+            _isConnected = true;
+          });
+
+          break;
+        case InternetConnectionStatus.disconnected:
+          setState(() {
+            _isConnected = false;
+          });
+          break;
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
+  // final LogProvider _logProvider = const LogProvider('⚡️ Dashboard');
   final List<Widget> _children = [
     BlocProvider(
       create: (_) => InternalBloc(),
@@ -57,7 +90,18 @@ class _DashboardPageState extends State<DashboardPage> {
           )
         ],
       ),
-      body: _children[_index],
+      body: _isConnected == true
+          ? _children[_index]
+          : const Center(
+              child: AutoSizeText(
+                'Không có kết nối mạng',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
     );
   }
 
