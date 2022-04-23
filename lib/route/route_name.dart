@@ -16,4 +16,6 @@ class RouteName {
   static const String feePage = '/fee-page';
 
   static const String managerPage = '/manager-page';
+
+  static const String detailHistory = '/detail-history-page';
 }
