@@ -6,6 +6,7 @@ import 'package:secman_parking/common/widgets/statefull/app_drawer.dart';
 import 'package:secman_parking/common/widgets/stateless/circular_progress_center.dart';
 import 'package:secman_parking/common/widgets/stateless/text_error.dart';
 import 'package:secman_parking/modules/history/blocs/history_bloc.dart';
+import 'package:secman_parking/route/route_name.dart';
 import 'package:secman_parking/themes/app_text_style.dart';
 import 'package:secman_parking/utils/date_time_intl.dart';
 
@@ -32,93 +33,124 @@ class _HistoryPageState extends State<HistoryPage> {
           }
 
           if (state is HistorySuccess) {
-            return SingleChildScrollView(
-              child: DataTable(
-                columnSpacing: 0,
-                dataRowHeight: 100,
-                headingTextStyle: AppTextStyle.headingTable,
-                columns: [
-                  DataColumn(
-                    label: SizedBox(
-                      width: width * .3,
-                      child: const AutoSizeText('Thông tin'),
+            return ListView.builder(
+              itemCount: state.cards != null ? state.cards!.length : 0,
+              itemBuilder: (context, index) {
+                final card = state.cards![index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        RouteName.detailHistory,
+                        arguments: card,
+                      );
+                    },
+                    child: Card(
+                      elevation: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 20,
+                        ),
+                        child: Text('${card.id}'),
+                      ),
                     ),
                   ),
-                  DataColumn(
-                    label: SizedBox(
-                      width: width * .7,
-                      child: const AutoSizeText('Lịch sử'),
-                    ),
-                  ),
-                ],
-                rows: List<DataRow>.generate(
-                  state.cards!.length,
-                  (index) {
-                    final card = state.cards![index];
-                    return DataRow(
-                      cells: [
-                        DataCell(
-                          SizedBox(
-                            height: 80,
-                            width: 100,
-                            child: card.isGuest!
-                                ? card.currentPhoto != null
-                                    ? CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: card.currentPhoto!)
-                                    : Container()
-                                : Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(width: 4),
-                                      color: Colors.blue.shade200,
-                                    ),
-                                    child: Center(
-                                      child: AutoSizeText(
-                                        '${card.vehicleNumber}',
-                                        maxLines: 1,
-                                        style:
-                                            AppTextStyle.vehicleNumberHistory,
-                                      ),
-                                    ),
-                                  ),
-                          ),
-                        ),
-                        DataCell(
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            height: 100,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  card.timeOut == null
-                                      ? ''
-                                      : DateTimeIntl.dateTimeToString(
-                                          card.timeOut!),
-                                  style: AppTextStyle.dateTimeHistory.copyWith(
-                                    color: Colors.redAccent,
-                                  ),
-                                ),
-                                Text(
-                                  card.timeIn == null
-                                      ? ''
-                                      : DateTimeIntl.dateTimeToString(
-                                          card.timeIn!),
-                                  style: AppTextStyle.dateTimeHistory.copyWith(
-                                    color: Colors.green,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
+                );
+              },
             );
+            // return SingleChildScrollView(
+            //   child: DataTable(
+            //     columnSpacing: 0,
+            //     dataRowHeight: 100,
+            //     headingTextStyle: AppTextStyle.headingTable,
+            //     columns: [
+            //       DataColumn(
+            //         label: SizedBox(
+            //           width: width * .3,
+            //           child: const AutoSizeText('Thông tin'),
+            //         ),
+            //       ),
+            //       DataColumn(
+            //         label: SizedBox(
+            //           width: width * .7,
+            //           child: const AutoSizeText('Lịch sử'),
+            //         ),
+            //       ),
+            //     ],
+            //     rows: List<DataRow>.generate(
+            //       state.cards!.length,
+            //       (index) {
+            //         final card = state.cards![index];
+            //         return DataRow(
+            //           cells: [
+            //             DataCell(
+            //               SizedBox(
+            //                 height: 80,
+            //                 width: 100,
+            //                 child: card.isGuest!
+            //                     ? card.currentPhoto != null
+            //                         ? CachedNetworkImage(
+            //                             fit: BoxFit.cover,
+            //                             imageUrl: card.currentPhoto!)
+            //                         : Container()
+            //                     : Container(
+            //                         decoration: BoxDecoration(
+            //                           border: Border.all(width: 4),
+            //                           color: Colors.blue.shade200,
+            //                         ),
+            //                         child: Center(
+            //                           child: AutoSizeText(
+            //                             '${card.vehicleNumber}',
+            //                             maxLines: 1,
+            //                             style:
+            //                                 AppTextStyle.vehicleNumberHistory,
+            //                           ),
+            //                         ),
+            //                       ),
+            //               ),
+            //             ),
+            //             DataCell(
+            //               Container(
+            //                 padding: const EdgeInsets.symmetric(vertical: 8),
+            //                 height: 100,
+            //                 child: Column(
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   mainAxisAlignment: MainAxisAlignment.center,
+            //                   children: [
+            //                     Text(
+            //                       card.timeOut == null
+            //                           ? ''
+            //                           : DateTimeIntl.dateTimeToString(
+            //                               card.timeOut!),
+            //                       style: AppTextStyle.dateTimeHistory.copyWith(
+            //                         color: Colors.redAccent,
+            //                       ),
+            //                     ),
+            //                     Text(
+            //                       card.timeIn == null
+            //                           ? ''
+            //                           : DateTimeIntl.dateTimeToString(
+            //                               card.timeIn!),
+            //                       style: AppTextStyle.dateTimeHistory.copyWith(
+            //                         color: Colors.green,
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // );
           }
 
           return const CircularProgressCenter(
