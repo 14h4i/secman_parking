@@ -7,7 +7,8 @@ import 'package:secman_parking/modules/authentication/pages/pin_code_page.dart';
 import 'package:secman_parking/modules/authentication/pages/welcome_page.dart';
 import 'package:secman_parking/modules/fee/blocs/fee_bloc.dart';
 import 'package:secman_parking/modules/fee/pages/fee_page.dart';
-import 'package:secman_parking/modules/history/pages/detail_history.dart';
+import 'package:secman_parking/modules/history/blocs/detail/detail_history_bloc.dart';
+import 'package:secman_parking/modules/history/pages/detail_history_page.dart';
 import 'package:secman_parking/modules/manager/pages/add_internal_card_page.dart';
 import 'package:secman_parking/modules/dashboard/pages/dashboard_page.dart';
 import 'package:secman_parking/modules/manager/pages/manager_page.dart';
@@ -45,8 +46,11 @@ class Routes {
         if (card is cardm.Card) {
           return _buildRoute(
             settings,
-            DetailHistory(
-              card: card,
+            BlocProvider(
+              create: (_) => DetailHistoryBloc(),
+              child: DetailHistoryPage(
+                card: card,
+              ),
             ),
           );
         }
