@@ -35,11 +35,6 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
                 focusedDay: DateTime.now(),
                 currentDay: DateTime.now(),
                 calendarFormat: CalendarFormat.week,
-                // onCalendarCreated: (PageController pageController) async {
-                // if (_controller.firstTime) {
-                //   await _controller.getDateFirst(_worker.listWorker);
-                // }
-                // },
                 selectedDayPredicate: (day) {
                   return isSameDay(selected, day);
                 },
@@ -51,12 +46,6 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
                     SelectDay(
                         daySelected: selectedDay, docId: widget.card.docId!),
                   );
-
-                  // DialogBuilder(context).showLoadingIndicator(
-                  //     'Vui lòng chờ...', 'Đang lấy thông tin ca trực');
-                  // await _controller.onDaySelected(
-                  //     selectedDay, focusedDay, _worker.listWorker);
-                  // DialogBuilder(context).hideOpenDialog();
                 },
               ),
               preferredSize: const Size.fromHeight(130)),
@@ -85,8 +74,8 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
                                       : Container(
                                           decoration: BoxDecoration(
                                               border: Border.all(width: 2)),
-                                          child:
-                                              Center(child: Text('Thẻ khách')),
+                                          child: const Center(
+                                              child: Text('Thẻ khách')),
                                         )),
                               Expanded(
                                 flex: 3,
