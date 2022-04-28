@@ -47,7 +47,9 @@ class Routes {
           return _buildRoute(
             settings,
             BlocProvider(
-              create: (_) => DetailHistoryBloc(),
+              create: (_) => DetailHistoryBloc()
+                ..add(
+                    SelectDay(daySelected: DateTime.now(), docId: card.docId!)),
               child: DetailHistoryPage(
                 card: card,
               ),

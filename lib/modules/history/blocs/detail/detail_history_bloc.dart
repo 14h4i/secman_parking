@@ -20,6 +20,7 @@ class DetailHistoryBloc extends Bloc<DetailHistoryEvent, DetailHistoryState> {
       DetailHistoryEvent event, Emitter<DetailHistoryState> emit) async {
     if (event is SelectDay) {
       try {
+        emit(DetailHistoryInitial());
         final records = await HistoryRepo()
             .getDetailHistory(event.docId, event.daySelected);
         emit(DetailHistoryLoaded(records));

@@ -61,6 +61,11 @@ class Card {
   String? get subVehicle =>
       '${fullVehicleNumber?.split('-')[0].substring(0, 2)}-${fullVehicleNumber?.split('-')[0].substring(2)}';
 
+  String? get name => id != null
+      ? id!.substring(1, id!.length - 1).split(', ')[1] +
+          id!.substring(1, id!.length - 1).split(', ')[2]
+      : null;
+
   String? get vehicleNumber => fullVehicleNumber?.split('-')[1];
 
   factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);

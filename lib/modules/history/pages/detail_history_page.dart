@@ -5,7 +5,6 @@ import 'package:secman_parking/common/widgets/stateless/circular_progress_center
 import 'package:secman_parking/common/widgets/stateless/text_center.dart';
 import 'package:secman_parking/models/card.dart' as cardm;
 import 'package:secman_parking/modules/history/blocs/detail/detail_history_bloc.dart';
-import 'package:secman_parking/themes/app_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class DetailHistoryPage extends StatefulWidget {
@@ -34,6 +33,7 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
                 lastDay: DateTime.utc(2040, 3, 14),
                 onFormatChanged: (format) {},
                 focusedDay: DateTime.now(),
+                currentDay: DateTime.now(),
                 calendarFormat: CalendarFormat.week,
                 // onCalendarCreated: (PageController pageController) async {
                 // if (_controller.firstTime) {
@@ -114,7 +114,9 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
               return TextCenter(content: '${state.error}');
             }
 
-            return const CircularProgressCenter();
+            return const CircularProgressCenter(
+              color: Colors.blue,
+            );
           },
         ));
   }

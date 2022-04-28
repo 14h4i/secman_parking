@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +59,15 @@ class _HistoryPageState extends State<HistoryPage> {
                           vertical: 20,
                           horizontal: 20,
                         ),
-                        child: Text('${card.id}'),
+                        child: Center(
+                          child: Text(
+                            '${card.name}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
