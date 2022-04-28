@@ -7,7 +7,7 @@ part of 'record.dart';
 // **************************************************************************
 
 Record _$RecordFromJson(Map<String, dynamic> json) => Record(
-      status: json['status'] as int?,
+      status: json['status'] as String?,
       photo: json['photo'] as String?,
       time: Record._datetimeFromTimestamp(json['time'] as Timestamp?),
       docId: json['doc_id'] as String?,

@@ -22,16 +22,18 @@ class HistoryRepo {
 
   Future<List<Record>> getDetailHistory(String docId, DateTime time) async {
     try {
-      DateTime start = DateTime(time.day, time.month, time.day);
-      DateTime end = DateTime(time.day, time.month, time.day, 23, 59);
+      DateTime start = DateTime(time.year, time.month, time.day);
+      final startTs = Timestamp.fromDate(start);
+      DateTime end = DateTime(time.year, time.month, time.day, 23, 59);
+
       final snapshot = await _firestore
           .collection('cards')
           .doc(docId)
           .collection('records')
           .where(
             'time',
-            isGreaterThanOrEqualTo: Timestamp.fromDate(start),
-            isLessThanOrEqualTo: Timestamp.fromDate(end),
+            isGreaterThan: startTs,
+            isLessThan: Timestamp.fromDate(end),
           )
           .get();
 

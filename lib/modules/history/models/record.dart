@@ -9,7 +9,7 @@ class Record {
   final String? photo;
 
   @JsonKey(name: 'status')
-  final int? status;
+  final String? status;
 
   @JsonKey(
       name: 'time',
