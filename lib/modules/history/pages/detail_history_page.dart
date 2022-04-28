@@ -25,7 +25,7 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('ID: ${widget.card.id}'),
+          title: Text('${widget.card.name}'),
           bottom: PreferredSize(
               child: TableCalendar(
                 locale: 'vi_VI',
@@ -71,15 +71,23 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
                     itemBuilder: (context, index) {
                       final record = state.records[index];
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 8.0),
                         child: SizedBox(
                           height: 200,
                           child: Row(
                             children: [
                               Expanded(
                                   flex: 2,
-                                  child: CachedNetworkImage(
-                                      imageUrl: record.photo!)),
+                                  child: record.photo != null
+                                      ? CachedNetworkImage(
+                                          imageUrl: record.photo!)
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: 2)),
+                                          child:
+                                              Center(child: Text('Thẻ khách')),
+                                        )),
                               Expanded(
                                 flex: 3,
                                 child: Center(
