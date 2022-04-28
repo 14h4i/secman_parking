@@ -22,6 +22,14 @@ class _FeePageState extends State<FeePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quản lý tiền'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              feeBloc!.add(GetListFee());
+            },
+            icon: const Icon(Icons.replay_outlined),
+          )
+        ],
       ),
       body: BlocBuilder<FeeBloc, FeeState>(
         bloc: feeBloc,
@@ -120,27 +128,23 @@ class _FeePageState extends State<FeePage> {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 10),
                       Expanded(
-                        child: Container(
-                          color: Colors.orange.shade200,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.redAccent),
-                                onPressed: () {
-                                  feeBloc!.add(CollectFees(state.listFee));
-                                },
-                                child: const Text('Thu phí'),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.redAccent),
+                          onPressed: () {
+                            feeBloc!.add(CollectFees(state.listFee));
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'Thu phí',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  feeBloc!.add(GetListFee());
-                                },
-                                child: const Text('Cập nhật'),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
